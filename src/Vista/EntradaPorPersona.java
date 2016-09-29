@@ -74,6 +74,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setClosable(true);
@@ -83,7 +84,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn7.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/siete.png"))); // NOI18N
+        btn7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (6).png"))); // NOI18N
         btn7.setBorder(null);
         btn7.setBorderPainted(false);
         btn7.setContentAreaFilled(false);
@@ -96,7 +97,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 70, 70));
 
         btn8.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ocho.png"))); // NOI18N
+        btn8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (8).png"))); // NOI18N
         btn8.setBorder(null);
         btn8.setBorderPainted(false);
         btn8.setContentAreaFilled(false);
@@ -109,7 +110,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 70, 70));
 
         btn9.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nueve.png"))); // NOI18N
+        btn9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (9).png"))); // NOI18N
         btn9.setBorder(null);
         btn9.setBorderPainted(false);
         btn9.setContentAreaFilled(false);
@@ -122,7 +123,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 140, 70, 70));
 
         btn4.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cuatro.png"))); // NOI18N
+        btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (3).png"))); // NOI18N
         btn4.setBorder(null);
         btn4.setBorderPainted(false);
         btn4.setContentAreaFilled(false);
@@ -135,7 +136,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 70, 70));
 
         btn5.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cinco.png"))); // NOI18N
+        btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (4).png"))); // NOI18N
         btn5.setBorder(null);
         btn5.setBorderPainted(false);
         btn5.setContentAreaFilled(false);
@@ -148,7 +149,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 210, 70, 70));
 
         btn6.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seis.png"))); // NOI18N
+        btn6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (5).png"))); // NOI18N
         btn6.setBorder(null);
         btn6.setBorderPainted(false);
         btn6.setContentAreaFilled(false);
@@ -161,7 +162,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, 70, 70));
 
         btn1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/uno.png"))); // NOI18N
+        btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero.png"))); // NOI18N
         btn1.setBorder(null);
         btn1.setBorderPainted(false);
         btn1.setContentAreaFilled(false);
@@ -174,7 +175,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 280, 70, 70));
 
         btn2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/dos.png"))); // NOI18N
+        btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (1).png"))); // NOI18N
         btn2.setBorder(null);
         btn2.setBorderPainted(false);
         btn2.setContentAreaFilled(false);
@@ -187,7 +188,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         getContentPane().add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, 70, 70));
 
         btn3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tres.png"))); // NOI18N
+        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (2).png"))); // NOI18N
         btn3.setBorder(null);
         btn3.setBorderPainted(false);
         btn3.setContentAreaFilled(false);
@@ -201,7 +202,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
         btn0.setBackground(new java.awt.Color(0, 102, 51));
         btn0.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btn0.setText("0");
+        btn0.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/numero (7).png"))); // NOI18N
         btn0.setBorder(null);
         btn0.setBorderPainted(false);
         btn0.setContentAreaFilled(false);
@@ -211,10 +212,10 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn0ActionPerformed(evt);
             }
         });
-        getContentPane().add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 370, 150, 60));
+        getContentPane().add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 70, 70));
 
         btnDel.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btnDel.setText("<");
+        btnDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancelar.png"))); // NOI18N
         btnDel.setBorder(null);
         btnDel.setBorderPainted(false);
         btnDel.setContentAreaFilled(false);
@@ -224,15 +225,16 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btnDelActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 70, 60));
+        getContentPane().add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 350, 70, 70));
 
         txtNumPersonas.setEditable(false);
-        txtNumPersonas.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        txtNumPersonas.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         txtNumPersonas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 270, 110));
 
-        jLabel1.setText("TOTAL A COBRAR");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setText("S/.");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, -1, -1));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("PRECIOS"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -251,34 +253,52 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
         jLabel10.setText("COVER");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        jTextField1.setEditable(false);
         jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 50, -1));
+
+        jTextField2.setEditable(false);
         jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 40, 50, -1));
+
+        jTextField3.setEditable(false);
         jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 50, -1));
+
+        jTextField4.setEditable(false);
         jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 50, -1));
+
+        jTextField5.setEditable(false);
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, 50, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 310, 150));
 
-        btnCobrar.setText("COBRAR");
+        btnCobrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caja-registradora.png"))); // NOI18N
+        btnCobrar.setBorder(null);
+        btnCobrar.setBorderPainted(false);
+        btnCobrar.setContentAreaFilled(false);
+        btnCobrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCobrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCobrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 180, 90));
+        getContentPane().add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 520, 130, 130));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("NUMERO DE PERSONAS");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
 
         jLabel3.setText("COVERS");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, -1, 20));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, 20));
 
+        txtTotalCobrar.setEditable(false);
+        txtTotalCobrar.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         txtTotalCobrar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 470, 140, 30));
+        txtTotalCobrar.setBorder(null);
+        getContentPane().add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 150, 80));
 
+        txtCovers.setEditable(false);
         txtCovers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(txtCovers, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 140, 30));
+        getContentPane().add(txtCovers, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 140, 30));
 
         cmbVip.setText("VIP");
         cmbVip.addActionListener(new java.awt.event.ActionListener() {
@@ -291,11 +311,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         cmbPopular.setText("POPULAR");
         getContentPane().add(cmbPopular, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, -1, -1));
 
+        txtEntradas.setEditable(false);
         txtEntradas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(txtEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 140, 30));
+        getContentPane().add(txtEntradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 140, 30));
 
         jLabel4.setText("ENTRADAS");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 430, 70, 20));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 70, 20));
 
         cmbEntradaPersona.setText("ENTRADAS POR PERSONA");
         getContentPane().add(cmbEntradaPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
@@ -375,6 +396,9 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(402, 0, -1, -1));
 
         getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 670, 700, 40));
+
+        jLabel13.setText("TOTAL");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -553,6 +577,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
