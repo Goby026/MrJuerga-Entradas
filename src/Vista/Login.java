@@ -64,7 +64,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(0, 0, 0));
         jLabel19.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel19.setForeground(new java.awt.Color(255, 0, 0));
         jLabel19.setText("DISCOTECK");
         getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, -1, -1));
 
@@ -86,13 +86,18 @@ public class Login extends javax.swing.JFrame {
         txtUsuario.setBorder(null);
         getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 310, 50));
 
+        btnIngresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("INGRESAR");
+        btnIngresar.setBorder(null);
+        btnIngresar.setBorderPainted(false);
+        btnIngresar.setContentAreaFilled(false);
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 470, -1, -1));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 470, 110, 30));
 
         txtPass.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         txtPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);

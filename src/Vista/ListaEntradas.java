@@ -52,7 +52,7 @@ public class ListaEntradas extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblEntradas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 570, 440));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 570, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
