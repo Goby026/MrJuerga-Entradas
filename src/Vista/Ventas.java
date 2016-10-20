@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -8,6 +9,7 @@ public class Ventas extends javax.swing.JFrame {
     public Ventas() {
         initComponents();
         setLocationRelativeTo(null);
+        getContentPane().setBackground(Color.white);
         setExtendedState(MAXIMIZED_BOTH);
         escritorio.setSize(this.getHeight(), this.getWidth());
     }
@@ -45,7 +47,10 @@ public class Ventas extends javax.swing.JFrame {
 
         getContentPane().add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2060, 990));
 
-        jMenu1.setText("ENTRADAS");
+        jMenuBar1.setBackground(new java.awt.Color(0, 51, 153));
+        jMenuBar1.setBorder(null);
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/inicio.png"))); // NOI18N
 
         jMenuItem1.setText("COBRAR ENTRADA");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -65,7 +70,7 @@ public class Ventas extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("ENTRADAS VENDIDAS");
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nota.png"))); // NOI18N
 
         jMenuItem2.setText("LISTA DE ENTRADAS VENDIDAS");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {

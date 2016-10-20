@@ -17,13 +17,14 @@ public class VentaDAO extends Conexion implements VentaCRUD {
     public void registrar(Venta v) throws Exception {
         try {
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("insert into venta(idventa,fecha, hora, idcliente, idcomprobante, idusuario) values (?,?,?,?,?,?)");
-            pst.setInt(1, v.getIdVenta());
-            pst.setString(2, v.getFecha());
-            pst.setString(3, v.getHora());
+            PreparedStatement pst = this.conexion.prepareStatement("insert into venta(fecha, hora,idusuario, idcliente, idcomprobante,estado, idcaja ) values (?,?,?,?,?,?,?)");
+            pst.setString(1, v.getFecha());
+            pst.setString(2, v.getHora());
+            pst.setInt(3, v.getIdUsuario());
             pst.setInt(4, v.getIdCliente());
-            pst.setInt(5, v.getIdUsuario());
-            pst.setInt(6, v.getIdComprobante());
+            pst.setInt(5, v.getIdComprobante());
+            pst.setInt(6, v.getEstado());
+            pst.setInt(7, v.getIdcaja());
             int res = pst.executeUpdate();
             if (res > 0) {
                 System.out.println("Se registro la venta");
@@ -40,7 +41,28 @@ public class VentaDAO extends Conexion implements VentaCRUD {
 
     @Override
     public void modificar(Venta v) throws Exception {
-
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("update venta(fecha, hora,idusuario, idcliente, idcomprobante,estado, idcaja ) values (?,?,?,?,?,?,?)");
+            pst.setString(1, v.getFecha());
+            pst.setString(2, v.getHora());
+            pst.setInt(3, v.getIdUsuario());
+            pst.setInt(4, v.getIdCliente());
+            pst.setInt(5, v.getIdComprobante());
+            pst.setInt(6, v.getEstado());
+            pst.setInt(7, v.getIdcaja());
+            int res = pst.executeUpdate();
+            if (res > 0) {
+                System.out.println("Se registro la venta");
+            } else {
+                System.out.println("Error");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error asd");
+        } finally {
+            this.cerrar();
+        }
     }
 
     @Override

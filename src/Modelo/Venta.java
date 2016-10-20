@@ -9,13 +9,17 @@ public class Venta {
     int idUsuario;
     int idCliente;
     int idComprobante;
+    int estado;
+    int idcaja;
 
-    public Venta(String fecha, String hora, int idUsuario, int idCliente, int idComprobante) {
+    public Venta(String fecha, String hora, int idUsuario, int idCliente, int idComprobante, int estado, int idcaja) {
         this.fecha = fecha;
         this.hora = hora;
         this.idUsuario = idUsuario;
         this.idCliente = idCliente;
         this.idComprobante = idComprobante;
+        this.estado = estado;
+        this.idcaja = idcaja;
     }
     
     public Venta(){
@@ -68,6 +72,22 @@ public class Venta {
 
     public void setIdComprobante(int idComprobante) {
         this.idComprobante = idComprobante;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
+
+    public int getIdcaja() {
+        return idcaja;
+    }
+
+    public void setIdcaja(int idcaja) {
+        this.idcaja = idcaja;
     }
     
     
