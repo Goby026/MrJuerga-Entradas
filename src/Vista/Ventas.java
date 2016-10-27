@@ -1,17 +1,20 @@
 package Vista;
 
+import Controlador.ImagenFondo;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Ventas extends javax.swing.JFrame {
 
-    public Ventas() {
+    public Ventas() throws Exception {
         initComponents();
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.white);
-        setExtendedState(MAXIMIZED_BOTH);
+        //setExtendedState(MAXIMIZED_BOTH);
         escritorio.setSize(this.getHeight(), this.getWidth());
+        escritorio.setBorder(new ImagenFondo());
     }
 
     /**
@@ -38,20 +41,22 @@ public class Ventas extends javax.swing.JFrame {
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 2060, Short.MAX_VALUE)
+            .addGap(0, 1680, Short.MAX_VALUE)
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 990, Short.MAX_VALUE)
+            .addGap(0, 1050, Short.MAX_VALUE)
         );
 
-        getContentPane().add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2060, 990));
+        getContentPane().add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1680, 1050));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 51, 153));
         jMenuBar1.setBorder(null);
+        jMenuBar1.setMargin(new java.awt.Insets(5, 0, 5, 0));
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/inicio.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa.png"))); // NOI18N
 
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/etiqueta-del-precio.png"))); // NOI18N
         jMenuItem1.setText("COBRAR ENTRADA");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,6 +65,7 @@ public class Ventas extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salida.png"))); // NOI18N
         jMenuItem3.setText("SALIR");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,8 +76,9 @@ public class Ventas extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nota.png"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ajustes.png"))); // NOI18N
 
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lista-32.png"))); // NOI18N
         jMenuItem2.setText("LISTA DE ENTRADAS VENDIDAS");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +158,11 @@ public class Ventas extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Ventas().setVisible(true);
+                try {
+                    new Ventas().setVisible(true);
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
         });
     }

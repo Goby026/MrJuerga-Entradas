@@ -6,7 +6,6 @@ import Modelo.Venta;
 import Modelo.VentaDAO;
 import Modelo.VentaEntrada;
 import java.awt.Color;
-import javax.swing.JInternalFrame;
 
 public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
@@ -14,7 +13,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     public EntradaPorPersona() throws Exception {
         initComponents();
         this.setBackground(Color.WHITE);
-        //new ProductoControl().cargarCombo(cmbProductos);
+        new ProductoControl().cargarCombo(cmbProductos);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,6 +32,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         txtHora = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
+        txtCaja = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -70,7 +70,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         txtEntradas = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         cmbPopular = new javax.swing.JCheckBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        cmbBox = new javax.swing.JCheckBox();
         cmbVip = new javax.swing.JCheckBox();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -123,6 +123,13 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel17.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         jLabel17.setText("ENTRADAS");
         jPanel8.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 20, -1, 30));
+
+        txtCaja.setEditable(false);
+        txtCaja.setBackground(new java.awt.Color(0, 102, 153));
+        txtCaja.setForeground(new java.awt.Color(255, 255, 255));
+        txtCaja.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "CAJA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel8.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 140, -1));
 
         getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1180, 70));
 
@@ -404,6 +411,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
         cmbProductos.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         cmbProductos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SIN OFERTA" }));
+        cmbProductos.setEnabled(false);
         jPanel3.add(cmbProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 180, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -436,11 +444,16 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         cmbPopular.setText("GENERAL");
         jPanel3.add(cmbPopular, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
 
-        jCheckBox1.setBackground(new java.awt.Color(51, 51, 51));
-        jCheckBox1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jCheckBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBox1.setText("BOX");
-        jPanel3.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
+        cmbBox.setBackground(new java.awt.Color(51, 51, 51));
+        cmbBox.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cmbBox.setForeground(new java.awt.Color(255, 255, 255));
+        cmbBox.setText("BOX");
+        cmbBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBoxActionPerformed(evt);
+            }
+        });
+        jPanel3.add(cmbBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
 
         cmbVip.setBackground(new java.awt.Color(51, 51, 51));
         cmbVip.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -481,7 +494,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
             //Registrar el comprobante
             
             //primero se registra la venta
-            Venta v = new Venta(fec, hora, idCliente, idUsuario, idComprobante,estado,idCaja);
+            Venta v = new Venta(fec, hora, idUsuario, idCliente, idComprobante,estado,idCaja);
             VentaDAO vdao = new VentaDAO();
             vdao.registrar(v);
             //segundo se registra las entradas
@@ -612,17 +625,33 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
     private void cmbVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbVipActionPerformed
         if (cmbVip.isSelected()) {
-            cmbPopular.setSelected(false);
+            cmbPopular.setEnabled(false);
+            cmbBox.setEnabled(false);
+            cmbProductos.setEnabled(false);
             int cantCovers = Integer.parseInt(txtCovers.getText());
             int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
             txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 20, 10));
         } else {
-            cmbPopular.setSelected(true);
+            cmbPopular.setEnabled(true);
+            cmbBox.setEnabled(true);
+            cmbProductos.setEnabled(true);
             int cantCovers = Integer.parseInt(txtCovers.getText());
             int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
             txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
         }
     }//GEN-LAST:event_cmbVipActionPerformed
+
+    private void cmbBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxActionPerformed
+        if (cmbBox.isSelected()) {
+            cmbProductos.setEnabled(true);
+            cmbPopular.setEnabled(false);
+            cmbVip.setEnabled(false);
+        } else {
+            cmbProductos.setEnabled(false);
+            cmbPopular.setEnabled(true);
+            cmbVip.setEnabled(true);
+        }
+    }//GEN-LAST:event_cmbBoxActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -638,10 +667,10 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnDel;
+    private javax.swing.JCheckBox cmbBox;
     private javax.swing.JCheckBox cmbPopular;
     private javax.swing.JComboBox cmbProductos;
     private javax.swing.JCheckBox cmbVip;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -666,6 +695,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField txtCaja;
     private javax.swing.JTextField txtCovers;
     private javax.swing.JTextField txtEntradas;
     private javax.swing.JTextField txtFecha;

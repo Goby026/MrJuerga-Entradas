@@ -1,6 +1,7 @@
 package Controlador;
 
 import Modelo.VentaEntradaDAO;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,5 +36,4 @@ public class VentaEntradaControl {
             modelo.addRow(columna);
         }
     }
-
 }
