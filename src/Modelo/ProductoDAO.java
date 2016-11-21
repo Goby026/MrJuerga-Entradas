@@ -44,12 +44,7 @@ public class ProductoDAO extends Conexion implements ProductoCRUD {
                 Producto p = new Producto();
                 p.setIdProducto(rs.getInt("idProducto"));
                 p.setNombre(rs.getString("nombre"));
-                p.setImagen(rs.getString("imagen"));
-                p.setPrecio(rs.getDouble("precio"));
-                p.setStock(rs.getInt("stock"));
-                p.setFechaVencimiento(rs.getDate("fec_vencimiento"));
-                p.setIdCategoria(rs.getInt("idCategoria"));
-                p.setIdPresentacion(rs.getInt("idPresentacion"));
+                p.setIdPresentacion(rs.getInt("fec_ingreso"));
                 lista.add(p);
             }
             rs.close();

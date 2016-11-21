@@ -3,6 +3,8 @@ package Controlador;
 
 import Modelo.Producto;
 import Modelo.ProductoDAO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 
 /**
@@ -11,9 +13,13 @@ import javax.swing.JComboBox;
  */
 public class ProductoControl {
     public void cargarCombo(JComboBox cmb) throws Exception{
-        ProductoDAO pdao = new ProductoDAO();
-        for (Producto prod : pdao.listar()) {
-            cmb.addItem(prod.getNombre());
+        try {
+            ProductoDAO pdao = new ProductoDAO();
+            for (Producto prod : pdao.listar()) {
+                cmb.addItem(prod.getNombre());
+            }
+        } catch (Exception ex) {
+            throw ex;
         }
     }
     public int covers(int personasPorCover, int cantPersonas) {

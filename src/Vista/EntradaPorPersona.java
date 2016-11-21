@@ -5,15 +5,18 @@ import Modelo.ManejadorFechas;
 import Modelo.Venta;
 import Modelo.VentaDAO;
 import Modelo.VentaEntrada;
+import Modelo.VentaEntradaDAO;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
     //double cover = 10.00;
     public EntradaPorPersona() throws Exception {
         initComponents();
-        this.setBackground(Color.WHITE);
-        new ProductoControl().cargarCombo(cmbProductos);
+        this.setBackground(Color.WHITE);        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -511,6 +514,13 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
             ve.setTipoEntrada(""+1);
             ve.setIdVenta(cantVentas);
             
+            VentaEntradaDAO vedao = new VentaEntradaDAO();
+            vedao.registrar(ve);
+            JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
+            
+            
+            
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -643,9 +653,14 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
     private void cmbBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxActionPerformed
         if (cmbBox.isSelected()) {
-            cmbProductos.setEnabled(true);
-            cmbPopular.setEnabled(false);
-            cmbVip.setEnabled(false);
+            try {
+                new ProductoControl().cargarCombo(cmbProductos);
+                cmbProductos.setEnabled(true);
+                cmbPopular.setEnabled(false);
+                cmbVip.setEnabled(false);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         } else {
             cmbProductos.setEnabled(false);
             cmbPopular.setEnabled(true);
