@@ -30,9 +30,13 @@ public class Ventas extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -57,13 +61,16 @@ public class Ventas extends javax.swing.JFrame {
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa.png"))); // NOI18N
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/etiqueta-del-precio.png"))); // NOI18N
-        jMenuItem1.setText("COBRAR ENTRADA");
+        jMenuItem1.setText("ENTRADA GENERAL");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem4.setText("ENTRADA VIP / BOX");
+        jMenu1.add(jMenuItem4);
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salida.png"))); // NOI18N
         jMenuItem3.setText("SALIR");
@@ -78,6 +85,9 @@ public class Ventas extends javax.swing.JFrame {
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ajustes.png"))); // NOI18N
 
+        jMenuItem5.setText("ABRIR CAJA ENTRADAS");
+        jMenu2.add(jMenuItem5);
+
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lista-32.png"))); // NOI18N
         jMenuItem2.setText("LISTA DE ENTRADAS VENDIDAS");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +96,12 @@ public class Ventas extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem2);
+
+        jMenuItem7.setText("ANULACIONES");
+        jMenu2.add(jMenuItem7);
+
+        jMenuItem6.setText("CERRAR CAJA ENTRADAS");
+        jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
 
@@ -175,5 +191,9 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
 }
