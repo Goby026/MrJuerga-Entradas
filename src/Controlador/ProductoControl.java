@@ -22,8 +22,8 @@ public class ProductoControl {
             throw ex;
         }
     }
-    public int covers(int personasPorCover, int cantPersonas) {
-        int covers = cantPersonas / personasPorCover;
+    public int covers(int personas, int cantPersonas) {
+        int covers = cantPersonas / personas;
         return covers;
     }
 

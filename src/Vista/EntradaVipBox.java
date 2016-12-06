@@ -2,30 +2,31 @@ package Vista;
 
 import Controlador.AbrirCajaControl;
 import Controlador.Cronometro;
-import Controlador.ProductoControl;
 import Controlador.ManejadorFechas;
-import Controlador.VentaEntradaControl;
-import Modelo.Comprobante;
+import Controlador.ProductoControl;
 import Modelo.Venta;
 import Modelo.VentaDAO;
 import Modelo.VentaEntrada;
 import Modelo.VentaEntradaDAO;
-import java.awt.Color;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class EntradaPorPersona extends javax.swing.JInternalFrame {
+/**
+ *
+ * @author Marce
+ */
+public class EntradaVipBox extends javax.swing.JInternalFrame {
 
-    //double cover = 10.00;
-    public EntradaPorPersona(String usuario) throws Exception {
+    /**
+     * Creates new form EntradaVipBox
+     */
+    public EntradaVipBox(String usuario) throws Exception {
         initComponents();
-        this.setBackground(Color.WHITE);
         txtUsuario.setText(usuario);
         txtFecha.setText(new ManejadorFechas().getFechaActual());
         new Cronometro().iniciarCronometro(txtHora);
         txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,15 +38,15 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
         txtNumPersonas = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
         txtHora = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         txtCaja = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -76,51 +77,59 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtCovers = new javax.swing.JTextField();
+        cmbBox = new javax.swing.JCheckBox();
+        cmbVip = new javax.swing.JCheckBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setClosable(true);
-        setIconifiable(true);
-        setResizable(true);
-        setTitle("ENTRADAS");
+        setTitle("ENTRADAS VIP - BOX");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtNumPersonas.setEditable(false);
-        txtNumPersonas.setBackground(new java.awt.Color(0, 153, 255));
+        txtNumPersonas.setBackground(new java.awt.Color(51, 51, 51));
         txtNumPersonas.setFont(new java.awt.Font("Dialog", 0, 60)); // NOI18N
         txtNumPersonas.setForeground(new java.awt.Color(255, 255, 255));
         txtNumPersonas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 580, 110));
 
-        jPanel8.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel8.setBackground(new java.awt.Color(0, 102, 153));
         jPanel8.setForeground(new java.awt.Color(255, 255, 255));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel16.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("ENTRADAS");
+        jPanel8.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, 30));
+
         jLabel15.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("ENTRADAS");
-        jPanel8.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, 30));
+        jLabel15.setText("VIP - BOX");
+        jPanel8.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, 30));
+
+        jLabel18.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel18.setText("VIP - BOX");
+        jPanel8.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 20, -1, 30));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/billete.png"))); // NOI18N
         jPanel8.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 70));
 
         txtFecha.setEditable(false);
-        txtFecha.setBackground(new java.awt.Color(255, 51, 51));
+        txtFecha.setBackground(new java.awt.Color(0, 102, 153));
         txtFecha.setForeground(new java.awt.Color(255, 255, 255));
         txtFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "FECHA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel8.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 20, 90, -1));
 
         txtHora.setEditable(false);
-        txtHora.setBackground(new java.awt.Color(255, 51, 51));
+        txtHora.setBackground(new java.awt.Color(0, 102, 153));
         txtHora.setForeground(new java.awt.Color(255, 255, 255));
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtHora.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "HORA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel8.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 20, 90, -1));
 
         txtUsuario.setEditable(false);
-        txtUsuario.setBackground(new java.awt.Color(255, 51, 51));
+        txtUsuario.setBackground(new java.awt.Color(0, 102, 153));
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "USUARIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -131,24 +140,15 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jPanel8.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(92, 20, -1, 30));
 
         txtCaja.setEditable(false);
-        txtCaja.setBackground(new java.awt.Color(255, 51, 51));
+        txtCaja.setBackground(new java.awt.Color(0, 102, 153));
         txtCaja.setForeground(new java.awt.Color(255, 255, 255));
         txtCaja.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "CAJA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel8.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, 140, -1));
-
-        jLabel16.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("GENERAL");
-        jPanel8.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, 30));
-
-        jLabel18.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
-        jLabel18.setText("GENERAL");
-        jPanel8.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 20, -1, 30));
+        jPanel8.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 140, -1));
 
         getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1180, 70));
 
-        jPanel6.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel6.setBackground(new java.awt.Color(0, 102, 153));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel19.setBackground(new java.awt.Color(0, 0, 0));
@@ -379,7 +379,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 560, 670));
 
-        jPanel3.setBackground(new java.awt.Color(0, 153, 255));
+        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -398,7 +398,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, 580, 80));
 
         txtTotalCobrar.setEditable(false);
-        txtTotalCobrar.setBackground(new java.awt.Color(0, 153, 255));
+        txtTotalCobrar.setBackground(new java.awt.Color(51, 51, 51));
         txtTotalCobrar.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         txtTotalCobrar.setForeground(new java.awt.Color(255, 255, 255));
         txtTotalCobrar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -419,50 +419,178 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel2.setText("NUMERO DE PERSONAS");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("COVERS");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, -1, 20));
+        cmbBox.setBackground(new java.awt.Color(51, 51, 51));
+        cmbBox.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cmbBox.setForeground(new java.awt.Color(255, 255, 255));
+        cmbBox.setText("BOX");
+        cmbBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBoxActionPerformed(evt);
+            }
+        });
+        jPanel3.add(cmbBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
 
-        txtCovers.setEditable(false);
-        txtCovers.setBackground(new java.awt.Color(0, 153, 255));
-        txtCovers.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        txtCovers.setForeground(new java.awt.Color(255, 255, 255));
-        txtCovers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel3.add(txtCovers, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 180, 30));
+        cmbVip.setBackground(new java.awt.Color(51, 51, 51));
+        cmbVip.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cmbVip.setForeground(new java.awt.Color(255, 255, 255));
+        cmbVip.setText("VIP");
+        cmbVip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbVipActionPerformed(evt);
+            }
+        });
+        jPanel3.add(cmbVip, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 570, 220));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 620, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
+        String captura = txtNumPersonas.getText() + 7;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+        //txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+        //int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn7ActionPerformed
+
+    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
+        String captura = txtNumPersonas.getText() + 8;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+        //txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+        //int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        //txtCovers.setText(""+(cover*8));
+    }//GEN-LAST:event_btn8ActionPerformed
+
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        String captura = txtNumPersonas.getText() + 9;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
+        String captura = txtNumPersonas.getText() + 4;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn4ActionPerformed
+
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        String captura = txtNumPersonas.getText() + 5;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn5ActionPerformed
+
+    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
+        String captura = txtNumPersonas.getText() + 6;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn6ActionPerformed
+
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        String captura = txtNumPersonas.getText() + 1;
+        txtNumPersonas.setText(captura);
+        //btnAgregar.setEnabled(true);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        String captura = txtNumPersonas.getText() + 2;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn2ActionPerformed
+
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
         String captura = txtNumPersonas.getText() + 3;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
     }//GEN-LAST:event_btn3ActionPerformed
+
+    private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
+        String captura = txtNumPersonas.getText() + 0;
+        txtNumPersonas.setText(captura);
+        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+//        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
+//        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+    }//GEN-LAST:event_btn0ActionPerformed
+
+    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
+        txtNumPersonas.setText("");
+//        txtCovers.setText("");
+        txtTotalCobrar.setText("");
+    }//GEN-LAST:event_btnDelActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         try {
             String fec = new ManejadorFechas().getFechaActualMySQL();
             String hora = new ManejadorFechas().getHoraActual();
-            int idCliente = 0;
-            if (!new VentaEntradaControl().VerificarClientes()) {
-                idCliente = 1;
-            }
-            int idUsuario = new VentaEntradaControl().getIdUsuario(txtUsuario.getText());
+            int idCliente = 1;
+            int idUsuario = 1;
             int idComprobante = 1;
             int estado = 1;
             int idCaja=1;
             //Registrar el comprobante
-             new VentaEntradaControl().regComprobante(fec, txtUsuario.getText(), "ENTRADA", Integer.parseInt(txtNumPersonas.getText()),Double.parseDouble(txtTotalCobrar.getText()),"12345678912","JR AYACUCHO 760" , "EFECTIVO", Double.parseDouble(txtTotalCobrar.getText()), idComprobante);
-             
-            //registrar la venta
+
+            //primero se registra la venta
             Venta v = new Venta(fec, hora, idUsuario, idCliente, idComprobante,estado,idCaja);
             VentaDAO vdao = new VentaDAO();
             vdao.registrar(v);
@@ -475,127 +603,50 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 cantVentas += 1;
             }
             ve.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
-            ve.setNumCovers(Integer.parseInt(txtCovers.getText()));
+//            ve.setNumCovers(Integer.parseInt(txtCovers.getText()));
             ve.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
             ve.setTipoEntrada(""+1);
             ve.setIdVenta(cantVentas);
-            
+
             VentaEntradaDAO vedao = new VentaEntradaDAO();
             vedao.registrar(ve);
             JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
-            
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnCobrarActionPerformed
 
-    private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
-        String captura = txtNumPersonas.getText() + 0;
-        txtNumPersonas.setText(captura);
-        //CAPTURAR EL PRECIO DE LAS ENTRADAS GENERALES
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn0ActionPerformed
+    private void cmbBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxActionPerformed
+        if (cmbBox.isSelected()) {
+            try {
+//                new ProductoControl().cargarCombo(cmbProductos);
+//                cmbProductos.setEnabled(true);                
+                cmbVip.setEnabled(false);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        } else {
+//            cmbProductos.setEnabled(false);
+            cmbVip.setEnabled(true);
+        }
+    }//GEN-LAST:event_cmbBoxActionPerformed
 
-    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
-        txtNumPersonas.setText("");
-        txtCovers.setText("");
-        txtTotalCobrar.setText("");
-    }//GEN-LAST:event_btnDelActionPerformed
-
-    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        String captura = txtNumPersonas.getText() + 1;
-        txtNumPersonas.setText(captura);
-        //btnAgregar.setEnabled(true);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn1ActionPerformed
-
-    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        String captura = txtNumPersonas.getText() + 2;
-        txtNumPersonas.setText(captura);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn2ActionPerformed
-
-    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        String captura = txtNumPersonas.getText() + 4;
-        txtNumPersonas.setText(captura);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn4ActionPerformed
-
-    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        String captura = txtNumPersonas.getText() + 5;
-        txtNumPersonas.setText(captura);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn5ActionPerformed
-
-    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        String captura = txtNumPersonas.getText() + 6;
-        txtNumPersonas.setText(captura);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn6ActionPerformed
-
-    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        String captura = txtNumPersonas.getText() + 7;
-        txtNumPersonas.setText(captura);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn7ActionPerformed
-
-    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        String captura = txtNumPersonas.getText() + 8;
-        txtNumPersonas.setText(captura);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-        //txtCovers.setText(""+(cover*8));
-    }//GEN-LAST:event_btn8ActionPerformed
-
-    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        String captura = txtNumPersonas.getText() + 9;
-        txtNumPersonas.setText(captura);
-        int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
-        //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
-        int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-    }//GEN-LAST:event_btn9ActionPerformed
+    private void cmbVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbVipActionPerformed
+        if (cmbVip.isSelected()) {
+            cmbBox.setEnabled(false);
+//            cmbProductos.setEnabled(false);
+//            int cantCovers = Integer.parseInt(txtCovers.getText());
+            int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 20, 10));
+        } else {
+            cmbBox.setEnabled(true);
+//            cmbProductos.setEnabled(true);
+//            int cantCovers = Integer.parseInt(txtCovers.getText());
+            int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+//            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        }
+    }//GEN-LAST:event_cmbVipActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -611,6 +662,8 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnDel;
+    private javax.swing.JCheckBox cmbBox;
+    private javax.swing.JCheckBox cmbVip;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -624,7 +677,6 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -632,11 +684,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField txtCaja;
-    private javax.swing.JTextField txtCovers;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtNumPersonas;

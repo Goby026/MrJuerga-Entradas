@@ -27,21 +27,158 @@ public class Anulaciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
-        );
+        jLabel5 = new javax.swing.JLabel();
+        txt_num_venta = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txtVenta1 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txtHora1 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        cmbEstado1 = new javax.swing.JComboBox();
+        jLabel12 = new javax.swing.JLabel();
+        cmbTrabajador1 = new javax.swing.JComboBox();
+        btnModificar1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        txtHora2 = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jTextField3 = new javax.swing.JTextField();
+
+        setClosable(true);
+        setIconifiable(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel5.setText("N° BOLETA");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
+
+        txt_num_venta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_num_ventaKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txt_num_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 80, 30));
+
+        jLabel13.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel13.setText("N° VENTA");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
+
+        txtVenta1.setEditable(false);
+        txtVenta1.setBackground(new java.awt.Color(255, 255, 153));
+        getContentPane().add(txtVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 130, -1));
+
+        jLabel14.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel14.setText("FECHA");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel15.setText("CONCEPTO");
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        getContentPane().add(txtHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 130, -1));
+
+        jLabel16.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel16.setText("ESTADO");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
+
+        cmbEstado1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ACTIVO", "ANULADO" }));
+        getContentPane().add(cmbEstado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 130, -1));
+
+        jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel12.setText("TRABAJADOR");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
+
+        getContentPane().add(cmbTrabajador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, 130, -1));
+
+        btnModificar1.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btnModificar1.setForeground(new java.awt.Color(255, 255, 255));
+        btnModificar1.setText("ANULAR");
+        btnModificar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificar1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnModificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 220, 70));
+
+        jButton1.setText("BUSCAR");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 80, -1));
+
+        jLabel17.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel17.setText("S/.");
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
+
+        txtHora2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        getContentPane().add(txtHora2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, 100, -1));
+
+        jLabel18.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel18.setText("MONTO");
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 450, -1, -1));
+
+        jLabel19.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel19.setText("HORA");
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+
+        jLabel20.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel20.setText("N° PERSONAS");
+        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 130, -1));
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 130, -1));
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setText("LISTA DE ANULACIONES");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 590, 220, -1));
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 130, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txt_num_ventaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_ventaKeyReleased
+        int id = Integer.parseInt(txt_num_venta.getText());
+        try {
+//            if (!txt_num_venta.getText().trim().isEmpty()) {
+//                cargarVentasConId(id);
+//            } else {
+//                limpiarTablaVentas();
+//            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }//GEN-LAST:event_txt_num_ventaKeyReleased
+
+    private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
+        
+    }//GEN-LAST:event_btnModificar1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnModificar1;
+    private javax.swing.JComboBox cmbEstado1;
+    private javax.swing.JComboBox cmbTrabajador1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txtHora1;
+    private javax.swing.JTextField txtHora2;
+    private javax.swing.JTextField txtVenta1;
+    private javax.swing.JTextField txt_num_venta;
     // End of variables declaration//GEN-END:variables
 }

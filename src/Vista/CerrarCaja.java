@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import Controlador.AbrirCajaControl;
+import Controlador.ManejadorFechas;
+
 /**
  *
  * @author Marce
@@ -14,8 +17,15 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
     /**
      * Creates new form CerrarCaja
      */
-    public CerrarCaja() {
+    public CerrarCaja(String usuario) throws Exception {
         initComponents();
+        lblFecha.setText(new ManejadorFechas().getFechaActual());
+        lblCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
+        if (new AbrirCajaControl().verificarEstadoCaja(usuario)>0) {
+            lblEstado.setText("CAJA APERTURADA");
+        } else {
+            lblEstado.setText("CAJA CERRADA");
+        }
     }
 
     /**
@@ -27,21 +37,186 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
-        );
+        jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        txtMontoVentas = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        txtMontoApertura = new javax.swing.JTextField();
+        txtSaldoContabilizado = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        lblDescuadre = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        btnCerrarCaja = new javax.swing.JButton();
+        lblFecha = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        lblEstado = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        txtBalance = new javax.swing.JTextField();
+        btnCalcular = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblCaja = new javax.swing.JLabel();
+
+        setClosable(true);
+        setIconifiable(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("INGRESOS"));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel11.setText("ENTRADAS");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
+
+        txtMontoVentas.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtMontoVentas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel2.add(txtMontoVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 120, -1));
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel30.setText("SALDO INICIAL");
+        jPanel2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, -1));
+
+        txtMontoApertura.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtMontoApertura.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel2.add(txtMontoApertura, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 120, -1));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 420, 130));
+
+        txtSaldoContabilizado.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtSaldoContabilizado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSaldoContabilizado.setText("0.0");
+        getContentPane().add(txtSaldoContabilizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 120, -1));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel14.setText("BALANCE TOTAL");
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, -1, -1));
+
+        lblDescuadre.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lblDescuadre.setForeground(new java.awt.Color(204, 0, 0));
+        lblDescuadre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblDescuadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 390, 120, 30));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel16.setText("DESCUADRE");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, -1, -1));
+
+        btnCerrarCaja.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCerrarCaja.setText("CERRAR CAJA");
+        btnCerrarCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarCajaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCerrarCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, 330, -1));
+
+        lblFecha.setText("____________");
+        getContentPane().add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, -1));
+
+        jLabel31.setText("FECHA:");
+        getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, -1, -1));
+
+        jLabel32.setText("ESTADO CAJA:");
+        getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
+
+        lblEstado.setText("________________");
+        getContentPane().add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 100, -1));
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel33.setText("SALDO CONTABILIZADO");
+        getContentPane().add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
+
+        txtBalance.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtBalance.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(txtBalance, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, 120, -1));
+
+        btnCalcular.setBackground(new java.awt.Color(51, 153, 0));
+        btnCalcular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCalcular.setForeground(new java.awt.Color(255, 255, 255));
+        btnCalcular.setText("CALCULAR");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcularActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 120, -1));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 120, 20));
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton1.setText("REPORTE DE CAJA");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 510, 330, -1));
+
+        jLabel1.setText("CAJA:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
+
+        lblCaja.setText("____________");
+        getContentPane().add(lblCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCerrarCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarCajaActionPerformed
+//        try {
+//            CajaDAO cdao = new CajaDAO();
+//            Caja c = new Caja();
+//            c.setMontoCierre(Double.parseDouble(txtBalance.getText()));
+//            c.setBalance(txtBalance.getText());
+//            c.setSaldoContabilizado(txtSaldoContabilizado.getText());
+//            c.setDescuadre(lblDescuadre.getText());
+//            c.setObservacion_cierre(txaObsCierre.getText());
+//            c.setIdCaja(new FlujoCajaControl().getIdCajaConFecha(fechaActual));
+//            if (cdao.modificar(c)) {
+//                JOptionPane.showMessageDialog(rootPane, "SE CERRO CORRECTAMENTE LA CAJA");
+//            } else {
+//                JOptionPane.showMessageDialog(rootPane, "ERROR CONSULTAR AL ADMINISTRADOR");
+//            }
+//        } catch (Exception ex) {
+//            System.out.println(ex.getMessage());
+//        }
+    }//GEN-LAST:event_btnCerrarCajaActionPerformed
+
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+        //calcular los montos que deben guardarse al cerrar la caja
+        //ingresos
+
+//        double ingresos = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtMontoVentas.getText()) + Double.parseDouble(txtMontoVisa.getText());
+//        double egresos = Double.parseDouble(txtCompras.getText()) + Double.parseDouble(txtGastos.getText());
+//        double saldoContado = Double.parseDouble(txtSaldoContabilizado.getText());
+//        double balance = ingresos - egresos;
+//        double descuadre = balance - saldoContado;
+//        txtBalance.setText(""+balance);
+//        if (descuadre>0) {
+//            lblDescuadre.setForeground(Color.green);
+//            lblDescuadre.setText(""+descuadre);
+//        } else {
+//            lblDescuadre.setForeground(Color.red);
+//            lblDescuadre.setText(""+descuadre);
+//        }
+    }//GEN-LAST:event_btnCalcularActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnCerrarCaja;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblCaja;
+    private javax.swing.JLabel lblDescuadre;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JTextField txtBalance;
+    private javax.swing.JTextField txtMontoApertura;
+    private javax.swing.JTextField txtMontoVentas;
+    private javax.swing.JTextField txtSaldoContabilizado;
     // End of variables declaration//GEN-END:variables
 }

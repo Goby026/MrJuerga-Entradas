@@ -1,19 +1,27 @@
-
 package Modelo;
 
 public class Usuario {
-    int idUsu, idArea;
-    String nombre,apellido, dni, telefono, direccion, imagen, usuario, pass;
-    
-    public Usuario(){
+
+    int id;
+    String nombre;
+    String apellido;
+    String dni;
+    String ruc;
+    String telefono;
+    String direccion;
+    String imagen;
+    String usuario;
+    String pass;
+
+    public Usuario() {
     }
 
-    public Usuario(int idUsu, int idArea, String nombre, String apellido, String dni, String telefono, String direccion, String imagen, String usuario, String pass) {
-        this.idUsu = idUsu;
-        this.idArea = idArea;
+    public Usuario(int id, String nombre, String apellido, String dni, String ruc, String telefono, String direccion, String imagen, String usuario, String pass) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
+        this.ruc = ruc;
         this.telefono = telefono;
         this.direccion = direccion;
         this.imagen = imagen;
@@ -21,20 +29,12 @@ public class Usuario {
         this.pass = pass;
     }
 
-    public int getIdUsu() {
-        return idUsu;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUsu(int idUsu) {
-        this.idUsu = idUsu;
-    }
-
-    public int getIdArea() {
-        return idArea;
-    }
-
-    public void setIdArea(int idArea) {
-        this.idArea = idArea;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -61,6 +61,14 @@ public class Usuario {
         this.dni = dni;
     }
 
+    public String getRuc() {
+        return ruc;
+    }
+
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -75,14 +83,6 @@ public class Usuario {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
     }
 
     public String getUsuario() {
@@ -100,6 +100,13 @@ public class Usuario {
     public void setPass(String pass) {
         this.pass = pass;
     }
-    
-    
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
 }

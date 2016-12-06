@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Controlador.LoginControl;
 import Modelo.Usuario;
 import Modelo.UsuarioDAO;
 import java.util.List;
@@ -117,22 +118,21 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        String usuario = txtUsuario.getText();
-        String pass = String.valueOf(txtPass.getPassword());
-        Usuario u = new Usuario();
-        u.setUsuario(usuario);
-        u.setPass(pass);
-        UsuarioDAO udao = new UsuarioDAO();
         try {
-            if (udao.validarUsuario(u)) {
-                Ventas v = new Ventas();
+            String usuario = txtUsuario.getText().toUpperCase();
+            String pass = String.valueOf(txtPass.getPassword()).toUpperCase();
+            Usuario u = new Usuario();
+            u.setUsuario(usuario);
+            u.setPass(pass);
+            if (new LoginControl().validar(u)) {
+                Ventas v = new Ventas(usuario);
                 v.setVisible(true);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(rootPane, "ERROR DE DATOS");
+                JOptionPane.showMessageDialog(null, "ERROR DE DATOS");
             }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 

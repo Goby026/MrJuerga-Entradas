@@ -1,4 +1,4 @@
-package Modelo;
+package Controlador;
 
 
 import java.text.DateFormat;

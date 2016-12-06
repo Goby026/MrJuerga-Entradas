@@ -8,7 +8,6 @@ package Modelo;
 import Interfaces.UsuarioCRUD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,101 +15,83 @@ import java.util.List;
  *
  * @author Gaby
  */
-public class UsuarioDAO extends Conexion implements UsuarioCRUD {
+public class UsuarioDAO extends Conexion implements UsuarioCRUD{
 
-    public boolean validarUsuario(Usuario u) throws Exception {
+    @Override
+    public boolean registrar(Usuario u) throws Exception {
         try {
+            String sql = "insert into usuario (nombre, apellido, dni,ruc, telefono, direccion,imagen, usuario, pass) values (?,?,?,?,?,?,?,?,?)";
             this.conectar();
-            String sql = "Select usuario, pass from usuario where usuario = '" + u.getUsuario() + "' AND pass = '" + u.getPass() + "'";
-            Statement st = this.conexion.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            if (rs.next()) {
+            PreparedStatement pst = this.conexion.prepareStatement(sql);
+            pst.setString(1, u.getNombre());
+            pst.setString(2, u.getApellido());
+            pst.setString(3, u.getDni());
+            pst.setString(4, u.getRuc());
+            pst.setString(5, u.getTelefono());
+            pst.setString(6, u.getDireccion());
+            pst.setString(7, u.getImagen());
+            pst.setString(8, u.getUsuario());
+            pst.setString(9, u.getPass());
+            int res = pst.executeUpdate();
+            if (res > 0) {
                 return true;
             }
+            pst.close();
         } catch (Exception e) {
             throw e;
+        } finally {
+            this.cerrar();
         }
         return false;
     }
 
     @Override
-    public void registrar(Usuario u) throws Exception {
+    public boolean modificar(Usuario u) throws Exception {
         try {
+            String sql = ("UPDATE usuario set nombre = ?, apellido= ?, dni=?,ruc = ? ,telefono = ?, direccion = ?, imagen= ?,usuario = ?, pass = ? where idusuario=?");
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("INSERT INTO `usuario`(`nombre`, `apellido`, "
-                    + "`dni`, `telefono`, `direccion`, `imagen`, `usuario`, `pass`, `idarea`) values (?,?,?,?,?,?,?,?,?)");
+            PreparedStatement pst = this.conexion.prepareStatement(sql);
             pst.setString(1, u.getNombre());
             pst.setString(2, u.getApellido());
             pst.setString(3, u.getDni());
-            pst.setString(4, u.getTelefono());
-            pst.setString(5, u.getDireccion());
-            pst.setString(6, u.getImagen());
-            pst.setString(7, u.getUsuario());
-            pst.setString(8, u.getPass());
-            pst.setInt(9, u.getIdArea());
-
+            pst.setString(4, u.getRuc());
+            pst.setString(5, u.getTelefono());
+            pst.setString(6, u.getDireccion());
+            pst.setString(7, u.getImagen());
+            pst.setString(8, u.getUsuario());
+            pst.setString(9, u.getPass());
+            pst.setInt(10, u.getId());
             int res = pst.executeUpdate();
             if (res > 0) {
-                System.out.println("Usuario registrado");
-            } else {
-                System.out.println("Error");
+                return true;
             }
+            pst.close();
         } catch (Exception e) {
             throw e;
         } finally {
             this.cerrar();
         }
+        return false;
     }
 
     @Override
-    public void modificar(Usuario u) throws Exception {
+    public boolean eliminar(Usuario u) throws Exception {
         try {
+            String sql = ("delete from usuario where idusuario=?");
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("UPDATE `usuario` SET `nombre`=?,`apellido`=?,"
-                    + "`dni`=?,`telefono`=?,`direccion`=?,`imagen`=?,"
-                    + "`usuario`=?,`pass`=?,`idarea`=? WHERE idusuario = ?");
-            pst.setString(1, u.getNombre());
-            pst.setString(2, u.getApellido());
-            pst.setString(3, u.getDni());
-            pst.setString(4, u.getTelefono());
-            pst.setString(5, u.getDireccion());
-            pst.setString(6, u.getImagen());
-            pst.setString(7, u.getUsuario());
-            pst.setString(8, u.getPass());
-            pst.setInt(9, u.getIdArea());
-            pst.setInt(10, u.getIdUsu());
-
+            PreparedStatement pst = this.conexion.prepareStatement(sql);
+            pst.setInt(1, u.getId());
             int res = pst.executeUpdate();
             if (res > 0) {
-                System.out.println("Usuario modificado");
-            } else {
-                System.out.println("Error");
+                return true;
             }
+            pst.close();
         } catch (Exception e) {
             throw e;
         } finally {
             this.cerrar();
         }
-    }
-
-    @Override
-    public void eliminar(Usuario u) throws Exception {
-        try {
-            this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("DELETE FROM usuario WHERE idusuario = ?");
-            pst.setInt(1, u.getIdUsu());
-
-            int res = pst.executeUpdate();
-            if (res > 0) {
-                System.out.println("Usuario eliminado");
-            } else {
-                System.out.println("Error");
-            }
-        } catch (Exception e) {
-            throw e;
-        } finally {
-            this.cerrar();
-        }
+        return false;
     }
 
     @Override
@@ -123,16 +104,16 @@ public class UsuarioDAO extends Conexion implements UsuarioCRUD {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Usuario u = new Usuario();
-                u.setIdUsu(rs.getInt("idusuario"));
+                u.setId(rs.getInt("idusuario"));
                 u.setNombre(rs.getString("nombre"));
                 u.setApellido(rs.getString("apellido"));
                 u.setDni(rs.getString("dni"));
+                u.setRuc(rs.getString("ruc"));
                 u.setTelefono(rs.getString("telefono"));
                 u.setDireccion(rs.getString("direccion"));
                 u.setImagen(rs.getString("imagen"));
                 u.setUsuario(rs.getString("usuario"));
                 u.setPass(rs.getString("pass"));
-                u.setIdArea(rs.getInt("idarea"));
                 lista.add(u);
             }
             rs.close();
@@ -144,5 +125,5 @@ public class UsuarioDAO extends Conexion implements UsuarioCRUD {
         }
         return lista;
     }
-
+    
 }

@@ -1,20 +1,29 @@
 package Vista;
 
+import Controlador.AbrirCajaControl;
 import Controlador.ImagenFondo;
+import Controlador.ManejadorFechas;
+import Modelo.FlujoCaja;
+import Modelo.FlujoCajaDAO;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Ventas extends javax.swing.JFrame {
 
-    public Ventas() throws Exception {
+    public Ventas(String usuario) throws Exception {
         initComponents();
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.white);
         //setExtendedState(MAXIMIZED_BOTH);
         escritorio.setSize(this.getHeight(), this.getWidth());
         escritorio.setBorder(new ImagenFondo());
+        lblUsuario.setText(usuario);
+    }
+
+    private Ventas() {
     }
 
     /**
@@ -27,6 +36,7 @@ public class Ventas extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
+        lblUsuario = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -41,26 +51,39 @@ public class Ventas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblUsuario.setText("....");
+        lblUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "USUARIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        escritorio.setLayer(lblUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
         escritorioLayout.setHorizontalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1680, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, escritorioLayout.createSequentialGroup()
+                .addContainerGap(1024, Short.MAX_VALUE)
+                .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(453, 453, 453))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1050, Short.MAX_VALUE)
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(986, Short.MAX_VALUE))
         );
 
         getContentPane().add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1680, 1050));
 
         jMenuBar1.setBackground(new java.awt.Color(0, 51, 153));
         jMenuBar1.setBorder(null);
-        jMenuBar1.setMargin(new java.awt.Insets(5, 0, 5, 0));
+        jMenuBar1.setMargin(new java.awt.Insets(10, 5, 10, 5));
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casa.png"))); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu.png"))); // NOI18N
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/etiqueta-del-precio.png"))); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/popular.png"))); // NOI18N
         jMenuItem1.setText("ENTRADA GENERAL");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,10 +92,16 @@ public class Ventas extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vip.png"))); // NOI18N
         jMenuItem4.setText("ENTRADA VIP / BOX");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/salida.png"))); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power-button.png"))); // NOI18N
         jMenuItem3.setText("SALIR");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,12 +112,18 @@ public class Ventas extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ajustes.png"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/settings.png"))); // NOI18N
 
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cash.png"))); // NOI18N
         jMenuItem5.setText("ABRIR CAJA ENTRADAS");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lista-32.png"))); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lista.png"))); // NOI18N
         jMenuItem2.setText("LISTA DE ENTRADAS VENDIDAS");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,10 +132,22 @@ public class Ventas extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/auction.png"))); // NOI18N
         jMenuItem7.setText("ANULACIONES");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem7);
 
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/safebox.png"))); // NOI18N
         jMenuItem6.setText("CERRAR CAJA ENTRADAS");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -112,9 +159,13 @@ public class Ventas extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         try {
-            EntradaPorPersona epp = new EntradaPorPersona();
-            escritorio.add(epp);
-            epp.setVisible(true);
+            if (new AbrirCajaControl().verificarEstadoCaja(lblUsuario.getText()) > 0) {
+                EntradaPorPersona epp = new EntradaPorPersona(lblUsuario.getText());
+                escritorio.add(epp);
+                epp.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE APERTURAR CAJA PARA PODER VENDER ENTRADAS");
+            }
         } catch (Exception ex) {
             ex.getMessage();
         }
@@ -140,6 +191,51 @@ public class Ventas extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            if (new AbrirCajaControl().verificarEstadoCaja(lblUsuario.getText()) > 0) {
+                EntradaVipBox evb = new EntradaVipBox(lblUsuario.getText());
+                escritorio.add(evb);
+                evb.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE APERTURAR CAJA PARA PODER VENDER ENTRADAS");
+            }
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        try {
+            AbrirCaja ac = new AbrirCaja(lblUsuario.getText());
+            escritorio.add(ac);
+            ac.setVisible(true);
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        try {
+            Anulaciones a = new Anulaciones();
+            escritorio.add(a);
+            a.setVisible(true);
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            CerrarCaja cc = new CerrarCaja(lblUsuario.getText());
+            escritorio.add(cc);
+            cc.setVisible(true);
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,5 +291,6 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
 }
