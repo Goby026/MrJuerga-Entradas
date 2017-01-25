@@ -17,7 +17,7 @@ public class Ventas extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.white);
-        //setExtendedState(MAXIMIZED_BOTH);
+        setExtendedState(MAXIMIZED_BOTH);
         escritorio.setSize(this.getHeight(), this.getWidth());
         escritorio.setBorder(new ImagenFondo());
         lblUsuario.setText(usuario);
@@ -37,6 +37,7 @@ public class Ventas extends javax.swing.JFrame {
 
         escritorio = new javax.swing.JDesktopPane();
         lblUsuario = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -49,6 +50,7 @@ public class Ventas extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -56,7 +58,7 @@ public class Ventas extends javax.swing.JFrame {
         lblUsuario.setText("....");
         lblUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "USUARIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        escritorio.setLayer(lblUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jToggleButton1.setText("jToggleButton1");
 
         javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
         escritorio.setLayout(escritorioLayout);
@@ -66,14 +68,22 @@ public class Ventas extends javax.swing.JFrame {
                 .addContainerGap(1024, Short.MAX_VALUE)
                 .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(453, 453, 453))
+            .addGroup(escritorioLayout.createSequentialGroup()
+                .addGap(445, 445, 445)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         escritorioLayout.setVerticalGroup(
             escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(escritorioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(986, Short.MAX_VALUE))
+                .addGap(124, 124, 124)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(747, Short.MAX_VALUE))
         );
+        escritorio.setLayer(lblUsuario, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        escritorio.setLayer(jToggleButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         getContentPane().add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1680, 1050));
 
@@ -291,6 +301,7 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lblUsuario;
     // End of variables declaration//GEN-END:variables
 }

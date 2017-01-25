@@ -3,7 +3,7 @@ package Modelo;
 
 /**
  *
- * @author Marce
+ * @author 
  */
 public class Caja {
     int idCaja;

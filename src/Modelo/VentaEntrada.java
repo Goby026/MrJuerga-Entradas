@@ -7,14 +7,18 @@ public class VentaEntrada {
     double total;
     String tipoEntrada;
     int idVenta;
+    int prod;
+    String fecha;
 
-    public VentaEntrada(int idVentaEntrada, int numPersonas, int numCovers, double total, String tipoEntrada, int idVenta) {
+    public VentaEntrada(int idVentaEntrada, int numPersonas, int numCovers, double total, String tipoEntrada, int idVenta,int prod ,String fecha) {
         this.idVentaEntrada = idVentaEntrada;
         this.numPersonas = numPersonas;
         this.numCovers = numCovers;
         this.total = total;
         this.tipoEntrada = tipoEntrada;
         this.idVenta = idVenta;
+        this.prod = prod;
+        this.fecha= fecha;
     }
     
     public VentaEntrada(){
@@ -66,6 +70,22 @@ public class VentaEntrada {
 
     public void setIdVenta(int idVenta) {
         this.idVenta = idVenta;
+    }
+
+    public int getProd() {
+        return prod;
+    }
+
+    public void setProd(int prod) {
+        this.prod = prod;
+    }
+    
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
     
     

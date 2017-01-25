@@ -7,18 +7,21 @@ package Vista;
 
 import Controlador.AbrirCajaControl;
 import Controlador.ManejadorFechas;
+import Modelo.Caja;
+import Modelo.CajaDAO;
 
 /**
  *
  * @author Marce
  */
-public class CerrarCaja extends javax.swing.JInternalFrame {
+public class CerrarCaja extends javax.swing.JFrame {
 
     /**
      * Creates new form CerrarCaja
      */
     public CerrarCaja(String usuario) throws Exception {
         initComponents();
+          setLocationRelativeTo(null);
         lblFecha.setText(new ManejadorFechas().getFechaActual());
         lblCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
         if (new AbrirCajaControl().verificarEstadoCaja(usuario)>0) {
@@ -27,6 +30,10 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
             lblEstado.setText("CAJA CERRADA");
         }
     }
+    
+    public CerrarCaja() {
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +50,6 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
         jLabel30 = new javax.swing.JLabel();
         txtMontoApertura = new javax.swing.JTextField();
         txtSaldoContabilizado = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
         lblDescuadre = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         btnCerrarCaja = new javax.swing.JButton();
@@ -52,15 +58,13 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
         jLabel32 = new javax.swing.JLabel();
         lblEstado = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        txtBalance = new javax.swing.JTextField();
         btnCalcular = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         lblCaja = new javax.swing.JLabel();
 
-        setClosable(true);
-        setIconifiable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("INGRESOS"));
@@ -80,6 +84,11 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
 
         txtMontoApertura.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txtMontoApertura.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMontoApertura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMontoAperturaActionPerformed(evt);
+            }
+        });
         jPanel2.add(txtMontoApertura, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 120, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 420, 130));
@@ -89,18 +98,14 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
         txtSaldoContabilizado.setText("0.0");
         getContentPane().add(txtSaldoContabilizado, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 120, -1));
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel14.setText("BALANCE TOTAL");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, -1, -1));
-
         lblDescuadre.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblDescuadre.setForeground(new java.awt.Color(204, 0, 0));
         lblDescuadre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(lblDescuadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 390, 120, 30));
+        getContentPane().add(lblDescuadre, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 370, 120, 30));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel16.setText("DESCUADRE");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, -1, -1));
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, -1, -1));
 
         btnCerrarCaja.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnCerrarCaja.setText("CERRAR CAJA");
@@ -109,7 +114,7 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
                 btnCerrarCajaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrarCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, 330, -1));
+        getContentPane().add(btnCerrarCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, 330, -1));
 
         lblFecha.setText("____________");
         getContentPane().add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, -1));
@@ -127,10 +132,6 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
         jLabel33.setText("SALDO CONTABILIZADO");
         getContentPane().add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
 
-        txtBalance.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtBalance.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(txtBalance, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 340, 120, -1));
-
         btnCalcular.setBackground(new java.awt.Color(51, 153, 0));
         btnCalcular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCalcular.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,11 +142,11 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
             }
         });
         getContentPane().add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 120, -1));
-        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 420, 120, 20));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 120, 20));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setText("REPORTE DE CAJA");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 510, 330, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 520, 330, -1));
 
         jLabel1.setText("CAJA:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
@@ -195,6 +196,44 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
 //        }
     }//GEN-LAST:event_btnCalcularActionPerformed
 
+    private void txtMontoAperturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoAperturaActionPerformed
+      
+    }//GEN-LAST:event_txtMontoAperturaActionPerformed
+    
+       /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CerrarCaja().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcular;
@@ -202,7 +241,6 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
@@ -214,7 +252,6 @@ public class CerrarCaja extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblDescuadre;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFecha;
-    private javax.swing.JTextField txtBalance;
     private javax.swing.JTextField txtMontoApertura;
     private javax.swing.JTextField txtMontoVentas;
     private javax.swing.JTextField txtSaldoContabilizado;

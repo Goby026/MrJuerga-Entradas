@@ -19,24 +19,30 @@ import javax.swing.JOptionPane;
  *
  * @author Marce
  */
-public class AbrirCaja extends javax.swing.JInternalFrame {
+public class AbrirCaja extends javax.swing.JFrame {
 
     /**
      * Creates new form AbrirCaja
      */
     public AbrirCaja(String usuario) throws Exception {
-        initComponents();        
+        initComponents();
+        setLocationRelativeTo(null);
         datosIniciales(usuario);
     }
-    
-    public void datosIniciales(String usuario) throws Exception{
+
+    public AbrirCaja() {
+    }
+
+    public void datosIniciales(String usuario) throws Exception {
         Color c = new Color(153, 153, 153);
         getRootPane().setBackground(c);
         txtUsuario.setText(usuario);
         new Cronometro().iniciarCronometro(txtHora);
         lblFecha.setText(new ManejadorFechas().getFechaActual());
         lblCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
-        if (new AbrirCajaControl().verificarEstadoCaja(usuario)>0) {
+        String captura = txtSaldoInicial.getText();
+        lblMonto.setText(captura);
+        if (new AbrirCajaControl().verificarEstadoCaja(usuario) > 0) {
             lblEstado.setText("CAJA APERTURADA");
             lblEstado.setForeground(Color.GREEN);
         } else {
@@ -64,7 +70,6 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
         lblCaja = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
         txtHora = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
         jLabel31 = new javax.swing.JLabel();
@@ -76,28 +81,32 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
         jPanel9 = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
 
-        setClosable(true);
-        setIconifiable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel25.setText("CAJA");
-        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 80, 40));
 
         txtSaldoInicial.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        getContentPane().add(txtSaldoInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 130, -1));
+        txtSaldoInicial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSaldoInicialActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtSaldoInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 150, 50));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel27.setText("SALDO INICIAL");
-        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
+        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 190, 40));
 
         lblFecha.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblFecha.setText("_______________");
-        getContentPane().add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, 30));
+        getContentPane().add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 220, 40));
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel28.setText("FECHA");
-        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
+        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 90, 40));
 
         btnAperturar.setBackground(new java.awt.Color(51, 153, 0));
         btnAperturar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -108,7 +117,7 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
                 btnAperturarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnAperturar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 160, -1));
+        getContentPane().add(btnAperturar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 190, 70));
 
         btnCancelar.setBackground(new java.awt.Color(255, 0, 0));
         btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -119,66 +128,67 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 160, -1));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 190, 70));
 
         lblCaja.setText("________________");
-        getContentPane().add(lblCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
+        getContentPane().add(lblCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 120, 30));
 
-        jPanel8.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel8.setBackground(new java.awt.Color(0, 102, 102));
         jPanel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         jPanel8.setForeground(new java.awt.Color(255, 255, 255));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel15.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Bauhaus 93", 1, 36)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("GESTION DE CAJA");
-        jPanel8.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, -1, 30));
-        jPanel8.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 70));
+        jPanel8.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 380, 60));
 
         txtHora.setEditable(false);
-        txtHora.setBackground(new java.awt.Color(102, 102, 102));
+        txtHora.setBackground(new java.awt.Color(0, 102, 102));
         txtHora.setForeground(new java.awt.Color(255, 255, 255));
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtHora.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "HORA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel8.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 140, -1));
+        jPanel8.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 70, 140, -1));
 
         txtUsuario.setEditable(false);
-        txtUsuario.setBackground(new java.awt.Color(102, 102, 102));
+        txtUsuario.setBackground(new java.awt.Color(0, 102, 102));
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "USUARIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel8.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, 140, -1));
+        txtUsuario.setEnabled(false);
+        txtUsuario.setFocusable(false);
+        jPanel8.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 30, 140, -1));
 
-        jLabel31.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
+        jLabel31.setFont(new java.awt.Font("Bauhaus 93", 1, 36)); // NOI18N
         jLabel31.setText("GESTION DE CAJA");
-        jPanel8.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(142, 70, -1, 30));
+        jPanel8.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 380, 60));
 
         jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/caja-registradora.png"))); // NOI18N
         jPanel8.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 130));
 
-        getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 130));
+        getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 130));
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel33.setText("MONTO");
-        getContentPane().add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
+        getContentPane().add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 80, 30));
 
         lblEstado.setText("________________");
-        getContentPane().add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, -1, -1));
+        getContentPane().add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 160, 120, 30));
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel34.setText("ESTADO");
-        getContentPane().add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, -1));
+        getContentPane().add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 80, 30));
 
-        lblMonto.setText("_____");
-        getContentPane().add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, -1, -1));
+        lblMonto.setText("________________");
+        getContentPane().add(lblMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 100, 30));
 
-        jPanel9.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel9.setBackground(new java.awt.Color(0, 102, 102));
         jPanel9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         jPanel9.setForeground(new java.awt.Color(255, 255, 255));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel9.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 70));
 
-        getContentPane().add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 640, 40));
+        getContentPane().add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 850, 40));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -187,7 +197,7 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
         //metodo para cargar los datos por defecto del formulario
         //1° Obtener el estado de la caja que esta abriendo segun el usuario que se logea
         //para obtener la caja que se esta aperturando se debe preguntar que caja esta ocupando
-        
+
         //2° cargamos la fecha actual del sistema en formato latam
         lblFecha.setText(new ManejadorFechas().getFechaActual());
     }
@@ -213,10 +223,12 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
                     fc.setSaldo(Double.parseDouble(txtSaldoInicial.getText()));
                     fc.setIdUsuario(new AbrirCajaControl().getIdUsuario(txtUsuario.getText()));
                     fc.setIdCaja(new AbrirCajaControl().getIdCaja(lblCaja.getText()));
+
                     if (fdao.Registrar(fc)) {
                         JOptionPane.showMessageDialog(getRootPane(), "SE APERTURO LA CAJA CON S/." + txtSaldoInicial.getText());
                         datosIniciales(txtUsuario.getText());
                         txtSaldoInicial.setText("");
+
                     } else {
                         JOptionPane.showMessageDialog(getRootPane(), "ERROR EN REGISTRO DE APERTURA");
                     }
@@ -233,6 +245,45 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AbrirCaja().setVisible(true);
+            }
+        });
+    }
+
+    private void txtSaldoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSaldoInicialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSaldoInicialActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAperturar;
@@ -241,7 +292,6 @@ public class AbrirCaja extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;

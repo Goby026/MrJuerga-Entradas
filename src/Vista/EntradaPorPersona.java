@@ -4,6 +4,7 @@ import Controlador.AbrirCajaControl;
 import Controlador.Cronometro;
 import Controlador.ProductoControl;
 import Controlador.ManejadorFechas;
+import Controlador.MyiReportVisor;
 import Controlador.VentaEntradaControl;
 import Modelo.Comprobante;
 import Modelo.Venta;
@@ -11,21 +12,41 @@ import Modelo.VentaDAO;
 import Modelo.VentaEntrada;
 import Modelo.VentaEntradaDAO;
 import java.awt.Color;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 
-public class EntradaPorPersona extends javax.swing.JInternalFrame {
+public class EntradaPorPersona extends javax.swing.JFrame {
+
+    MyiReportVisor mrv;
+    HashMap parametros = new HashMap();
+    double costoGeneral = 10;
+//    double costoVIP = 12;
 
     //double cover = 10.00;
     public EntradaPorPersona(String usuario) throws Exception {
+
         initComponents();
+        setLocationRelativeTo(null);
+        setExtendedState(MAXIMIZED_BOTH);
         this.setBackground(Color.WHITE);
         txtUsuario.setText(usuario);
         txtFecha.setText(new ManejadorFechas().getFechaActual());
         new Cronometro().iniciarCronometro(txtHora);
         txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
+        btn_mas.setEnabled(false);
+        btn_menos.setEnabled(false);
+        jcbChicas.setEnabled(false);
+        jcbCerveza.setEnabled(false);
+
     }
+
+    public EntradaPorPersona() {
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,7 +56,6 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtNumPersonas = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -54,11 +74,9 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         btn7 = new javax.swing.JButton();
         btn8 = new javax.swing.JButton();
-        btn9 = new javax.swing.JButton();
         btn4 = new javax.swing.JButton();
         btn5 = new javax.swing.JButton();
         btn6 = new javax.swing.JButton();
-        btn1 = new javax.swing.JButton();
         btn2 = new javax.swing.JButton();
         btn3 = new javax.swing.JButton();
         btn0 = new javax.swing.JButton();
@@ -70,6 +88,8 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
+        btn1 = new javax.swing.JButton();
+        btn9 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnCobrar = new javax.swing.JButton();
         txtTotalCobrar = new javax.swing.JTextField();
@@ -78,20 +98,19 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtCovers = new javax.swing.JTextField();
+        btn_mas = new javax.swing.JButton();
+        btn_menos = new javax.swing.JButton();
+        txtNumPersonas = new javax.swing.JTextField();
+        jcbChicas = new javax.swing.JCheckBox();
+        jcbCerveza = new javax.swing.JCheckBox();
+        lblLogo = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        setClosable(true);
-        setIconifiable(true);
-        setResizable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ENTRADAS");
+        setBounds(new java.awt.Rectangle(0, 0, 1000, 800));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtNumPersonas.setEditable(false);
-        txtNumPersonas.setBackground(new java.awt.Color(0, 153, 255));
-        txtNumPersonas.setFont(new java.awt.Font("Dialog", 0, 60)); // NOI18N
-        txtNumPersonas.setForeground(new java.awt.Color(255, 255, 255));
-        txtNumPersonas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 580, 110));
 
         jPanel8.setBackground(new java.awt.Color(255, 51, 51));
         jPanel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -110,21 +129,21 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         txtFecha.setForeground(new java.awt.Color(255, 255, 255));
         txtFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtFecha.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "FECHA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel8.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 20, 90, -1));
+        jPanel8.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(1720, 20, 90, -1));
 
         txtHora.setEditable(false);
         txtHora.setBackground(new java.awt.Color(255, 51, 51));
         txtHora.setForeground(new java.awt.Color(255, 255, 255));
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtHora.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "HORA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel8.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 20, 90, -1));
+        jPanel8.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(1630, 20, 90, -1));
 
         txtUsuario.setEditable(false);
         txtUsuario.setBackground(new java.awt.Color(255, 51, 51));
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "USUARIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
-        jPanel8.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 20, 140, -1));
+        jPanel8.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(1490, 20, 140, -1));
 
         jLabel17.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         jLabel17.setText("ENTRADAS");
@@ -140,13 +159,13 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("GENERAL");
-        jPanel8.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, 30));
+        jPanel8.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(292, 20, -1, 30));
 
         jLabel18.setFont(new java.awt.Font("Bauhaus 93", 0, 36)); // NOI18N
         jLabel18.setText("GENERAL");
-        jPanel8.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(272, 20, -1, 30));
+        jPanel8.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, 30));
 
-        getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1180, 70));
+        getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 70));
 
         jPanel6.setBackground(new java.awt.Color(255, 51, 51));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -155,12 +174,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel19.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(204, 0, 0));
         jLabel19.setText("DISCOTECK");
-        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 0, -1, -1));
+        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(932, 0, -1, -1));
 
         jLabel12.setBackground(new java.awt.Color(0, 0, 0));
         jLabel12.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel12.setText("DISCOTECK");
-        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(892, 0, -1, -1));
+        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 0, -1, -1));
 
         jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
@@ -173,17 +192,16 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jLabel11.setText("MISTER JUERGA");
         jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(732, 0, -1, -1));
 
-        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 740, 1180, 40));
+        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1020, 1920, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn7.setBackground(new java.awt.Color(0, 153, 0));
-        btn7.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn7.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn7.setForeground(new java.awt.Color(255, 255, 255));
         btn7.setText("7");
-        btn7.setBorder(null);
         btn7.setBorderPainted(false);
         btn7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn7.setFocusPainted(false);
@@ -192,13 +210,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn7ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 150, 120));
+        jPanel2.add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 210, 180));
 
         btn8.setBackground(new java.awt.Color(0, 153, 0));
-        btn8.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn8.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn8.setForeground(new java.awt.Color(255, 255, 255));
         btn8.setText("8");
-        btn8.setBorder(null);
         btn8.setBorderPainted(false);
         btn8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn8.setFocusPainted(false);
@@ -207,28 +224,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn8ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 150, 120));
-
-        btn9.setBackground(new java.awt.Color(0, 153, 0));
-        btn9.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
-        btn9.setForeground(new java.awt.Color(255, 255, 255));
-        btn9.setText("9");
-        btn9.setBorder(null);
-        btn9.setBorderPainted(false);
-        btn9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn9.setFocusPainted(false);
-        btn9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn9ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 150, 120));
+        jPanel2.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 40, 210, 180));
 
         btn4.setBackground(new java.awt.Color(0, 153, 0));
-        btn4.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn4.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn4.setForeground(new java.awt.Color(255, 255, 255));
         btn4.setText("4");
-        btn4.setBorder(null);
         btn4.setBorderPainted(false);
         btn4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn4.setFocusPainted(false);
@@ -237,13 +238,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn4ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 150, 120));
+        jPanel2.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 210, 180));
 
         btn5.setBackground(new java.awt.Color(0, 153, 0));
-        btn5.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn5.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn5.setForeground(new java.awt.Color(255, 255, 255));
         btn5.setText("5");
-        btn5.setBorder(null);
         btn5.setBorderPainted(false);
         btn5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn5.setFocusPainted(false);
@@ -252,13 +252,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn5ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 150, 120));
+        jPanel2.add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 210, 180));
 
         btn6.setBackground(new java.awt.Color(0, 153, 0));
-        btn6.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn6.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn6.setForeground(new java.awt.Color(255, 255, 255));
         btn6.setText("6");
-        btn6.setBorder(null);
         btn6.setBorderPainted(false);
         btn6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn6.setFocusPainted(false);
@@ -267,28 +266,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn6ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 150, 120));
-
-        btn1.setBackground(new java.awt.Color(0, 153, 0));
-        btn1.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
-        btn1.setForeground(new java.awt.Color(255, 255, 255));
-        btn1.setText("1");
-        btn1.setBorder(null);
-        btn1.setBorderPainted(false);
-        btn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn1.setFocusPainted(false);
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 150, 120));
+        jPanel2.add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 210, 180));
 
         btn2.setBackground(new java.awt.Color(0, 153, 0));
-        btn2.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn2.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn2.setForeground(new java.awt.Color(255, 255, 255));
         btn2.setText("2");
-        btn2.setBorder(null);
         btn2.setBorderPainted(false);
         btn2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn2.setFocusPainted(false);
@@ -297,13 +280,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn2ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 150, 120));
+        jPanel2.add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 210, 180));
 
         btn3.setBackground(new java.awt.Color(0, 153, 0));
-        btn3.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn3.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn3.setForeground(new java.awt.Color(255, 255, 255));
         btn3.setText("3");
-        btn3.setBorder(null);
         btn3.setBorderPainted(false);
         btn3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn3.setFocusPainted(false);
@@ -312,13 +294,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn3ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 150, 120));
+        jPanel2.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 420, 210, 180));
 
         btn0.setBackground(new java.awt.Color(0, 153, 0));
-        btn0.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn0.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn0.setForeground(new java.awt.Color(255, 255, 255));
         btn0.setText("0");
-        btn0.setBorder(null);
         btn0.setBorderPainted(false);
         btn0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn0.setFocusPainted(false);
@@ -327,13 +308,12 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btn0ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 150, 120));
+        jPanel2.add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 620, 210, 180));
 
         btnDel.setBackground(new java.awt.Color(255, 0, 0));
-        btnDel.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btnDel.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btnDel.setForeground(new java.awt.Color(255, 255, 255));
         btnDel.setText("x");
-        btnDel.setBorder(null);
         btnDel.setBorderPainted(false);
         btnDel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDel.setFocusPainted(false);
@@ -342,7 +322,7 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btnDelActionPerformed(evt);
             }
         });
-        jPanel2.add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 150, 120));
+        jPanel2.add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 620, 210, 180));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("PRECIOS"));
@@ -375,11 +355,39 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 120, -1));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, 540, 90));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 840, 540, 90));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 560, 670));
+        btn1.setBackground(new java.awt.Color(0, 153, 0));
+        btn1.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
+        btn1.setForeground(new java.awt.Color(255, 255, 255));
+        btn1.setText("1");
+        btn1.setBorderPainted(false);
+        btn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn1.setFocusPainted(false);
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 210, 180));
 
-        jPanel3.setBackground(new java.awt.Color(0, 153, 255));
+        btn9.setBackground(new java.awt.Color(0, 153, 0));
+        btn9.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
+        btn9.setForeground(new java.awt.Color(255, 255, 255));
+        btn9.setText("9");
+        btn9.setBorderPainted(false);
+        btn9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn9.setFocusPainted(false);
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn9ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 210, 180));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 720, 940));
+
+        jPanel3.setBackground(new java.awt.Color(51, 153, 0));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -387,7 +395,6 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         btnCobrar.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         btnCobrar.setForeground(new java.awt.Color(255, 255, 255));
         btnCobrar.setText("COBRAR");
-        btnCobrar.setBorder(null);
         btnCobrar.setBorderPainted(false);
         btnCobrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCobrar.addActionListener(new java.awt.event.ActionListener() {
@@ -395,43 +402,116 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
                 btnCobrarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, 580, 80));
+        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 770, 560, 120));
 
         txtTotalCobrar.setEditable(false);
-        txtTotalCobrar.setBackground(new java.awt.Color(0, 153, 255));
+        txtTotalCobrar.setBackground(new java.awt.Color(51, 153, 0));
         txtTotalCobrar.setFont(new java.awt.Font("Dialog", 0, 48)); // NOI18N
         txtTotalCobrar.setForeground(new java.awt.Color(255, 255, 255));
         txtTotalCobrar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTotalCobrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 580, 110));
+        txtTotalCobrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalCobrarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 590, 650, 130));
 
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("TOTAL");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 530, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("S/.");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 530, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("NUMERO DE PERSONAS");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 290, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("COVERS");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, -1, 20));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 110, 50));
 
         txtCovers.setEditable(false);
-        txtCovers.setBackground(new java.awt.Color(0, 153, 255));
+        txtCovers.setBackground(new java.awt.Color(51, 153, 0));
         txtCovers.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         txtCovers.setForeground(new java.awt.Color(255, 255, 255));
         txtCovers.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel3.add(txtCovers, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 180, 30));
+        txtCovers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCoversActionPerformed(evt);
+            }
+        });
+        jPanel3.add(txtCovers, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, 350, 100));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 620, 670));
+        btn_mas.setBackground(new java.awt.Color(0, 153, 255));
+        btn_mas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-hacia-arriba5.png"))); // NOI18N
+        btn_mas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_masActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_mas, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 280, 80, 90));
+
+        btn_menos.setBackground(new java.awt.Color(0, 153, 255));
+        btn_menos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/flecha-hacia-abajo.png"))); // NOI18N
+        btn_menos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_menosActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btn_menos, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 390, 80, 90));
+
+        txtNumPersonas.setEditable(false);
+        txtNumPersonas.setBackground(new java.awt.Color(51, 153, 0));
+        txtNumPersonas.setFont(new java.awt.Font("Dialog", 0, 60)); // NOI18N
+        txtNumPersonas.setForeground(new java.awt.Color(255, 255, 255));
+        txtNumPersonas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel3.add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 650, 110));
+
+        jcbChicas.setBackground(new java.awt.Color(51, 153, 0));
+        jcbChicas.setFont(new java.awt.Font("Consolas", 0, 48)); // NOI18N
+        jcbChicas.setForeground(new java.awt.Color(255, 255, 255));
+        jcbChicas.setText("CHICAS");
+        jcbChicas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/chica1.png"))); // NOI18N
+        jcbChicas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbChicasActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jcbChicas, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 210, 250, 70));
+
+        jcbCerveza.setBackground(new java.awt.Color(51, 153, 0));
+        jcbCerveza.setFont(new java.awt.Font("Consolas", 0, 48)); // NOI18N
+        jcbCerveza.setForeground(new java.awt.Color(255, 255, 255));
+        jcbCerveza.setText("CERVEZA");
+        jcbCerveza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerveza (1).png"))); // NOI18N
+        jcbCerveza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbCervezaActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jcbCerveza, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 280, 70));
+
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/idosftlogo_opt.png")));
+        jPanel3.add(lblLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 130, -1));
+
+        jLabel4.setFont(new java.awt.Font("Ebrima", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("IDSOFT S.A.C.");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 170, 60));
+
+        jLabel5.setFont(new java.awt.Font("MV Boli", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("\"Usted no se adecua al Software ,\n el Software se adecua a Usted\"");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 400, 70));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 1200, 950));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -440,50 +520,93 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         String captura = txtNumPersonas.getText() + 3;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         try {
+            //capturo datos
             String fec = new ManejadorFechas().getFechaActualMySQL();
             String hora = new ManejadorFechas().getHoraActual();
-            int idCliente = 0;
-            if (!new VentaEntradaControl().VerificarClientes()) {
-                idCliente = 1;
-            }
+            int idCliente = 1;
             int idUsuario = new VentaEntradaControl().getIdUsuario(txtUsuario.getText());
             int idComprobante = 1;
             int estado = 1;
-            int idCaja=1;
+            int idCaja = 1;
             //Registrar el comprobante
-             new VentaEntradaControl().regComprobante(fec, txtUsuario.getText(), "ENTRADA", Integer.parseInt(txtNumPersonas.getText()),Double.parseDouble(txtTotalCobrar.getText()),"12345678912","JR AYACUCHO 760" , "EFECTIVO", Double.parseDouble(txtTotalCobrar.getText()), idComprobante);
-             
+            new VentaEntradaControl().regComprobante(fec, txtUsuario.getText(), "ENTRADA", Integer.parseInt(txtNumPersonas.getText()), Double.parseDouble(txtTotalCobrar.getText()), "12345678912", "JR AYACUCHO 760", "EFECTIVO", Double.parseDouble(txtTotalCobrar.getText()), idComprobante);
+
             //registrar la venta
-            Venta v = new Venta(fec, hora, idUsuario, idCliente, idComprobante,estado,idCaja);
+            Venta v = new Venta(fec, hora, idUsuario, idCliente, idComprobante, estado, idCaja);
             VentaDAO vdao = new VentaDAO();
             vdao.registrar(v);
             //segundo se registra las entradas
             VentaEntrada ve = new VentaEntrada();
-            int cantVentas = new VentaDAO().listar().size();
-            if (cantVentas == 0) {
-                cantVentas = 1;
-            } else {
-                cantVentas += 1;
-            }
+            int prod = 1;
+            int idVenta = new VentaEntradaControl().getIdDeUltimaVentaRegistrada();
+            System.out.println("ultima venta: "+idVenta);
             ve.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
             ve.setNumCovers(Integer.parseInt(txtCovers.getText()));
             ve.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
-            ve.setTipoEntrada(""+1);
-            ve.setIdVenta(cantVentas);
-            
+            ve.setTipoEntrada("ENTRADA GENERAL");            
+            ve.setIdVenta(idVenta);
+            if (jcbCerveza.isSelected()) {
+                prod = 2;
+            }else{
+                prod = 1;
+            }
+            ve.setProd(prod);
+
             VentaEntradaDAO vedao = new VentaEntradaDAO();
-            vedao.registrar(ve);
-            JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
-            
+            if (vedao.registrar(ve)) {
+                boolean printChicas = jcbChicas.isSelected();
+//                JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
+                parametros.put("nom_cajero", txtUsuario.getText());
+                parametros.put("id_venta", idVenta);
+                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\boleta.jrxml", parametros, getPageSize());
+                mrv.setNombreArchivo("BoletaEntrada");
+                if(!printChicas)
+                    mrv.exportarADocxConCopia("boletas.docx");
+                
+                HashMap par2 = new HashMap();
+                System.out.println("Imprimiendo Cover");
+                par2.put("nroComprobante", idVenta);
+                String flagCover = "COVER";
+                if (jcbCerveza.isSelected()){
+                    flagCover = "CERVEZA";
+                }else{
+                    flagCover = "COVER";
+                }
+                par2.put("nombreCover", flagCover);
+                MyiReportVisor mrv2 = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\coversNormalT1.jrxml", par2, getPageSize(1 , 28 ,20 , 33));
+                mrv2.setNombreArchivo("Cover Cerveza");
+                int numerodeCopias = ve.getNumCovers();
+                for(int i = 1 ; i<= numerodeCopias; i++ ){
+                    if(!printChicas)
+                    mrv2.exportarADocxConCopia("covers"+i+".docx");
+                }
+                txtNumPersonas.setText("");
+                txtCovers.setText("");
+                txtTotalCobrar.setText("");
+                btn_mas.setEnabled(false);
+                btn_menos.setEnabled(false);
+                jcbChicas.setEnabled(false);
+                jcbChicas.setSelected(false);
+                jcbCerveza.setEnabled(false);
+                jcbCerveza.setSelected(false);
+            } else {
+            }
+
+//            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaPorPersona.jrxml", parametros);
+//            mrv.exportarAPdf();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -494,17 +617,26 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         txtNumPersonas.setText(captura);
         //CAPTURAR EL PRECIO DE LAS ENTRADAS GENERALES
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
         txtNumPersonas.setText("");
         txtCovers.setText("");
         txtTotalCobrar.setText("");
+        btn_mas.setEnabled(false);
+        btn_menos.setEnabled(false);
+        jcbCerveza.setEnabled(false);
+        jcbChicas.setEnabled(false);
+
     }//GEN-LAST:event_btnDelActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -512,91 +644,205 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
         txtNumPersonas.setText(captura);
         //btnAgregar.setEnabled(true);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
-        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());        
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));//precio de cover se debe jalar de base de datosvvvv
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         String captura = txtNumPersonas.getText() + 2;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbCerveza.setEnabled(true);
+        jcbChicas.setEnabled(true);
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
         String captura = txtNumPersonas.getText() + 4;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
         String captura = txtNumPersonas.getText() + 5;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
         String captura = txtNumPersonas.getText() + 6;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
         String captura = txtNumPersonas.getText() + 7;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         String captura = txtNumPersonas.getText() + 8;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
         //txtCovers.setText(""+(cover*8));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
         String captura = txtNumPersonas.getText() + 9;
         txtNumPersonas.setText(captura);
         int numPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtCovers.setText("" + new ProductoControl().covers(2, numPersonas));
+        txtCovers.setText("" + new ProductoControl().covers(1, numPersonas));
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        btn_mas.setEnabled(true);
+        btn_menos.setEnabled(true);
+        jcbChicas.setEnabled(true);
+        jcbCerveza.setEnabled(true);
     }//GEN-LAST:event_btn9ActionPerformed
 
+    private void txtCoversActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCoversActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCoversActionPerformed
+
+    private void btn_masActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_masActionPerformed
+        int cover = Integer.parseInt(txtCovers.getText());
+        cover += 1;
+        txtCovers.setText(cover + "");
+        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+
+    }//GEN-LAST:event_btn_masActionPerformed
+
+    private void btn_menosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_menosActionPerformed
+        int cover = Integer.parseInt(txtCovers.getText());
+        cover -= 1;
+        txtCovers.setText(cover + "");
+        int cantCovers = Integer.parseInt(txtCovers.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+
+    }//GEN-LAST:event_btn_menosActionPerformed
+
+    private void jcbChicasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbChicasActionPerformed
+        int cantCovers = Integer.parseInt(txtCovers.getText());
+        if (jcbChicas.isSelected()) {
+            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, 0));
+        } else {
+            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));
+        }
+
+    }//GEN-LAST:event_jcbChicasActionPerformed
+
+    private void jcbCervezaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCervezaActionPerformed
+       int cantCovers = Integer.parseInt(txtCovers.getText());
+        if (!jcbCerveza.isSelected()) {
+            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral));//precio de cover se debe jalar de base de datosvvvv                        
+        }else{
+            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, costoGeneral + 2));//precio de cover se debe jalar de base de datosvvvv
+            jcbCerveza.setBackground(Color.BLACK);
+        }
+    }//GEN-LAST:event_jcbCervezaActionPerformed
+
+    private void txtTotalCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalCobrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalCobrarActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new EntradaPorPersona().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn0;
@@ -611,6 +857,8 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnDel;
+    private javax.swing.JButton btn_mas;
+    private javax.swing.JButton btn_menos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -625,6 +873,8 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -635,6 +885,9 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JCheckBox jcbCerveza;
+    private javax.swing.JCheckBox jcbChicas;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JTextField txtCaja;
     private javax.swing.JTextField txtCovers;
     private javax.swing.JTextField txtFecha;
@@ -643,4 +896,41 @@ public class EntradaPorPersona extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtTotalCobrar;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    private int getPageSize() {
+        int filas = 1;
+        System.out.println("cantidad de filas: " + filas);
+        int rowCount = 1;//FILAS DE GRACIA
+        int fontSize = 7;//TAMAÑO DE LETRA DEL DETAIL
+        int rowSize = fontSize + 2;//TAMAÑO DE LA FILA
+        int caracteresPorLinea = 16;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA
+        for (int i = 0; i < filas; i++) {
+            //String descripcionDeProducto = tbl_venta.getValueAt(i, 1).toString();
+            rowCount += 1;//(1 + (int) (descripcionDeProducto.length() / caracteresPorLinea));
+        }
+        int cabecera = 170;
+        int piePagina = 90;
+//        int pageSize = (rowCount * rowSize) + cabecera + piePagina;
+        int pageSize = (rowCount) + cabecera + piePagina;
+        System.out.println("Cantidad de Filas finale:" + rowCount);
+        System.out.println("pageSize:" + pageSize);
+        return pageSize;
+    }
+    
+    private int getPageSize(int filas,  int fontSize,int cabecera, int piePagina) {
+        /*Para el cover el valor de Filas es 1*/
+        System.out.println("cantidad de filas: " + filas);
+        int rowSize = fontSize + 2;//TAMAÑO DE LA FILA
+        int caracteresPorLinea = 16;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA
+        int rowCount = 0;
+        for (int i = 0; i < filas; i++) {
+            //String descripcionDeProducto = tbl_venta.getValueAt(i, 1).toString();
+            rowCount += 1;//(1 + (int) (descripcionDeProducto.length() / caracteresPorLinea));
+        }
+//        int pageSize = (rowCount * rowSize) + cabecera + piePagina;
+        int pageSize = (rowCount * rowSize) + cabecera + piePagina;
+        System.out.println("Cantidad de Filas finale:" + rowCount);
+        System.out.println("pageSize:" + pageSize);
+        return pageSize;
+    }
 }

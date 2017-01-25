@@ -9,42 +9,92 @@ import java.util.List;
 public class VentaEntradaDAO extends Conexion implements VentaEntradaCRUD{
 
     @Override
-    public void registrar(VentaEntrada ve) throws Exception {
+    public boolean registrar(VentaEntrada ve) throws Exception {
         try {
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("INSERT INTO `ventaentrada`(`numPersonas`, `numCovers`, `total`, `tipoEntrada`, `venta_idventa`) VALUES (?,?,?,?,?)");
+            PreparedStatement pst = this.conexion.prepareStatement("INSERT INTO `ventaentrada`(`numPersonas`, `numCovers`, `total`, `tipoEntrada`, `venta_idventa`, `prod`) VALUES (?,?,?,?,?,?)");
             pst.setInt(1, ve.getNumPersonas());
             pst.setInt(2, ve.getNumCovers());
             pst.setDouble(3, ve.getTotal());
             pst.setString(4, ve.getTipoEntrada());
             pst.setInt(5, ve.getIdVenta());
+            pst.setInt(6, ve.getProd());
             int res = pst.executeUpdate();
             if (res > 0) {
-                System.out.println("Se registro la entrada");
-            } else {
-                System.out.println("Error");
+                return true;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Error asd");
         } finally {
             this.cerrar();
         }
+        return false;
     }
+//
+//    public boolean registrarEntrada(VentaEntrada ve) throws Exception {
+//             try {
+//            this.conectar();
+//            PreparedStatement pst = this.conexion.prepareStatement("INSERT INTO `ventaentrada`(`numPersonas`, `total`, `tipoEntrada`, `venta_idventa`) VALUES (?,?,?,?)");
+//            pst.setInt(1, ve.getNumPersonas());
+//            //pst.setInt(2, ve.getNumCovers());
+//            pst.setDouble(2, ve.getTotal());
+//            pst.setString(3, ve.getTipoEntrada());
+//            pst.setInt(4, ve.getIdVenta());
+//            int res = pst.executeUpdate();
+//            if (res > 0) {
+//                return true;
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        } finally {
+//            this.cerrar();
+//        }
+//        return false;
+//    }
 
     @Override
-    public void registrarEntrada(VentaEntrada ve) throws Exception {
+    public boolean modificar(VentaEntrada ve) throws Exception {
+             try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("UPDATE `ventaentrada`SET numPersonas = ?, numCovers =?, total=?,tipoEntrada=?,prod=?  WHERE venta_idventa=?");
+            pst.setInt(1, ve.getNumPersonas());
+            pst.setInt(2, ve.getNumCovers());
+            pst.setDouble(3, ve.getTotal());
+            pst.setString(4, ve.getTipoEntrada());
+            pst.setInt(5, ve.getProd());
+            pst.setInt(6, ve.getIdVenta());
+            int res = pst.executeUpdate();
+            if (res > 0) {
+                return true;
+            }
         
-    }
-
-    @Override
-    public void modificar(VentaEntrada ve) throws Exception {
-        
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return false;
     }
 
     @Override
     public void eliminar(VentaEntrada ve) throws Exception {
-        
+              try {
+            boolean b = false;
+            String sql = ("delete from ventaentrada where idventaEntrada=?");
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement(sql);
+            pst.setInt(1, ve.getIdVentaEntrada());
+
+            int res = pst.executeUpdate();
+            if (res > 0) {
+                b = true;
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            this.cerrar();
+        }
     }
 
     @Override
@@ -63,6 +113,8 @@ public class VentaEntradaDAO extends Conexion implements VentaEntradaCRUD{
                 ve.setTotal(rs.getDouble("total"));
                 ve.setTipoEntrada(rs.getString("tipoEntrada"));
                 ve.setIdVenta(rs.getInt("venta_idventa"));
+                ve.setProd(rs.getInt("prod"));
+                ve.setFecha(rs.getString("fecha"));
                 lista.add(ve);
             }
             rs.close();

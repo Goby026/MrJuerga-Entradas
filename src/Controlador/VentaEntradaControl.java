@@ -6,6 +6,8 @@ import Modelo.Comprobante;
 import Modelo.ComprobanteDAO;
 import Modelo.Usuario;
 import Modelo.UsuarioDAO;
+import Modelo.Venta;
+import Modelo.VentaDAO;
 import Modelo.VentaEntradaDAO;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
@@ -92,5 +94,15 @@ public class VentaEntradaControl {
         } catch (Exception e) {
             throw e;
         }        
+    }
+    
+    // METODO PARA OBTENER EL ULTIMO ID DE VENTA
+    
+/*OBTENER ULTIMO REGISTRO DE VENTA */
+    public int getIdDeUltimaVentaRegistrada() throws Exception {
+        VentaDAO vdao = new VentaDAO();
+        int ultimaFila = vdao.listar().size() - 1;
+        Venta v = vdao.listar().get(ultimaFila);
+        return v.getIdVenta();
     }
 }

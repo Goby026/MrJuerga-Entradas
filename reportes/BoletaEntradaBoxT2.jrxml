@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-01-13T01:02:52 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="215" pageHeight="842" columnWidth="169" leftMargin="26" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a97fe6d1-d240-40da-aa44-d168058947d1">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="idventa" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idvendedor" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nom_cajero" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT numPersonas, numCovers, total, tipoEntrada from ventaentrada where venta_idventa =$P{idventa};]]>
+	</queryString>
+	<field name="numPersonas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numCovers" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipoEntrada" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="33" width="169" height="11" uuid="125a685a-d1db-4c68-a674-7f5eb92b53e6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[JR. AYACUCHO 773]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="11" width="169" height="11" uuid="22fb0e36-6395-44fa-b04b-f75e21651be2">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[DISCO CLUB]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="22" width="169" height="11" uuid="82ca371c-d923-4bdf-97bf-98a839df4388"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[DISCOTECA AREA E.I.R.L.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="44" width="169" height="11" uuid="d9befb12-53fb-4562-8aa9-d9625903cda0"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[HUANCAYO-HUANCAYO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="168" height="11" uuid="3ffce4de-2a3c-4336-9f24-44975b0527d6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[MR JUERGA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="169" height="11" uuid="afd7a146-0468-4ce7-b749-2f4c28bfb4b6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[R.U.C. N° 20486243245]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="169" height="11" uuid="fde60cf5-8fbe-456c-b23a-7fe08bdfe85c">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[ENTRADA BOX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="11" width="169" height="11" uuid="e01ac28c-4ef4-4461-8806-29bb62913f2b"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Nro.TICKETERA: FFCF282925]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="22" width="169" height="11" uuid="8eabc63e-9e1f-4113-858b-c6c5ba660164"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Nro. AUTORIZACION: 0133845114653]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="44" width="64" height="11" uuid="04412c19-6946-4867-b34e-4310af424fb6"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[PERSONAS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="44" width="22" height="11" uuid="3e4d817c-a70c-4e34-97ca-d3870a69e51e"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numPersonas}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="55" width="34" height="11" uuid="dfca3fb3-0d27-4705-93a8-cd825ee336f2"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="55" width="28" height="11" uuid="a5097ae2-9eec-4512-b1d7-3e9f0a0f9e10"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[HORA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="44" width="19" height="11" uuid="dc501d15-72a1-432c-ad8b-ab88bf79636a">
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[002-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="44" width="75" height="11" uuid="379dd3ef-9186-46b6-9fa1-1e97c1e6cfdc"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{venta_idventa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="34" y="55" width="49" height="11" uuid="206a9ee3-4ea6-4dde-bed9-683c12da6c44">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h:mm a">
+				<reportElement x="111" y="55" width="58" height="11" uuid="379e66d3-91b5-46e3-980d-4d9ae12401b6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="66" width="40" height="11" uuid="b662e468-b8fa-4bf8-8f75-186061d6c9c6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[CAJERO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="78" width="30" height="11" uuid="af03de1b-a912-42b8-a32a-5390891cf019"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[CANT.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="78" width="90" height="11" uuid="d85afbdf-02ce-4c4f-83b3-4e3798f56be9"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[CONCEPTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="78" width="50" height="11" uuid="e5427543-434b-4299-b09a-d026d772cee8">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[IMPORTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="89" width="170" height="1" uuid="af7a6a69-fb3b-4151-b822-d532d2099c2f"/>
+			</line>
+			<textField>
+				<reportElement x="40" y="66" width="129" height="11" uuid="6111e6bb-fb77-4c46-9220-64e0cb9906ba">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nom_cajero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="30" height="11" uuid="ca5f5746-213c-4b20-9871-a4636eb98999"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numCovers}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="5" width="90" height="11" uuid="7136fc55-ec2f-493f-97b2-7e43b04cb6de"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoEntrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="5" width="50" height="11" uuid="901b83ee-88e8-4177-8d17-130482e052c2"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="83" y="4" width="35" height="11" uuid="ded3c5f3-ccad-4f7c-a275-076904a687be"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="4" width="50" height="11" uuid="5e6b6cf5-6c0a-4b07-b827-0e138180e062"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="70" y="15" width="47" height="11" uuid="5704ed8a-f8c4-4bf2-88aa-932cac0c94ba"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[RECIBIDO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="26" width="42" height="11" uuid="a1892b2c-a009-4441-b25c-747be3b3dd00"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[VUELTO:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="-2" width="169" height="1" uuid="9907886b-1656-4b26-af4d-56198e5bd721"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="169" height="11" uuid="d7ef0b59-1faf-4da4-a342-9aceb55e3bfa">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[*********  MRJUERGA  ********]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="11" width="169" height="11" uuid="26adbab8-d45c-4e54-a410-9f40ab034626">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[GRACIAS POR TU PREFERENCIA ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="5" splitType="Stretch"/>
+	</summary>
+</jasperReport>

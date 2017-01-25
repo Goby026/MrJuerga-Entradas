@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a5b38b9c-f303-447f-954b-49d99d2861a6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     ventaentrada.`idventaEntrada` AS ventaentrada_idventaEntrada,
+     ventaentrada.`numPersonas` AS ventaentrada_numPersonas,
+     ventaentrada.`numCovers` AS ventaentrada_numCovers,
+     ventaentrada.`total` AS ventaentrada_total,
+     ventaentrada.`tipoEntrada` AS ventaentrada_tipoEntrada,
+     ventaentrada.`venta_idventa` AS ventaentrada_venta_idventa,
+     ventaentrada.`fecha` AS ventaentrada_fecha
+FROM
+     `ventaentrada` ventaentrada]]>
+	</queryString>
+	<field name="ventaentrada_idventaEntrada" class="java.lang.Integer"/>
+	<field name="ventaentrada_numPersonas" class="java.lang.Integer"/>
+	<field name="ventaentrada_numCovers" class="java.lang.Integer"/>
+	<field name="ventaentrada_total" class="java.lang.Double"/>
+	<field name="ventaentrada_tipoEntrada" class="java.lang.String"/>
+	<field name="ventaentrada_venta_idventa" class="java.lang.Integer"/>
+	<field name="ventaentrada_fecha" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="50" uuid="98cf537c-e64f-4961-b5d7-6067749b9214"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="40"/>
+				</textElement>
+				<text><![CDATA[MR JUERGA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="41" height="20" uuid="2230af4a-43c9-4f33-a147-580b83c86b8c"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="0" width="121" height="20" uuid="b8eb77af-eae8-4d68-a3b5-06d025012d76"/>
+				<text><![CDATA[NUMERO PERSONAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="0" width="114" height="20" uuid="00dbe1e1-7fbb-4813-a07f-bdb1c7c56537"/>
+				<text><![CDATA[NUMERO COVER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="92" height="20" uuid="c99f40d5-c8e4-4e70-93d5-fb80d20db089"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="368" y="0" width="92" height="20" uuid="c396a9fc-e43c-456d-aeec-26da728ea63a"/>
+				<text><![CDATA[TIPO ENTRADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="92" height="20" uuid="06b41d08-7fd2-4f32-9ed0-a166b312df1b"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="41" height="20" uuid="5473bd08-005c-474c-9e8e-527bd0603f79"/>
+				<textFieldExpression><![CDATA[$F{ventaentrada_idventaEntrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="41" y="0" width="121" height="20" uuid="d2c3c61d-fdeb-4009-b0a8-f68493fcf8b7"/>
+				<textFieldExpression><![CDATA[$F{ventaentrada_numPersonas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="114" height="20" uuid="dda53c63-c2f5-4f3a-8a78-f0a08fcc826f"/>
+				<textFieldExpression><![CDATA[$F{ventaentrada_numCovers}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="92" height="20" uuid="7806ae7d-c62a-4475-b5d0-73d543a5427e"/>
+				<textFieldExpression><![CDATA[$F{ventaentrada_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="92" height="20" uuid="359eed46-2a1f-47a8-adf5-de6580bd33a4"/>
+				<textFieldExpression><![CDATA[$F{ventaentrada_tipoEntrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="92" height="20" uuid="668b3fda-3b23-4c18-b045-571780e3bd57"/>
+				<textFieldExpression><![CDATA[$F{ventaentrada_fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="323" y="31" width="111" height="23" uuid="1570a323-9751-4765-9532-d502f64be2c3"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

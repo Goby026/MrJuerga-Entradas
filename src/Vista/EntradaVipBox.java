@@ -2,29 +2,49 @@ package Vista;
 
 import Controlador.AbrirCajaControl;
 import Controlador.Cronometro;
+import Controlador.EntradaVipControl;
 import Controlador.ManejadorFechas;
+import Controlador.MyiReportVisor;
 import Controlador.ProductoControl;
+import Controlador.VentaEntradaControl;
+
 import Modelo.Venta;
 import Modelo.VentaDAO;
 import Modelo.VentaEntrada;
 import Modelo.VentaEntradaDAO;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Marce
+ * @author
  */
-public class EntradaVipBox extends javax.swing.JInternalFrame {
+public class EntradaVipBox extends javax.swing.JFrame {
 
     /**
      * Creates new form EntradaVipBox
      */
+    MyiReportVisor mrv;
+    HashMap parametros = new HashMap();
+//    double costoGeneral = 12;
+    double costoVIP = 15;
+
     public EntradaVipBox(String usuario) throws Exception {
         initComponents();
+        setLocationRelativeTo(null);
+        setExtendedState(MAXIMIZED_BOTH);
         txtUsuario.setText(usuario);
         txtFecha.setText(new ManejadorFechas().getFechaActual());
         new Cronometro().iniciarCronometro(txtHora);
         txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
+        try {
+            new EntradaVipControl().LlenarTablaVIP(tblentradaVip);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public EntradaVipBox() {
     }
 
     /**
@@ -36,7 +56,6 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtNumPersonas = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -77,21 +96,17 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        cmbBox = new javax.swing.JCheckBox();
-        cmbVip = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblentradaVip = new javax.swing.JTable();
+        txtNumPersonas = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        btnmas = new javax.swing.JButton();
+        btnmenos = new javax.swing.JButton();
 
-        setClosable(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ENTRADAS VIP - BOX");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtNumPersonas.setEditable(false);
-        txtNumPersonas.setBackground(new java.awt.Color(51, 51, 51));
-        txtNumPersonas.setFont(new java.awt.Font("Dialog", 0, 60)); // NOI18N
-        txtNumPersonas.setForeground(new java.awt.Color(255, 255, 255));
-        txtNumPersonas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        getContentPane().add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 580, 110));
 
         jPanel8.setBackground(new java.awt.Color(0, 102, 153));
         jPanel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -146,7 +161,7 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         txtCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true), "CAJA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 8), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel8.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 140, -1));
 
-        getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1180, 70));
+        getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 70));
 
         jPanel6.setBackground(new java.awt.Color(0, 102, 153));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -155,12 +170,12 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         jLabel19.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(204, 0, 0));
         jLabel19.setText("DISCOTECK");
-        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 0, -1, -1));
+        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 0, -1, -1));
 
         jLabel12.setBackground(new java.awt.Color(0, 0, 0));
         jLabel12.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel12.setText("DISCOTECK");
-        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(892, 0, -1, -1));
+        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(942, 0, -1, -1));
 
         jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
@@ -173,14 +188,14 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         jLabel11.setText("MISTER JUERGA");
         jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(732, 0, -1, -1));
 
-        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 740, 1180, 40));
+        getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 1010, 1920, 50));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn7.setBackground(new java.awt.Color(0, 153, 0));
-        btn7.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn7.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn7.setForeground(new java.awt.Color(255, 255, 255));
         btn7.setText("7");
         btn7.setBorder(null);
@@ -192,10 +207,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn7ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 150, 120));
+        jPanel2.add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 210, 180));
 
         btn8.setBackground(new java.awt.Color(0, 153, 0));
-        btn8.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn8.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn8.setForeground(new java.awt.Color(255, 255, 255));
         btn8.setText("8");
         btn8.setBorder(null);
@@ -207,10 +222,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn8ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 150, 120));
+        jPanel2.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 210, 180));
 
         btn9.setBackground(new java.awt.Color(0, 153, 0));
-        btn9.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn9.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn9.setForeground(new java.awt.Color(255, 255, 255));
         btn9.setText("9");
         btn9.setBorder(null);
@@ -222,10 +237,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn9ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 150, 120));
+        jPanel2.add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, 210, 180));
 
         btn4.setBackground(new java.awt.Color(0, 153, 0));
-        btn4.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn4.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn4.setForeground(new java.awt.Color(255, 255, 255));
         btn4.setText("4");
         btn4.setBorder(null);
@@ -237,10 +252,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn4ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 150, 120));
+        jPanel2.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 210, 180));
 
         btn5.setBackground(new java.awt.Color(0, 153, 0));
-        btn5.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn5.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn5.setForeground(new java.awt.Color(255, 255, 255));
         btn5.setText("5");
         btn5.setBorder(null);
@@ -252,10 +267,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn5ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 150, 120));
+        jPanel2.add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, 210, 180));
 
         btn6.setBackground(new java.awt.Color(0, 153, 0));
-        btn6.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn6.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn6.setForeground(new java.awt.Color(255, 255, 255));
         btn6.setText("6");
         btn6.setBorder(null);
@@ -267,10 +282,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn6ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 150, 120));
+        jPanel2.add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 240, 210, 180));
 
         btn1.setBackground(new java.awt.Color(0, 153, 0));
-        btn1.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn1.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn1.setForeground(new java.awt.Color(255, 255, 255));
         btn1.setText("1");
         btn1.setBorder(null);
@@ -282,10 +297,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn1ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 150, 120));
+        jPanel2.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 210, 180));
 
         btn2.setBackground(new java.awt.Color(0, 153, 0));
-        btn2.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn2.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn2.setForeground(new java.awt.Color(255, 255, 255));
         btn2.setText("2");
         btn2.setBorder(null);
@@ -297,10 +312,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn2ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 150, 120));
+        jPanel2.add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 430, 210, 180));
 
         btn3.setBackground(new java.awt.Color(0, 153, 0));
-        btn3.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn3.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn3.setForeground(new java.awt.Color(255, 255, 255));
         btn3.setText("3");
         btn3.setBorder(null);
@@ -312,10 +327,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn3ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 150, 120));
+        jPanel2.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, 210, 180));
 
         btn0.setBackground(new java.awt.Color(0, 153, 0));
-        btn0.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn0.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btn0.setForeground(new java.awt.Color(255, 255, 255));
         btn0.setText("0");
         btn0.setBorder(null);
@@ -327,10 +342,10 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btn0ActionPerformed(evt);
             }
         });
-        jPanel2.add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 150, 120));
+        jPanel2.add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 620, 210, 180));
 
         btnDel.setBackground(new java.awt.Color(255, 0, 0));
-        btnDel.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btnDel.setFont(new java.awt.Font("SansSerif", 1, 90)); // NOI18N
         btnDel.setForeground(new java.awt.Color(255, 255, 255));
         btnDel.setText("x");
         btnDel.setBorder(null);
@@ -342,7 +357,7 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btnDelActionPerformed(evt);
             }
         });
-        jPanel2.add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 150, 120));
+        jPanel2.add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 620, 210, 180));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("PRECIOS"));
@@ -375,9 +390,9 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         jTextField5.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 120, -1));
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, 540, 90));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 840, 540, 90));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 560, 670));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 710, 940));
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -395,7 +410,7 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 btnCobrarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, 580, 80));
+        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 790, 570, 110));
 
         txtTotalCobrar.setEditable(false);
         txtTotalCobrar.setBackground(new java.awt.Color(51, 51, 51));
@@ -403,45 +418,35 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         txtTotalCobrar.setForeground(new java.awt.Color(255, 255, 255));
         txtTotalCobrar.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtTotalCobrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 580, 110));
+        txtTotalCobrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalCobrarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 620, 740, 140));
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("TOTAL");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 570, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("S/.");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 570, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("NUMERO DE PERSONAS");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        jLabel2.setText("CANTIDAD");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 460, 130, 30));
 
-        cmbBox.setBackground(new java.awt.Color(51, 51, 51));
-        cmbBox.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        cmbBox.setForeground(new java.awt.Color(255, 255, 255));
-        cmbBox.setText("BOX");
-        cmbBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbBoxActionPerformed(evt);
+        tblentradaVip = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
             }
-        });
-        jPanel3.add(cmbBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 130, -1, -1));
-
-        cmbVip.setBackground(new java.awt.Color(51, 51, 51));
-        cmbVip.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        cmbVip.setForeground(new java.awt.Color(255, 255, 255));
-        cmbVip.setText("VIP");
-        cmbVip.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbVipActionPerformed(evt);
-            }
-        });
-        jPanel3.add(cmbVip, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 130, -1, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        };
+        tblentradaVip.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        tblentradaVip.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -452,11 +457,51 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblentradaVip.setRowHeight(24);
+        tblentradaVip.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblentradaVipMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblentradaVip);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 570, 220));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 730, 230));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 620, 670));
+        txtNumPersonas.setEditable(false);
+        txtNumPersonas.setBackground(new java.awt.Color(51, 51, 51));
+        txtNumPersonas.setFont(new java.awt.Font("Dialog", 0, 60)); // NOI18N
+        txtNumPersonas.setForeground(new java.awt.Color(255, 255, 255));
+        txtNumPersonas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNumPersonas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumPersonasActionPerformed(evt);
+            }
+        });
+        jPanel3.add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 730, 150));
+        jPanel3.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 460, 240, 30));
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("NUMERO DE PERSONAS");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 0, 290, 30));
+
+        btnmas.setText("+");
+        btnmas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmasActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnmas, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 460, -1, -1));
+
+        btnmenos.setText("-");
+        btnmenos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmenosActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnmenos, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 460, -1, -1));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 1210, 940));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -469,7 +514,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         //int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
@@ -480,8 +526,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
         //txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
         //int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-        //txtCovers.setText(""+(cover*8));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
@@ -492,7 +538,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
@@ -503,7 +550,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
@@ -514,7 +562,7 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
@@ -525,7 +573,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -537,7 +586,9 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
+
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
@@ -548,7 +599,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
@@ -559,7 +611,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
@@ -570,13 +623,17 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
 //        txtEntradas.setText("" + new ProductoControl().entradas(2, numPersonas));
 //        int cantCovers = Integer.parseInt(txtCovers.getText());
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
+        tblentradaVip.clearSelection();
+
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
         txtNumPersonas.setText("");
 //        txtCovers.setText("");
         txtTotalCobrar.setText("");
+        tblentradaVip.clearSelection();
+        txtCantidad.setText("");
     }//GEN-LAST:event_btnDelActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
@@ -584,70 +641,116 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
             String fec = new ManejadorFechas().getFechaActualMySQL();
             String hora = new ManejadorFechas().getHoraActual();
             int idCliente = 1;
-            int idUsuario = 1;
+            int idUsuario = new VentaEntradaControl().getIdUsuario(txtUsuario.getText());
             int idComprobante = 1;
             int estado = 1;
-            int idCaja=1;
+            int idCaja = 1;
             //Registrar el comprobante
+            new VentaEntradaControl().regComprobante(fec, txtUsuario.getText(), "ENTRADA", Integer.parseInt(txtNumPersonas.getText()), Double.parseDouble(txtTotalCobrar.getText()), "12345678912", "JR AYACUCHO 760", "EFECTIVO", Double.parseDouble(txtTotalCobrar.getText()), idComprobante);
 
             //primero se registra la venta
-            Venta v = new Venta(fec, hora, idUsuario, idCliente, idComprobante,estado,idCaja);
+            Venta v = new Venta(fec, hora, idUsuario, idCliente, idComprobante, estado, idCaja);
             VentaDAO vdao = new VentaDAO();
             vdao.registrar(v);
             //segundo se registra las entradas
+
             VentaEntrada ve = new VentaEntrada();
-            int cantVentas = new VentaDAO().listar().size();
-            if (cantVentas == 0) {
-                cantVentas = 1;
-            } else {
-                cantVentas += 1;
-            }
+            int idVenta = new VentaEntradaControl().getIdDeUltimaVentaRegistrada();
+            System.out.println(idVenta);
             ve.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
-//            ve.setNumCovers(Integer.parseInt(txtCovers.getText()));
+            ve.setNumCovers(0);
             ve.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
-            ve.setTipoEntrada(""+1);
-            ve.setIdVenta(cantVentas);
+            ve.setTipoEntrada("ENTRADA VIP");
+            ve.setIdVenta(idVenta);
 
             VentaEntradaDAO vedao = new VentaEntradaDAO();
-            vedao.registrar(ve);
-            JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
-
+            if (vedao.registrar(ve)) {
+                System.out.println("ingreso al if");
+//                JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
+                parametros.put("nom_cajero", txtUsuario.getText());
+                parametros.put("idventa", idVenta);
+                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaVipT2.jrxml", parametros, getPageSize());
+                mrv.setNombreArchivo("BoletaVIP");
+                mrv.exportarADocxConCopia("boletavip.docx");
+                txtNumPersonas.setText("");
+                txtTotalCobrar.setText("");
+            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }//GEN-LAST:event_btnCobrarActionPerformed
 
-    private void cmbBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxActionPerformed
-        if (cmbBox.isSelected()) {
-            try {
-//                new ProductoControl().cargarCombo(cmbProductos);
-//                cmbProductos.setEnabled(true);                
-                cmbVip.setEnabled(false);
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+    private void tblentradaVipMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblentradaVipMouseClicked
+        int fila = tblentradaVip.getSelectedRow();
+        //int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+        String monto = tblentradaVip.getValueAt(fila, 4).toString();
+        txtTotalCobrar.setText(monto);
+        //txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, 20));
+
+    }//GEN-LAST:event_tblentradaVipMouseClicked
+
+    private void btnmasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmasActionPerformed
+
+        int fila = tblentradaVip.getSelectedRow();
+        int cantidad = Integer.parseInt(txtCantidad.getText());
+        String cant = tblentradaVip.getValueAt(fila, 0).toString();
+        txtCantidad.setText(cant);
+        cantidad += 1;
+        int cantCovers = Integer.parseInt(txtCantidad.getText());
+        //int canti = Integer.parseInt(txtCantidad.getText());
+        txtTotalCobrar.setText("" + new ProductoControl().totalvip(cantCovers, 20));
+    }//GEN-LAST:event_btnmasActionPerformed
+
+    private void btnmenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmenosActionPerformed
+        int cover = Integer.parseInt(txtCantidad.getText());
+        cover -= 1;
+        txtCantidad.setText(cover + "");
+        int cantCovers = Integer.parseInt(txtCantidad.getText());
+        int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
+        txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, 20));
+    }//GEN-LAST:event_btnmenosActionPerformed
+
+    private void txtNumPersonasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumPersonasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumPersonasActionPerformed
+
+    private void txtTotalCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalCobrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalCobrarActionPerformed
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
-        } else {
-//            cmbProductos.setEnabled(false);
-            cmbVip.setEnabled(true);
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cmbBoxActionPerformed
+        //</editor-fold>
 
-    private void cmbVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbVipActionPerformed
-        if (cmbVip.isSelected()) {
-            cmbBox.setEnabled(false);
-//            cmbProductos.setEnabled(false);
-//            int cantCovers = Integer.parseInt(txtCovers.getText());
-            int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 20, 10));
-        } else {
-            cmbBox.setEnabled(true);
-//            cmbProductos.setEnabled(true);
-//            int cantCovers = Integer.parseInt(txtCovers.getText());
-            int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
-//            txtTotalCobrar.setText("" + new ProductoControl().total(cantCovers, cantPersonas, 10, 5));
-        }
-    }//GEN-LAST:event_cmbVipActionPerformed
-
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new EntradaVipBox().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn0;
@@ -662,8 +765,8 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnDel;
-    private javax.swing.JCheckBox cmbBox;
-    private javax.swing.JCheckBox cmbVip;
+    private javax.swing.JButton btnmas;
+    private javax.swing.JButton btnmenos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -677,6 +780,7 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -685,15 +789,36 @@ public class EntradaVipBox extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
+    public javax.swing.JTable tblentradaVip;
     private javax.swing.JTextField txtCaja;
+    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtNumPersonas;
     private javax.swing.JTextField txtTotalCobrar;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+       private int getPageSize() {
+        int filas = 1;
+        System.out.println("cantidad de filas: " + filas);
+        int rowCount = 1;//FILAS DE GRACIA
+        int fontSize = 7;//TAMAÑO DE LETRA DEL DETAIL
+        int rowSize = fontSize + 2;//TAMAÑO DE LA FILA
+        int caracteresPorLinea = 16;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA
+        for (int i = 0; i < filas; i++) {
+            //String descripcionDeProducto = tbl_venta.getValueAt(i, 1).toString();
+            rowCount += 1;//(1 + (int) (descripcionDeProducto.length() / caracteresPorLinea));
+        }
+        int cabecera = 165;
+        int piePagina = 116;
+//        int pageSize = (rowCount * rowSize) + cabecera + piePagina;
+        int pageSize = (rowCount) + cabecera + piePagina;
+        System.out.println("Cantidad de Filas finale:" + rowCount);
+        System.out.println("pageSize:" + pageSize);
+        return pageSize;
+    }
+
 }

@@ -1,4 +1,3 @@
-
 package Controlador;
 
 import Modelo.Producto;
@@ -12,7 +11,8 @@ import javax.swing.JComboBox;
  * @author Goby
  */
 public class ProductoControl {
-    public void cargarCombo(JComboBox cmb) throws Exception{
+
+    public void cargarCombo(JComboBox cmb) throws Exception {
         try {
             ProductoDAO pdao = new ProductoDAO();
             for (Producto prod : pdao.listar()) {
@@ -22,6 +22,7 @@ public class ProductoControl {
             throw ex;
         }
     }
+
     public int covers(int personas, int cantPersonas) {
         int covers = cantPersonas / personas;
         return covers;
@@ -36,8 +37,14 @@ public class ProductoControl {
         return entrada;
     }
 
-    public double total(int cantCovers, int cantPersonas, double precioCover, double precioEntrada) {
-        double p = (cantCovers * precioCover) + (cantPersonas * precioEntrada);
+    public double total(int cantCovers, double precioCover) {
+        double p = (cantCovers * precioCover);
         return p;
     }
+
+    public double totalvip(int cant, double precio) {
+        double p = (cant  * precio);
+        return p;
+    }
+     
 }

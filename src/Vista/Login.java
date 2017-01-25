@@ -27,6 +27,7 @@ public class Login extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         setLocationRelativeTo(null);
+        txtUsuario.requestFocus();
     }
 
     /**
@@ -38,6 +39,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         sombra1 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -49,8 +51,17 @@ public class Login extends javax.swing.JFrame {
         txtPass = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setForeground(new java.awt.Color(204, 204, 204));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarlogin.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(957, 30, 130, 100));
 
         jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
@@ -67,12 +78,12 @@ public class Login extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 0, 0));
         jLabel19.setText("DISCOTECK");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, -1, -1));
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, -1, -1));
 
         sombra2.setBackground(new java.awt.Color(0, 0, 0));
         sombra2.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
         sombra2.setText("DISCOTECK");
-        getContentPane().add(sombra2, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 10, -1, -1));
+        getContentPane().add(sombra2, new org.netbeans.lib.awtextra.AbsoluteConstraints(652, 10, -1, -1));
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("USUARIO");
@@ -85,6 +96,11 @@ public class Login extends javax.swing.JFrame {
         txtUsuario.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtUsuario.setBorder(null);
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 310, 50));
 
         btnIngresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -125,8 +141,8 @@ public class Login extends javax.swing.JFrame {
             u.setUsuario(usuario);
             u.setPass(pass);
             if (new LoginControl().validar(u)) {
-                Ventas v = new Ventas(usuario);
-                v.setVisible(true);
+                Menu m =new Menu(usuario);
+                m.setVisible(true);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "ERROR DE DATOS");
@@ -136,9 +152,18 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
+   
     private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
         btnIngresar.doClick();
     }//GEN-LAST:event_txtPassActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        txtPass.requestFocus();
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,6 +203,7 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;

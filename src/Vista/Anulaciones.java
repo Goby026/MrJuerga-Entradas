@@ -5,18 +5,44 @@
  */
 package Vista;
 
+import Controlador.AnulacionesControl;
+import Controlador.Validaciones;
+import Modelo.Anulacion;
+import Modelo.AnulacionDAO;
+import Modelo.Conexion;
+import Modelo.VentaEntrada;
+import Modelo.VentaEntradaDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author Marce
+ * @author
  */
-public class Anulaciones extends javax.swing.JInternalFrame {
+public class Anulaciones extends javax.swing.JFrame {
 
     /**
      * Creates new form Anulaciones
      */
-    public Anulaciones() {
+    public Anulaciones(String Usuario) {
         initComponents();
+        setLocationRelativeTo(null);
+        lbl_Usuario.setText(Usuario);
+
     }
+
+    public Anulaciones() {
+    }
+
+    Connection Connection;
+    PreparedStatement PreparedStatement;
+    ResultSet ResultSet;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,73 +53,98 @@ public class Anulaciones extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panel1 = new java.awt.Panel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_ListaEntradas = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         txt_num_venta = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txtVenta1 = new javax.swing.JTextField();
+        txtnumCovers = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        txtHora1 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        cmbEstado1 = new javax.swing.JComboBox();
+        txtHora = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        cmbTrabajador1 = new javax.swing.JComboBox();
         btnModificar1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
-        txtHora2 = new javax.swing.JTextField();
+        txtMonto = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtConcepto = new javax.swing.JTextField();
+        txtnumPersona = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        btn7 = new javax.swing.JButton();
+        btn8 = new javax.swing.JButton();
+        btn9 = new javax.swing.JButton();
+        btn4 = new javax.swing.JButton();
+        btn5 = new javax.swing.JButton();
+        btn6 = new javax.swing.JButton();
+        btn1 = new javax.swing.JButton();
+        btn2 = new javax.swing.JButton();
+        btn3 = new javax.swing.JButton();
+        btn0 = new javax.swing.JButton();
+        btnDel = new javax.swing.JButton();
+        txtTrabajador = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        lbl_Usuario = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
-        setClosable(true);
-        setIconifiable(true);
+        panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tbl_ListaEntradas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbl_ListaEntradas);
+
+        panel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 610, 420));
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Anulaciones");
+        setBackground(new java.awt.Color(0, 0, 0));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setText("N° BOLETA");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, -1));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, -1, -1));
 
         txt_num_venta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_num_ventaKeyReleased(evt);
             }
         });
-        getContentPane().add(txt_num_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 80, 30));
+        getContentPane().add(txt_num_venta, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 120, 30));
 
         jLabel13.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel13.setText("N° VENTA");
-        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
+        jLabel13.setText("N° COVERS");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
-        txtVenta1.setEditable(false);
-        txtVenta1.setBackground(new java.awt.Color(255, 255, 153));
-        getContentPane().add(txtVenta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 240, 130, -1));
+        txtnumCovers.setEditable(false);
+        txtnumCovers.setBackground(new java.awt.Color(255, 255, 153));
+        getContentPane().add(txtnumCovers, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 130, -1));
 
         jLabel14.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel14.setText("FECHA");
-        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+        getContentPane().add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel15.setText("CONCEPTO");
-        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
-        getContentPane().add(txtHora1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 130, -1));
-
-        jLabel16.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-        jLabel16.setText("ESTADO");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, -1, -1));
-
-        cmbEstado1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ACTIVO", "ANULADO" }));
-        getContentPane().add(cmbEstado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 130, -1));
+        getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        getContentPane().add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 130, -1));
 
         jLabel12.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel12.setText("TRABAJADOR");
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
-
-        getContentPane().add(cmbTrabajador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 360, 130, -1));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
 
         btnModificar1.setBackground(new java.awt.Color(255, 102, 0));
         btnModificar1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -104,42 +155,243 @@ public class Anulaciones extends javax.swing.JInternalFrame {
                 btnModificar1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnModificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 490, 220, 70));
+        getContentPane().add(btnModificar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 260, 90));
 
         jButton1.setText("BUSCAR");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 80, -1));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 120, 40));
 
         jLabel17.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel17.setText("S/.");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, -1, -1));
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 380, -1, -1));
 
-        txtHora2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        getContentPane().add(txtHora2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 410, 100, -1));
+        txtMonto.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        getContentPane().add(txtMonto, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, 100, -1));
 
         jLabel18.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel18.setText("MONTO");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 450, -1, -1));
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel19.setText("HORA");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
+        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
 
         jLabel20.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel20.setText("N° PERSONAS");
-        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 130, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 130, -1));
+        getContentPane().add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        txtConcepto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtConceptoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtConcepto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 130, -1));
+        getContentPane().add(txtnumPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 130, -1));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton2.setText("LISTA DE ANULACIONES");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 590, 220, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 130, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 600, 230, 50));
+        getContentPane().add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 130, -1));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn7.setBackground(new java.awt.Color(255, 153, 0));
+        btn7.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn7.setForeground(new java.awt.Color(255, 255, 255));
+        btn7.setText("7");
+        btn7.setBorder(null);
+        btn7.setBorderPainted(false);
+        btn7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn7.setFocusPainted(false);
+        btn7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn7ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 150, 120));
+
+        btn8.setBackground(new java.awt.Color(255, 153, 0));
+        btn8.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn8.setForeground(new java.awt.Color(255, 255, 255));
+        btn8.setText("8");
+        btn8.setBorder(null);
+        btn8.setBorderPainted(false);
+        btn8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn8.setFocusPainted(false);
+        btn8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn8ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 150, 120));
+
+        btn9.setBackground(new java.awt.Color(255, 153, 0));
+        btn9.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn9.setForeground(new java.awt.Color(255, 255, 255));
+        btn9.setText("9");
+        btn9.setBorder(null);
+        btn9.setBorderPainted(false);
+        btn9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn9.setFocusPainted(false);
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn9ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn9, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 150, 120));
+
+        btn4.setBackground(new java.awt.Color(255, 153, 0));
+        btn4.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn4.setForeground(new java.awt.Color(255, 255, 255));
+        btn4.setText("4");
+        btn4.setBorder(null);
+        btn4.setBorderPainted(false);
+        btn4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn4.setFocusPainted(false);
+        btn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn4ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 150, 120));
+
+        btn5.setBackground(new java.awt.Color(255, 153, 0));
+        btn5.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn5.setForeground(new java.awt.Color(255, 255, 255));
+        btn5.setText("5");
+        btn5.setBorder(null);
+        btn5.setBorderPainted(false);
+        btn5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn5.setFocusPainted(false);
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 150, 120));
+
+        btn6.setBackground(new java.awt.Color(255, 153, 0));
+        btn6.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn6.setForeground(new java.awt.Color(255, 255, 255));
+        btn6.setText("6");
+        btn6.setBorder(null);
+        btn6.setBorderPainted(false);
+        btn6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn6.setFocusPainted(false);
+        btn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn6ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn6, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 150, 120));
+
+        btn1.setBackground(new java.awt.Color(255, 153, 0));
+        btn1.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn1.setForeground(new java.awt.Color(255, 255, 255));
+        btn1.setText("1");
+        btn1.setBorder(null);
+        btn1.setBorderPainted(false);
+        btn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn1.setFocusPainted(false);
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 150, 120));
+
+        btn2.setBackground(new java.awt.Color(255, 153, 0));
+        btn2.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn2.setForeground(new java.awt.Color(255, 255, 255));
+        btn2.setText("2");
+        btn2.setBorder(null);
+        btn2.setBorderPainted(false);
+        btn2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn2.setFocusPainted(false);
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, 150, 120));
+
+        btn3.setBackground(new java.awt.Color(255, 153, 0));
+        btn3.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn3.setForeground(new java.awt.Color(255, 255, 255));
+        btn3.setText("3");
+        btn3.setBorder(null);
+        btn3.setBorderPainted(false);
+        btn3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn3.setFocusPainted(false);
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 150, 120));
+
+        btn0.setBackground(new java.awt.Color(255, 153, 0));
+        btn0.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btn0.setForeground(new java.awt.Color(255, 255, 255));
+        btn0.setText("0");
+        btn0.setBorder(null);
+        btn0.setBorderPainted(false);
+        btn0.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn0.setFocusPainted(false);
+        btn0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn0ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn0, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 150, 120));
+
+        btnDel.setBackground(new java.awt.Color(255, 0, 0));
+        btnDel.setFont(new java.awt.Font("SansSerif", 1, 60)); // NOI18N
+        btnDel.setForeground(new java.awt.Color(255, 255, 255));
+        btnDel.setText("x");
+        btnDel.setBorder(null);
+        btnDel.setBorderPainted(false);
+        btnDel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDel.setFocusPainted(false);
+        btnDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnDel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 150, 120));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 550, 560));
+        getContentPane().add(txtTrabajador, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 130, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("USUARIO:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(612, 12, 140, 20));
+
+        lbl_Usuario.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbl_Usuario.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_Usuario.setText("jLabel2");
+        getContentPane().add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 12, 100, 20));
+
+        jPanel1.setBackground(new java.awt.Color(255, 51, 51));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_num_ventaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_ventaKeyReleased
-        int id = Integer.parseInt(txt_num_venta.getText());
+//        int id = Integer.parseInt(txt_num_venta.getText());
         try {
 //            if (!txt_num_venta.getText().trim().isEmpty()) {
 //                cargarVentasConId(id);
@@ -153,32 +405,191 @@ public class Anulaciones extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_num_ventaKeyReleased
 
     private void btnModificar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificar1ActionPerformed
-        
+        try {
+            VentaEntrada ve = new VentaEntrada();
+            ve.setNumPersonas(Integer.parseInt(txtnumPersona.getText()));
+            ve.setNumCovers(Integer.parseInt(txtnumCovers.getText()));
+            ve.setTotal(0);
+            ve.setTipoEntrada(txtConcepto.getText());
+            ve.setIdVenta(Integer.parseInt(txt_num_venta.getText()));
+
+            if (new VentaEntradaDAO().modificar(ve)) {
+                JOptionPane.showMessageDialog(getRootPane(), "LA ENTRADA: " + txt_num_venta.getText() + " FUE ANULADA EXITOSAMENTE");
+            } else {
+                System.out.println("error");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnModificar1ActionPerformed
 
+    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
+        String captura = txt_num_venta.getText() + 7;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn7ActionPerformed
+
+    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
+        String captura = txt_num_venta.getText() + 8;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn8ActionPerformed
+
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        String captura = txt_num_venta.getText() + 9;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
+        String captura = txt_num_venta.getText() + 4;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn4ActionPerformed
+
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        String captura = txt_num_venta.getText() + 5;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn5ActionPerformed
+
+    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
+        String captura = txt_num_venta.getText() + 6;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn6ActionPerformed
+
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        String captura = txt_num_venta.getText() + 1;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        String captura = txt_num_venta.getText() + 2;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn2ActionPerformed
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        String captura = txt_num_venta.getText() + 3;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn3ActionPerformed
+
+    private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
+        String captura = txt_num_venta.getText() + 0;
+        txt_num_venta.setText(captura);
+
+    }//GEN-LAST:event_btn0ActionPerformed
+
+    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
+        txt_num_venta.setText("");
+    }//GEN-LAST:event_btnDelActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            int numBoleta = Integer.parseInt(txt_num_venta.getText());
+            AnulacionesControl ac = new AnulacionesControl();
+            //String datos[] = new String[5];
+            String array[] = ac.CargarDatos(numBoleta);
+
+            txtConcepto.setText(array[0]);
+            txtnumPersona.setText(array[1]);
+            txtnumCovers.setText(array[2]);
+            txtFecha.setText(array[3]);
+            txtHora.setText(array[4]);
+            txtTrabajador.setText(array[5]);
+            txtMonto.setText(array[6]);
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtConceptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConceptoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtConceptoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Anulaciones().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn0;
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
+    private javax.swing.JButton btn4;
+    private javax.swing.JButton btn5;
+    private javax.swing.JButton btn6;
+    private javax.swing.JButton btn7;
+    private javax.swing.JButton btn8;
+    private javax.swing.JButton btn9;
+    private javax.swing.JButton btnDel;
     private javax.swing.JButton btnModificar1;
-    private javax.swing.JComboBox cmbEstado1;
-    private javax.swing.JComboBox cmbTrabajador1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField txtHora1;
-    private javax.swing.JTextField txtHora2;
-    private javax.swing.JTextField txtVenta1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_Usuario;
+    private java.awt.Panel panel1;
+    private javax.swing.JTable tbl_ListaEntradas;
+    private javax.swing.JTextField txtConcepto;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtTrabajador;
     private javax.swing.JTextField txt_num_venta;
+    private javax.swing.JTextField txtnumCovers;
+    private javax.swing.JTextField txtnumPersona;
     // End of variables declaration//GEN-END:variables
 }

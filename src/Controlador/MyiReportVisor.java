@@ -16,10 +16,10 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -27,7 +27,10 @@ import java.util.logging.Logger;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.ooxml.JRDocxExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.swing.JRViewer;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
@@ -139,6 +142,39 @@ public class MyiReportVisor extends javax.swing.JInternalFrame {
         }
     }
     
+    
+    public void exportarAPdfConCopia(int cantidadCopias) throws IOException{
+        try {
+            //EXPORTANDO PDF
+            System.out.println("Exportando a pdf");
+            final JRPdfExporter exp = new JRPdfExporter();
+            
+            List nroCopias = new ArrayList<>();
+            for(int i = 0 ; i<cantidadCopias; i++ ){
+                nroCopias.add(printr);
+            }
+            exp.setParameter(JRExporterParameter.JASPER_PRINT_LIST, nroCopias);
+            exp.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF-8");
+            exp.setParameter(JRExporterParameter.OUTPUT_FILE, new File("D:\\pdfGenerados\\"+nombreArchivo+".pdf"));
+            exp.exportReport();
+            PrinterJob job = PrinterJob.getPrinterJob();
+            
+            PDDocument pdc = PDDocument.load(new File("D:\\pdfGenerados\\"+nombreArchivo+".pdf"));
+            System.out.println("" + pdc.getNumberOfPages());
+            job.setPageable(new PDFPageable(pdc));
+            try {
+                job.print();
+            } catch (PrinterException ex) {
+                Logger.getLogger(MyiReportVisor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Mostrando PDF");
+            //Abriendo PDF
+            //Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler "+"D:\\pdfGenerados\\" + nombreArchivo + ".pdf");
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     public MyiReportVisor(String fileName,HashMap parameter, String cnVacia){
         this();
         try{
@@ -176,10 +212,10 @@ public class MyiReportVisor extends javax.swing.JInternalFrame {
             JasperCompileManager.compileReportToFile(jd,fileName + ".jasper");
             //String nfileName= JasperCompileManager.compileReportToFile(fileName);
             System.out.println("Compilo");
-            JasperPrint print = JasperFillManager.fillReport(fileName + ".jasper", parameter,con.getConexion());
+            JasperPrint print = JasperFillManager.fillReport(fileName + ".jasper", parameter, con.getConexion());
             
             pages.add(print);
-            pages.add(print);
+            //pages.add(print);
             
             System.out.println("Relleno el reporte");
             //JRViewer viewer=new JRViewer(print);
@@ -242,6 +278,80 @@ public class MyiReportVisor extends javax.swing.JInternalFrame {
     public void setNombreArchivo(String nombreArchivo) {
         this.nombreArchivo = nombreArchivo;
     }
+    /*
+    protected byte[] exportReportToRtf(JasperPrint jasperPrint) throws JRException{
+   JRRtfExporter exporter = new JRRtfExporter();
+   ByteArrayOutputStream baos = new ByteArrayOutputStream();    
+   exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+   exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
+   exporter.exportReport(); 
+   return baos.toByteArray();
+}*/
+protected byte[] exportReportToRtf(JasperPrint jasperPrint) throws JRException{
+   JRDocxExporter exporter = new JRDocxExporter();
+   ByteArrayOutputStream baos = new ByteArrayOutputStream();    
+   exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+   exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
+   exporter.exportReport(); 
+   return baos.toByteArray();
+    
+    
+    
+    
+}
+
+public void exportarADocx(JasperPrint jasperPrint, String fileName) throws JRException{
+    JRDocxExporter exporter = new JRDocxExporter();
+    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+    exporter.setParameter(JRExporterParameter.IGNORE_PAGE_MARGINS, false);
+    //exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "myreport.docx");
+    exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new File("D:\\docxGenerados\\" + fileName));
+    
+    exporter.exportReport();
+}
+
+public void exportarADocx2(JasperPrint jasperPrint, String fileName) throws JRException{
+    JRDocxExporter exporter = new JRDocxExporter();
+    
+     exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+     exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("D:\\docxGenerados\\" + fileName));
+    //exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, "myreport.docx");
+    //exporter.setParameter(JRExporterParameter.OUTPUT_FILE,new File("D:\\docxGenerados\\" + fileName));
+    
+    exporter.exportReport();
+}
+
+    public void exportarADocxConCopia(String fileName) throws IOException {
+        try {
+            //EXPORTANDO docx
+            System.out.println("Exportando a docx");
+            exportarADocx2(printr, fileName);
+            imprimeDocx(fileName);
+            //exp.setParameter(JRExporterParameter.OUTPUT_FILE, new File("D:\\pdfGenerados\\" + nombreArchivo + ".pdf"));
+            //exp.exportReport();
+            //PrinterJob job = PrinterJob.getPrinterJob();
+
+            //PDDocument pdc = PDDocument.load(new File("D:\\pdfGenerados\\" + nombreArchivo + ".pdf"));
+            //System.out.println("" + pdc.getNumberOfPages());
+            //job.setPageable(new PDFPageable(pdc));
+            //try {
+            //    job.print();
+            /*} catch (PrinterException ex) {
+                Logger.getLogger(MyiReportVisor.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            System.out.println("Mostrando Docx");
+        //Abriendo PDF
+            //Runtime.getRuntime().exec("rundll32 url.dll, FileProtocolHandler "+"D:\\pdfGenerados\\" + nombreArchivo + ".pdf");
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void imprimeDocx(String fileName) throws IOException{
+        java.awt.Desktop.getDesktop().print(new File("D:\\docxGenerados\\" +fileName));
+    }
+    
+   
 
     
 }
