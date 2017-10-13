@@ -1,28 +1,32 @@
-
 package Modelo;
 
-
 public class Venta {
+
     int idVenta;
     String fecha;
     String hora;
     int idUsuario;
     int idCliente;
-    int idComprobante;
-    int estado;
-    int idcaja;
+    int idTipoComprobante;
+    int tipopago;
+    String nOperacion;
+    int estado, idcaja, idFlujoCaja;
 
-    public Venta(String fecha, String hora, int idUsuario, int idCliente, int idComprobante, int estado, int idcaja) {
+    public Venta() {
+    }
+
+    public Venta(int idVenta, String fecha, String hora, int idUsuario, int idCliente, int idTipoComprobante, int tipopago, String nOperacion, int estado, int idcaja, int idFlujoCaja) {
+        this.idVenta = idVenta;
         this.fecha = fecha;
         this.hora = hora;
         this.idUsuario = idUsuario;
         this.idCliente = idCliente;
-        this.idComprobante = idComprobante;
+        this.idTipoComprobante = idTipoComprobante;
+        this.tipopago = tipopago;
+        this.nOperacion = nOperacion;
         this.estado = estado;
         this.idcaja = idcaja;
-    }
-    
-    public Venta(){
+        this.idFlujoCaja = idFlujoCaja;
     }
 
     public int getIdVenta() {
@@ -32,8 +36,7 @@ public class Venta {
     public void setIdVenta(int idVenta) {
         this.idVenta = idVenta;
     }
-    
-    
+
     public String getFecha() {
         return fecha;
     }
@@ -66,12 +69,28 @@ public class Venta {
         this.idCliente = idCliente;
     }
 
-    public int getIdComprobante() {
-        return idComprobante;
+    public int getIdTipoComprobante() {
+        return idTipoComprobante;
     }
 
-    public void setIdComprobante(int idComprobante) {
-        this.idComprobante = idComprobante;
+    public void setIdTipoComprobante(int idTipoComprobante) {
+        this.idTipoComprobante = idTipoComprobante;
+    }
+
+    public int getTipopago() {
+        return tipopago;
+    }
+
+    public void setTipopago(int tipopago) {
+        this.tipopago = tipopago;
+    }
+
+    public String getnOperacion() {
+        return nOperacion;
+    }
+
+    public void setnOperacion(String nOperacion) {
+        this.nOperacion = nOperacion;
     }
 
     public int getEstado() {
@@ -88,6 +107,19 @@ public class Venta {
 
     public void setIdcaja(int idcaja) {
         this.idcaja = idcaja;
+    }
+
+    public int getIdFlujoCaja() {
+        return idFlujoCaja;
+    }
+
+    public void setIdFlujoCaja(int idFlujoCaja) {
+        this.idFlujoCaja = idFlujoCaja;
+    }
+
+    @Override
+    public String toString() {
+        return "Venta{" + "idVenta=" + idVenta + ", fecha=" + fecha + ", hora=" + hora + ", idUsuario=" + idUsuario + ", idCliente=" + idCliente + ", idTipoComprobante=" + idTipoComprobante + ", tipopago=" + tipopago + ", nOperacion=" + nOperacion + ", estado=" + estado + ", idcaja=" + idcaja + ", idFlujoCaja=" + idFlujoCaja + '}';
     }
     
     

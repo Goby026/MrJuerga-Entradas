@@ -1,13 +1,13 @@
 package Controlador;
 
 import Modelo.Caja;
-import Modelo.CajaDAO;
+import Modelo.MySQLDAO.CajaDAO;
 import Modelo.FlujoCaja;
-import Modelo.FlujoCajaDAO;
+import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.Usuario;
 import Modelo.UsuarioCaja;
-import Modelo.UsuarioCajaDAO;
-import Modelo.UsuarioDAO;
+import Modelo.MySQLDAO.UsuarioCajaDAO;
+import Modelo.MySQLDAO.UsuarioDAO;
 
 /**
  *
@@ -82,16 +82,53 @@ public class AbrirCajaControl {
         //obtener el id de la caja asignada al usuario logeado
         String nomCaja = new AbrirCajaControl().getCajaDeUsuario(usuario);
         int idCaja = new AbrirCajaControl().getIdCaja(nomCaja);
-        //verificar si ya se abrio caja del usuario
-        String fecha = new ManejadorFechas().getFechaActualMySQL();
-        FlujoCajaDAO fdao = new FlujoCajaDAO();
-        for (FlujoCaja fc : fdao.Listar()) {
-            if (fc.getFecha().equals(fecha) && fc.getIdCaja() == idCaja) {
-                flag++;
+        System.out.println(idCaja);
+        //obtener el id del usuario
+        int idUsuario = new AbrirCajaControl().getIdUsuario(usuario);
+        System.out.println(idUsuario);
+        //capturo el id de flujo de caja
+        int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(idUsuario, idCaja);
+        System.out.println(idFlujoCaja);
+        
+        FlujoCajaDAO fcdao = new FlujoCajaDAO();
+        for (FlujoCaja fc : fcdao.Listar()) {
+            if (fc.getIdFlujoCaja()==idFlujoCaja) {
+                flag = Integer.parseInt(fc.getEstado());
+                break;
             }
         }
+        System.out.println(flag);
         return flag;
     }
 
-    /*METODO PARA OBTENER EL ESTADO DE CAJA*/
+    //METODO PARA VALIDAR LA APERTURA DE CAJA
+    public boolean verificarApertura(int idUsuario,int idCaja) throws Exception {
+        try {
+            //verificar el estado de la caja
+            FlujoCajaDAO fcdao = new FlujoCajaDAO();
+            int idFlujoCaja = fcdao.getIdFlujo(idUsuario, idCaja);
+            for (FlujoCaja fc : fcdao.Listar()) {
+                if ("1".equals(fc.getEstado()) && fc.getIdFlujoCaja()==idFlujoCaja) {
+                    return true;
+                }
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+        return false;
+    }
+    
+    public String getSaldoInicial(int idFlujoCaja) throws Exception{
+        try {
+            FlujoCajaDAO fcdao = new FlujoCajaDAO();
+            for (FlujoCaja fc : fcdao.Listar()) {
+                if (fc.getIdFlujoCaja() == idFlujoCaja) {                    
+                    return String.valueOf(fc.getSaldo());
+                }
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return null;
+    }
 }

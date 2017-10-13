@@ -12,11 +12,13 @@ public class Usuario {
     String imagen;
     String usuario;
     String pass;
+    double sueldo;
+    int planilla;
 
     public Usuario() {
     }
 
-    public Usuario(int id, String nombre, String apellido, String dni, String ruc, String telefono, String direccion, String imagen, String usuario, String pass) {
+    public Usuario(int id, String nombre, String apellido, String dni, String ruc, String telefono, String direccion, String imagen, String usuario, String pass, double sueldo, int planilla) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -27,8 +29,10 @@ public class Usuario {
         this.imagen = imagen;
         this.usuario = usuario;
         this.pass = pass;
+        this.sueldo = sueldo;
+        this.planilla = planilla;
     }
-
+        
     public int getId() {
         return id;
     }
@@ -108,5 +112,23 @@ public class Usuario {
     public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    public double getSueldo() {
+        return sueldo;
+    }
+
+    public void setSueldo(double sueldo) {
+        this.sueldo = sueldo;
+    }
+
+    public int getPlanilla() {
+        return planilla;
+    }
+
+    public void setPlanilla(int planilla) {
+        this.planilla = planilla;
+    }
+    
+    
 
 }

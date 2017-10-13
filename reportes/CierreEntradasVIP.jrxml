@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-06-02T23:52:20 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="215" pageHeight="842" columnWidth="169" leftMargin="26" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19e61c6a-b76f-421f-97ef-bf76f3fd8df7">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="278"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="idflujo" class="java.lang.Integer"/>
+	<parameter name="usuario" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<parameter name="nota" class="java.lang.Double"/>
+	<queryString language="SQL">
+		<![CDATA[select producto.nombre ,if(producto.nombre = 'ENTRADA VIP',sum(ventaentrada.numPersonas),count(ventaentrada.numPersonas)) as cantidad,sum(ventaentrada.total) AS subtotal from venta 
+inner join ventaentrada on venta.idventa = ventaentrada.venta_idventa
+inner join producto on ventaentrada.idproducto = producto.idproducto
+where venta.idflujocaja = $P{idflujo}
+group by producto.nombre]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="cantidad" class="java.lang.Integer"/>
+	<field name="subtotal" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="169" height="16" uuid="ca8ddeb7-d21a-47a3-b388-4e82e0607edb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="13"/>
+				</textElement>
+				<text><![CDATA[CIERRE ENTRADA VIP]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="16" width="169" height="12" uuid="ed14f9d3-1ba4-4e2b-b6aa-fe64376582f3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="28" width="83" height="11" uuid="0d2f6be6-6fe0-4150-8c24-6869d14d84da">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[USUARIO: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="39" width="169" height="11" uuid="f9e1f329-b64c-4aec-a0da-6a5feb5cb21e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE VENTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="83" height="11" uuid="b200dacd-d932-4313-8c01-fbd287a329a3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[SALDO INICIAL: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="83" y="28" width="86" height="11" uuid="fa252552-a9cf-4595-9a16-bd0b3e91cd3f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="12" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="0" width="20" height="11" uuid="01b42998-65bd-44bc-aec4-c524618abb44"/>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[CANT.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="110" height="11" uuid="3085650d-9899-4cc3-8c69-5de47f093467"/>
+				<textElement>
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="0" width="29" height="11" uuid="0cd163d8-0f8d-4de2-b2ea-80cd4653faa6">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[ S/.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="11" width="169" height="1" uuid="70c50bc4-32c4-4c24-8ad0-a44b07863583"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="11" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+			<textField>
+				<reportElement x="0" y="0" width="120" height="11" uuid="53a93154-d614-44df-9252-61eac8acc851"/>
+				<textElement>
+					<font fontName="Consolas" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="20" height="11" uuid="3bbcfac9-cc16-467f-9482-c3ea66c6f475"/>
+				<textElement>
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="29" height="11" uuid="e6dbf9fa-a742-495f-8277-0738075f6105"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="144" splitType="Stretch">
+			<staticText>
+				<reportElement x="81" y="14" width="30" height="11" uuid="59d1d495-0ffd-4877-8704-1a2bf05edede"/>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="0" width="169" height="1" uuid="9fc49ed8-c6af-4f48-88e8-676fd21a764b"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="40" y="28" width="40" height="11" uuid="b099c7d1-ec18-43ad-887e-8b9e045cfd54">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[GASTO 1:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="26" width="169" height="1" uuid="3adc8901-7427-4463-9e03-86bd94ef0dcc"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="40" y="41" width="40" height="11" uuid="55a3138d-a031-44ab-951e-1b4fc6a7096f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[GASTO 2:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="54" width="40" height="11" uuid="dda74a42-675e-483f-90ba-f3672e6ac020">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[GASTO 3:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="28" width="86" height="11" uuid="f5016202-ce7d-4a33-bbcc-7def61a38959">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[_ _ _ _ _ _]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="41" width="86" height="11" uuid="cc2ee09e-708d-497e-96ca-6961b2ec79fb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[_ _ _ _ _ _]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="54" width="86" height="11" uuid="aff07311-0660-495c-84a9-f018658b6774">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[_ _ _ _ _ _]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="87" width="40" height="11" uuid="c121bffb-3e5b-4eb5-bdeb-3374ff3b5571">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="87" width="86" height="11" uuid="c1c11427-77db-4605-a761-35e71ee99841">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[_ _ _ _ _ _]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="68" width="40" height="11" uuid="db1e0172-e984-49c2-94b3-dfe8047ba685">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[VISA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="68" width="86" height="11" uuid="8677526d-622a-4399-aa62-a5ec8b7c9496">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[_ _ _ _ _ _]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="80" height="11" uuid="f656881a-f1e1-46fd-b60c-4e10b0c04009">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[TOTAL EFECTIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="123" width="169" height="11" uuid="7793eccd-4797-45c0-81d2-8674ee5d05fb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[______________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="100" width="86" height="11" uuid="875919d1-ad80-47e5-9dd7-eb368ec7a181">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[_________________]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="134" width="169" height="10" uuid="44a0d09e-8309-4e98-ab9e-24d0e30e3eff"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="14" width="46" height="11" uuid="f22bdf56-9e12-45ed-b101-9ea7749c73cb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="1" width="79" height="11" uuid="755b6934-edf9-429f-a822-22ecc06f232c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Consolas" size="8"/>
+				</textElement>
+				<text><![CDATA[TOTAL NOTA PEDIDO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="1" width="46" height="11" uuid="00cd15fa-4ff8-4e5d-9d36-8fe1e3355a35"/>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nota}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="11" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="169" height="11" uuid="a0efbb89-4374-4125-9c97-8727a6ec1da8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[DEVELOPED BY IDSOFT S.A.C]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

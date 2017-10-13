@@ -5,6 +5,13 @@
  */
 package Vista;
 
+import Controlador.AbrirCajaControl;
+import Controlador.MenuControl;
+import Modelo.FlujoCaja;
+import Modelo.MySQLDAO.FlujoCajaDAO;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USER
@@ -14,14 +21,26 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public Menu(String Usuario) {
+    public Menu(String Usuario) throws Exception {
+        setUndecorated(true);
         initComponents();
-        setLocationRelativeTo(null);
-        setExtendedState(MAXIMIZED_BOTH);
-        lbl_Usuario.setText(Usuario);
+        cargarDatos(Usuario);
     }
 
     public Menu() {
+    }
+
+    public void cargarDatos(String Usuario) throws Exception {
+        try {
+            Color c = new Color(0, 0, 1, 0.15f);
+            this.setBackground(c);
+            setLocationRelativeTo(null);
+            setExtendedState(MAXIMIZED_BOTH);
+            lbl_Usuario.setText(Usuario);
+            lbl_caja.setText(new MenuControl().getCajaDeUsuario(Usuario));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -33,9 +52,6 @@ public class Menu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        lbl_Usuario = new javax.swing.JLabel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
@@ -45,19 +61,16 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        lblSalir = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lbl_caja = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_Usuario = new javax.swing.JLabel();
+        lblImg = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("USUARIO:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1610, 10, 130, 70));
-
-        lbl_Usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbl_Usuario.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(1720, 30, 160, 30));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/CERRAR CAJA.png"))); // NOI18N
         jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/CERRAR CAJA 01.png"))); // NOI18N
@@ -66,8 +79,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton4ActionPerformed(evt);
             }
         });
-        jDesktopPane1.add(jButton4);
-        jButton4.setBounds(1100, 480, 290, 210);
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 620, -1, -1));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ANULAR ENTRADA.png"))); // NOI18N
         jButton5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ANULAR ENTRADA 1.png"))); // NOI18N
@@ -76,8 +88,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton5ActionPerformed(evt);
             }
         });
-        jDesktopPane1.add(jButton5);
-        jButton5.setBounds(770, 480, 290, 210);
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 620, -1, -1));
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LISTA ENTRADAS 01.png"))); // NOI18N
         jButton6.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LISTA ENTRADAS.png"))); // NOI18N
@@ -86,8 +97,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton6ActionPerformed(evt);
             }
         });
-        jDesktopPane1.add(jButton6);
-        jButton6.setBounds(440, 480, 290, 210);
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 620, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL.png"))); // NOI18N
         jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL - copia.png"))); // NOI18N
@@ -96,8 +106,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jDesktopPane1.add(jButton1);
-        jButton1.setBounds(440, 200, 290, 210);
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 390, -1, -1));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA VIP.png"))); // NOI18N
         jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRAD VIP 2.png"))); // NOI18N
@@ -106,8 +115,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jDesktopPane1.add(jButton2);
-        jButton2.setBounds(770, 200, 290, 210);
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 390, -1, -1));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/APERTURAR CAJA 01.png"))); // NOI18N
         jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/APERTURAR CAJA.png"))); // NOI18N
@@ -116,10 +124,7 @@ public class Menu extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jDesktopPane1.add(jButton3);
-        jButton3.setBounds(1100, 200, 290, 210);
-
-        getContentPane().add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1920, 900));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 390, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -139,7 +144,47 @@ public class Menu extends javax.swing.JFrame {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 50, 670, 100));
 
+        lblSalir.setFont(new java.awt.Font("Consolas", 0, 24)); // NOI18N
+        lblSalir.setForeground(new java.awt.Color(255, 255, 255));
+        lblSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/puerta-de-salida-abierta.png"))); // NOI18N
+        lblSalir.setText("SALIR");
+        lblSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSalirMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lblSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1690, 10, 210, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("USUARIO:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, 30));
+
+        lbl_caja.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbl_caja.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(lbl_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 160, 30));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setText("CAJA:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 130, 30));
+
+        lbl_Usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lbl_Usuario.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 160, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 160));
+
+        lblImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/girlDJ.png"))); // NOI18N
+        lblImg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImgMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 880, 210, 160));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -157,32 +202,88 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            String usuario = lbl_Usuario.getText();
-            EntradaVipBox evip = new EntradaVipBox(usuario);
-            evip.setVisible(true);
+
+            if (lbl_caja.getText().equals("ENTRADA VIP")) {
+                int flag = 0;
+                int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new AbrirCajaControl().getIdUsuario(lbl_Usuario.getText()), new AbrirCajaControl().getIdCaja(lbl_caja.getText()));
+                FlujoCajaDAO fcdao = new FlujoCajaDAO();
+                for (FlujoCaja fc : fcdao.Listar()) {
+                    if (fc.getIdFlujoCaja() == idFlujoCaja && fc.getEstado().equals("1")) {
+                        flag++;
+                    }
+                }
+                if (flag > 0) {
+                    String usuario = lbl_Usuario.getText();
+                    EntradaVipBox evip = new EntradaVipBox(usuario);
+                    evip.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "DEBE APERTURAR CAJA PARA REALIZAR VENTAS");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "ESTA ASIGNADO A ENTRADAS VIP, NO PUEDE RELIZAR VENTAS DE ENTRADA GENERAL");
+            }
+
             //dispose();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
+//        try {
+//
+//            if (lbl_caja.getText().equals("ENTRADA VIP")) {
+//                String usuario = lbl_Usuario.getText();
+//                EntradaVipBox evip = new EntradaVipBox(usuario);
+//                evip.setVisible(true);
+//            } else {
+//                JOptionPane.showMessageDialog(null, "ESTA ASIGNADO A ENTRADA GENERAL, NO PUEDE RELIZAR VENTAS VIP");
+//            }
+//            //dispose();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            String usuario = lbl_Usuario.getText();
-            EntradaPorPersona epp = new EntradaPorPersona(usuario);
-            epp.setVisible(true);
+
+            if (lbl_caja.getText().equals("ENTRADA GENERAL")) {
+                int flag = 0;
+                int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new AbrirCajaControl().getIdUsuario(lbl_Usuario.getText()), new AbrirCajaControl().getIdCaja(lbl_caja.getText()));
+                FlujoCajaDAO fcdao = new FlujoCajaDAO();
+                for (FlujoCaja fc : fcdao.Listar()) {
+                    if (fc.getIdFlujoCaja() == idFlujoCaja && fc.getEstado().equals("1")) {
+                        flag++;
+                    }
+                }
+                if (flag > 0) {
+                    String usuario = lbl_Usuario.getText();
+                    EntradaGeneralVista epp = new EntradaGeneralVista(usuario);
+                    epp.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "DEBE APERTURAR CAJA PARA REALIZAR VENTAS");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "ESTA ASIGNADO A ENTRADAS VIP, NO PUEDE RELIZAR VENTAS DE ENTRADA GENERAL");
+            }
+
             //dispose();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {
-            String usuario = lbl_Usuario.getText();
-            ListaEntradas le = new ListaEntradas(usuario);
-            le.setVisible(true);
+            if (lbl_caja.getText().equals("ENTRADA GENERAL")) {
+                String usuario = lbl_Usuario.getText();
+                ResumenEntradasGeneral le = new ResumenEntradasGeneral(usuario);
+                le.setVisible(true);
+            } else {
+                String usuario = lbl_Usuario.getText();
+                ResumenEntradasVIP le = new ResumenEntradasVIP(usuario);
+                le.setVisible(true);
+            }
             // dispose();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -203,13 +304,60 @@ public class Menu extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
             String usuario = lbl_Usuario.getText();
-            CerrarCaja cc = new CerrarCaja(usuario);
-            cc.setVisible(true);
+            //validar si es entrada vip o entrada popular
+            if (lbl_caja.getText().trim().equals("ENTRADA VIP")) {
+                CerrarCajaVIP ccv = new CerrarCajaVIP(lbl_Usuario.getText());
+                ccv.setVisible(true);
+            } else {
+                CerrarCaja cc = new CerrarCaja(usuario);
+                cc.setVisible(true);
+            }
+
             // dispose();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void lblSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSalirMouseClicked
+        dispose();
+        new Login().setVisible(true);
+    }//GEN-LAST:event_lblSalirMouseClicked
+
+    private void lblImgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImgMouseClicked
+        try {
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+
+            if (lbl_caja.getText().equals("ENTRADA VIP")) {
+                int flag = 0;
+                int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new AbrirCajaControl().getIdUsuario(lbl_Usuario.getText()), new AbrirCajaControl().getIdCaja(lbl_caja.getText()));
+                FlujoCajaDAO fcdao = new FlujoCajaDAO();
+                for (FlujoCaja fc : fcdao.Listar()) {
+                    if (fc.getIdFlujoCaja() == idFlujoCaja && fc.getEstado().equals("1")) {
+                        flag++;
+                    }
+                }
+                if (flag > 0) {
+                    String usuario = lbl_Usuario.getText();
+                    VipNotaPedido vnp = new VipNotaPedido(usuario);
+                    vnp.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "DEBE APERTURAR CAJA PARA REALIZAR VENTAS");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "ESTA ASIGNADO A ENTRADAS VIP, NO PUEDE RELIZAR VENTAS DE ENTRADA GENERAL");
+            }
+
+            //dispose();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_lblImgMouseClicked
 
     /**
      * @param args the command line arguments
@@ -253,11 +401,14 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblImg;
+    private javax.swing.JLabel lblSalir;
     private javax.swing.JLabel lbl_Usuario;
+    private javax.swing.JLabel lbl_caja;
     // End of variables declaration//GEN-END:variables
 }

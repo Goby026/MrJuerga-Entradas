@@ -1,7 +1,7 @@
 package Controlador;
 
 import Modelo.Usuario;
-import Modelo.UsuarioDAO;
+import Modelo.MySQLDAO.UsuarioDAO;
 
 /**
  *

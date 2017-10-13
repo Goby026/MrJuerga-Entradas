@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-01-10T00:38:38 -->
+<!-- 2017-03-14T21:19:33 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="215" pageHeight="842" columnWidth="169" leftMargin="26" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1912b1d8-e61d-40c2-910c-27c5bc36be0c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<property name="com.jaspersoft.studio.unit." value="cm"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value="ZHVhbCAsMTUsMTUsNDcxYTk2ZTEtMDA0ZC00YTY3LWIyMWYtNzE5ODFhM2M4YWJjOw=="/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="nroComprobante" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -28,7 +36,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="40" splitType="Stretch">
+		<band height="63" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="170" height="28" uuid="990c07e4-81e5-410f-a8e7-d95490680a8f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -40,18 +48,29 @@
 				<textFieldExpression><![CDATA[$P{nombreCover}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="28" width="80" height="12" uuid="94c22d3b-34ef-4af7-ae88-f4af0ea3a966">
+				<reportElement x="110" y="43" width="60" height="14" uuid="94c22d3b-34ef-4af7-ae88-f4af0ea3a966">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font fontName="Arial" size="9"/>
+					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nroComprobante}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="28" width="90" height="12" uuid="754b1188-9a80-4e35-aff9-a5f9df342efd"/>
+				<reportElement x="0" y="28" width="110" height="17" uuid="754b1188-9a80-4e35-aff9-a5f9df342efd">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="9"/>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h:mm a">
+				<reportElement x="0" y="45" width="110" height="18" uuid="f74fc6d4-f05f-459b-9c31-54a7707df1e0">
+					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>

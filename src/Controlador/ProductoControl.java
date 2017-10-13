@@ -1,7 +1,7 @@
 package Controlador;
 
 import Modelo.Producto;
-import Modelo.ProductoDAO;
+import Modelo.MySQLDAO.ProductoDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -37,9 +37,8 @@ public class ProductoControl {
         return entrada;
     }
 
-    public double total(int cantCovers, double precioCover) {
-        double p = (cantCovers * precioCover);
-        return p;
+    public double total(int cantCovers, double precioCover) {        
+        return (cantCovers * precioCover);
     }
 
     public double totalvip(int cant, double precio) {

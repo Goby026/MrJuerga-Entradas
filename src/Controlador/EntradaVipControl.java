@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controlador;
 
-import Modelo.VentaEntradaVipDAO;
+import Modelo.MySQLDAO.VentaEntradaVipDAO;
+import javax.swing.DefaultListModel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,9 +12,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EntradaVipControl {
  
+    DefaultListModel modeloLista = new DefaultListModel();
        
     public void LlenarTablaVIP(JTable tabla) throws Exception {
-
         DefaultTableModel modelo = new DefaultTableModel();
         tabla.setModel(modelo);
         VentaEntradaVipDAO vevip = new VentaEntradaVipDAO();
@@ -42,6 +39,17 @@ public class EntradaVipControl {
             modelo.addRow(columna);
         }
     }
+    
+    /* METODO PARA LLENAR LA LISTA DE PROMOCIONES */
+//    public void llenarLista(JList lista) throws Exception{
+//        PromocionDAO pdao = new PromocionDAO();
+//        for (Promocion p : pdao.listar()) {
+//            modeloLista.addElement(p.getNombre());
+//            lista.setModel(modeloLista);
+//        }
+//    }
+    
+    /* Metodo para cargar la tabla segun la seleccion de la lista de promociones */
     
 }
 

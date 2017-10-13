@@ -7,12 +7,8 @@ package Vista;
 
 import Controlador.LoginControl;
 import Modelo.Usuario;
-import Modelo.UsuarioDAO;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import sun.security.util.Password;
+
 
 /**
  *
@@ -41,9 +37,6 @@ public class Login extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
-        sombra1 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        sombra2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
@@ -55,80 +48,71 @@ public class Login extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setForeground(new java.awt.Color(204, 204, 204));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarlogin.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Close_Window_32px.png"))); // NOI18N
+        jButton1.setText("SALIR");
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(957, 30, 130, 100));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 670, 110, 30));
 
         jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("MISTER JUERGA");
-        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, -1));
+        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 10, -1, -1));
 
-        sombra1.setBackground(new java.awt.Color(0, 0, 0));
-        sombra1.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
-        sombra1.setText("MISTER JUERGA");
-        getContentPane().add(sombra1, new org.netbeans.lib.awtextra.AbsoluteConstraints(262, 10, -1, -1));
-
-        jLabel19.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel19.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel19.setText("DISCOTECK");
-        getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 10, -1, -1));
-
-        sombra2.setBackground(new java.awt.Color(0, 0, 0));
-        sombra2.setFont(new java.awt.Font("Bauhaus 93", 0, 48)); // NOI18N
-        sombra2.setText("DISCOTECK");
-        getContentPane().add(sombra2, new org.netbeans.lib.awtextra.AbsoluteConstraints(652, 10, -1, -1));
-
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("USUARIO");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 240, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 250, -1, -1));
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("CONTRASEÑA");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 440, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 340, -1, -1));
 
+        txtUsuario.setBackground(new java.awt.Color(0, 0, 0));
         txtUsuario.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtUsuario.setBorder(null);
+        txtUsuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 310, 50));
+        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 270, 310, 50));
 
+        btnIngresar.setBackground(new java.awt.Color(102, 102, 102));
         btnIngresar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("INGRESAR");
         btnIngresar.setBorder(null);
         btnIngresar.setBorderPainted(false);
-        btnIngresar.setContentAreaFilled(false);
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIngresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 470, 110, 30));
+        getContentPane().add(btnIngresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 440, 310, 50));
 
+        txtPass.setBackground(new java.awt.Color(0, 0, 0));
         txtPass.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        txtPass.setForeground(new java.awt.Color(255, 255, 255));
         txtPass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtPass.setBorder(null);
+        txtPass.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         txtPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPassActionPerformed(evt);
             }
         });
-        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, 310, 50));
+        getContentPane().add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 360, 310, 50));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/login1.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/img_login.jpg"))); // NOI18N
         jLabel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1130, 680));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 710));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -205,12 +189,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel sombra1;
-    private javax.swing.JLabel sombra2;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

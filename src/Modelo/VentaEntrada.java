@@ -1,27 +1,28 @@
 package Modelo;
 
 public class VentaEntrada {
+
     int idVentaEntrada;
     int numPersonas;
     int numCovers;
     double total;
     String tipoEntrada;
     int idVenta;
-    int prod;
-    String fecha;
+    int idProd;
+    String feha;
 
-    public VentaEntrada(int idVentaEntrada, int numPersonas, int numCovers, double total, String tipoEntrada, int idVenta,int prod ,String fecha) {
+    public VentaEntrada(int idVentaEntrada, int numPersonas, int numCovers, double total, String tipoEntrada, int idVenta, int idProd, String fecha) {
         this.idVentaEntrada = idVentaEntrada;
         this.numPersonas = numPersonas;
         this.numCovers = numCovers;
         this.total = total;
         this.tipoEntrada = tipoEntrada;
         this.idVenta = idVenta;
-        this.prod = prod;
-        this.fecha= fecha;
+        this.idProd = idProd;
+        this.feha = fecha;
     }
-    
-    public VentaEntrada(){
+
+    public VentaEntrada() {
     }
 
     public int getIdVentaEntrada() {
@@ -72,21 +73,25 @@ public class VentaEntrada {
         this.idVenta = idVenta;
     }
 
-    public int getProd() {
-        return prod;
+    public int getIdProd() {
+        return idProd;
     }
 
-    public void setProd(int prod) {
-        this.prod = prod;
-    }
-    
-    public String getFecha() {
-        return fecha;
+    public void setIdProd(int idProd) {
+        this.idProd = idProd;
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public String getFeha() {
+        return feha;
     }
-    
-    
+
+    public void setFeha(String feha) {
+        this.feha = feha;
+    }
+
+    @Override
+    public String toString() {
+        return "VentaEntrada{" + "idVentaEntrada=" + idVentaEntrada + ", numPersonas=" + numPersonas + ", numCovers=" + numCovers + ", total=" + total + ", tipoEntrada=" + tipoEntrada + ", idVenta=" + idVenta + ", idProd=" + idProd + ", feha=" + feha + '}';
+    }
+
 }
