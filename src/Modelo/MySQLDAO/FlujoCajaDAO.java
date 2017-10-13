@@ -224,7 +224,7 @@ public class FlujoCajaDAO extends Conexion implements FlujoCajaCRUD {
     public boolean updateFlujoCaja(FlujoCaja fc) throws Exception {
         try {
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("UPDATE `flujocaja` SET `fecha_final`='" + fc.getFechaFinal() + "', `hora_final`='" + fc.getHoraFinal() + "', `ingresos`='" + fc.getIngresos() + "', egresos = " + fc.getEgresos() + ", saldo = " + fc.getSaldo() + ",descuadre = " + fc.getDescuadre() + " ,`estado`='0' WHERE `idflujocaja`='" + fc.getIdFlujoCaja() + "'");
+            PreparedStatement pst = this.conexion.prepareStatement("UPDATE `flujocaja` SET `fecha_final`='" + fc.getFechaFinal() + "', `hora_final`='" + fc.getHoraFinal() + "', `ingresos`='" + fc.getIngresos() + "', egresos = " + fc.getEgresos() + ", saldo = " + fc.getSaldo() + ",visa = " + fc.getVisa()+ ",master=" + fc.getMaster()+ ",jarras=" + fc.getJarras()+ ",descuadre = " + fc.getDescuadre() + " ,`estado`='0' WHERE `idflujocaja`='" + fc.getIdFlujoCaja() + "'");
             int res = pst.executeUpdate();
             if (res > 0) {
                 return true;
