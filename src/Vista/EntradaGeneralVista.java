@@ -4,6 +4,7 @@ import Controlador.AbrirCajaControl;
 import Controlador.Cronometro;
 import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
+import Controlador.StockBebidasPreparadas;
 import Modelo.Conexion;
 import Modelo.Configuracion;
 import Modelo.MySQLDAO.CajaDAO;
@@ -46,36 +47,24 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
         setExtendedState(MAXIMIZED_BOTH);
         this.setBackground(Color.WHITE);
         titulos();
-        cargarTablaProductos();        
+        cargarTablaProductos();
         txtUsuario.setText(usuario);
         txtFecha.setText(new ManejadorFechas().getFechaActual());
         c = new ConfiguracionDAO().Obtener(1);
         lblPrecioCover.setText("" + c.getPrecioGeneral());
         pp = new ProductoPresentacionDAO().Obtener(c.getIdProfuctoDefecto());
         p = new ProductoDAO().obtenerProducto(pp.getIdProducto());
-        lblProductoCover.setText(""+p.getNombre());
+        lblProductoCover.setText("" + p.getNombre());
         new Cronometro().iniciarCronometro(txtHora);
         txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
-        
+
         producto = c.getIdProfuctoDefecto();
     }
 
     public EntradaGeneralVista() {
     }
 
-//    private void botonesSeleccionados() {
-//        botonesOpcion.add(btnCover);
-//        botonesOpcion.add(btnCerveza);
-//        botonesOpcion.add(btnOrange);
-//        botonesOpcion.add(btnCuzqueña);
-//        botonesOpcion.add(btnChata);
-//        botonesOpcion.add(btnMojito);
-//
-//        if (seleccionado) {
-//            btnCover.setSelected(seleccionado);
-//            lblProducto.setText("COVER@@");
-//        }
-//    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -493,27 +482,6 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//    private void activarControles() {
-//        btn_mas.setEnabled(true);
-//        btn_menos.setEnabled(true);
-//        btnCover.setEnabled(true);
-//        btnOrange.setEnabled(true);
-//        btnCerveza.setEnabled(true);
-//        btnCuzqueña.setEnabled(true);
-//        btnChata.setEnabled(true);
-//        btnMojito.setEnabled(true);
-//    }
-//
-//    private void desactivarControles() {
-//        btn_mas.setEnabled(false);
-//        btn_menos.setEnabled(false);
-//        btnCover.setEnabled(false);
-//        btnOrange.setEnabled(false);
-//        btnCerveza.setEnabled(false);
-//        btnCuzqueña.setEnabled(false);
-//        btnChata.setEnabled(false);
-//        btnMojito.setEnabled(false);
-//    }
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
         String captura = txtNumPersonas.getText() + 3;
@@ -578,9 +546,10 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 mrv2.setNombreArchivo("Cover Cerveza");
                 int numerodeCopias = ve.getNumCovers();
                 for (int i = 1; i <= numerodeCopias; i++) {
-//                    if (!printChicas) {
-//                        
-//                    }                    
+                    pp = new ProductoPresentacionDAO().Obtener(producto);
+                    System.out.println("EL ID DE PROD A ANALIZAR ES: "+pp.getIdProducto());
+                    StockBebidasPreparadas sbp = new StockBebidasPreparadas(pp.getIdProducto(), 2);
+                    sbp.updateStockVenta();
                     mrv2.exportarADocxConCopia("covers" + i + ".docx");
                 }
                 txtNumPersonas.setText("");

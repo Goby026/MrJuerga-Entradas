@@ -48,6 +48,10 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
         txtPrecio = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        txtPrecioEntradaVip = new javax.swing.JTextField();
+        btnGuardarPrecioEntradaVip = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("PRECIOS VIP");
@@ -80,7 +84,7 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblBox);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 650, 520));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 650, 490));
 
         btnGuardar.setBackground(new java.awt.Color(51, 255, 51));
         btnGuardar.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -93,10 +97,10 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
         });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 680, -1, 50));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("PRECIOS VIP");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jLabel2.setText("PRECIO ENTRADA VIP");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, -1, 30));
 
         txtPrecio.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         txtPrecio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -118,6 +122,30 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 680, 150, 50));
+
+        txtPrecioEntradaVip.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jPanel1.add(txtPrecioEntradaVip, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 60, 100, -1));
+
+        btnGuardarPrecioEntradaVip.setBackground(new java.awt.Color(51, 255, 51));
+        btnGuardarPrecioEntradaVip.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnGuardarPrecioEntradaVip.setText("GUARDAR");
+        btnGuardarPrecioEntradaVip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarPrecioEntradaVipActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGuardarPrecioEntradaVip, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 60, 130, 30));
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("PRECIOS VIP");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 650, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 760));
 
@@ -165,6 +193,15 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnGuardarPrecioEntradaVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPrecioEntradaVipActionPerformed
+        if (!txtPrecioEntradaVip.getText().trim().isEmpty()) {
+            double precioVip = Double.parseDouble(txtPrecioEntradaVip.getText());
+            //ACTUALIZAR LA TABLA
+        } else {
+            JOptionPane.showMessageDialog(getRootPane(), "INGRESE UN PRECIO PARA ENTRADA VIP");
+        }
+    }//GEN-LAST:event_btnGuardarPrecioEntradaVipActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -209,14 +246,18 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnGuardarPrecioEntradaVip;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JTable tblBox;
     private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtPrecioEntradaVip;
     // End of variables declaration//GEN-END:variables
 
     private void titulos() {

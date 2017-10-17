@@ -47,7 +47,9 @@ public class CerrarCaja extends javax.swing.JFrame {
             txtTotalVentas.setText("" + new FlujoCajaDAO().getMontoFlujo(idFlujoCaja));
             //txtEgresos.setText("" + new UsuarioGastosDAO().getMontoEgresos(idFlujoCaja));
             //txtBalance.setText("" + calcularBalanceTotal());
-            lblIngresos.setText("" + (Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText())));
+            double total = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText());
+            lblIngresos.setText("" + total);
+            lblTotalEfectivo.setText(""+total);
         } else {
             lblEstado.setText("CAJA CERRADA");
         }
@@ -281,7 +283,8 @@ public class CerrarCaja extends javax.swing.JFrame {
 
         lblTotalEfectivo.setFont(new java.awt.Font("Consolas", 0, 36)); // NOI18N
         lblTotalEfectivo.setForeground(new java.awt.Color(0, 102, 51));
-        getContentPane().add(lblTotalEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, 410, 70));
+        lblTotalEfectivo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(lblTotalEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, 270, 70));
 
         btnCerrarCaja.setBackground(new java.awt.Color(255, 0, 0));
         btnCerrarCaja.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
@@ -349,11 +352,13 @@ public class CerrarCaja extends javax.swing.JFrame {
         txtVisa.setEditable(false);
         txtVisa.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         txtVisa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtVisa.setText("0");
         jPanel3.add(txtVisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 120, 30));
 
         txtMasterCard.setEditable(false);
         txtMasterCard.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         txtMasterCard.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMasterCard.setText("0");
         jPanel3.add(txtMasterCard, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 120, 30));
 
         jLabel33.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
@@ -455,14 +460,18 @@ public class CerrarCaja extends javax.swing.JFrame {
 
     private void jarraCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarraCalcularActionPerformed
 
+        double subtotal = 0.0;
         if (opc == 1) {
             txtVisa.setText(txtMontos.getText());
             txtMontos.setText("");
+            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));            
+            lblTotalEfectivo.setText(""+ subtotal);
             panelMontos.dispose();
-
         } else {
             txtMasterCard.setText(txtMontos.getText());
             txtMontos.setText("");
+            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));            
+            lblTotalEfectivo.setText("" + subtotal);
             panelMontos.dispose();
         }
     }//GEN-LAST:event_jarraCalcularActionPerformed
