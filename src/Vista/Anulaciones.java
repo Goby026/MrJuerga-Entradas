@@ -1,32 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Vista;
 
 import Controlador.AnulacionesControl;
 import Controlador.Cronometro;
 import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
-import Controlador.Validaciones;
 import Modelo.Conexion;
+import Modelo.EntradaGeneral;
+import Modelo.MySQLDAO.EntradaGeneralDAO;
 import Modelo.MySQLDAO.FlujoCajaDAO;
-import Modelo.Venta;
+import Modelo.MySQLDAO.NotaPedidoDAO;
 import Modelo.MySQLDAO.VentaDAO;
-//import Modelo.VentaProductoDAO;
+import Modelo.MySQLDAO.VentaEntradaDAO;
+import Modelo.MySQLDAO.VentaNotaDAO;
+import Modelo.NotaPedido;
+import Modelo.VentaEntrada;
+import Modelo.VentaNota;
 import java.awt.Color;
-//import Modelo.VentaEntrada;
-//import Modelo.VentaEntradaDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Arrays;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -36,6 +35,12 @@ public class Anulaciones extends javax.swing.JFrame {
 
     MyiReportVisor mrv;
     HashMap parametros = new HashMap();
+    Connection Connection;
+    PreparedStatement PreparedStatement;
+    ResultSet ResultSet;
+    DefaultTableModel modeloDetalle;
+
+    int tipoTicket = 0;
 
     public Anulaciones(String Usuario) {
         initComponents();
@@ -43,15 +48,27 @@ public class Anulaciones extends javax.swing.JFrame {
         lblUsuario.setText(Usuario);
         lblFecha.setText(new ManejadorFechas().getFechaActual());
         new Cronometro().iniciarCronometro(txtHoraCronometro);
-        new AnulacionesControl().cargarTitulosTabla(tblDetalle);
+        cargarTitulosTabla();
     }
 
     public Anulaciones() {
     }
 
-    Connection Connection;
-    PreparedStatement PreparedStatement;
-    ResultSet ResultSet;
+    public void cargarTitulosTabla() {
+        String titulos[] = {"PRODUCTO", "PRESENTACION", "CANTIDAD", "SUBTOTAL"};
+        modeloDetalle = new DefaultTableModel(null, titulos);
+        tblDetalle.setModel(modeloDetalle);
+    }
+
+    private void limpiarCampos() {
+        txtnumVenta.setText("");
+        txtConcepto.setText("");
+        txtCaja.setText("");
+        txtUsuario.setText("");
+        txtHora.setText("");
+        txtFecha.setText("");
+        txtMonto.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,6 +79,9 @@ public class Anulaciones extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        formTipoBoleta = new javax.swing.JDialog();
+        btnBuscarTicket = new javax.swing.JButton();
+        btnBuscarNota = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         txtCaja = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -108,6 +128,25 @@ public class Anulaciones extends javax.swing.JFrame {
         lblEstado = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         panelEstado = new javax.swing.JPanel();
+
+        formTipoBoleta.setTitle("OPCION TICKET");
+        formTipoBoleta.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnBuscarTicket.setText("TICKET");
+        btnBuscarTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarTicketActionPerformed(evt);
+            }
+        });
+        formTipoBoleta.getContentPane().add(btnBuscarTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 320, 50));
+
+        btnBuscarNota.setText("NOTA DE PEDIDO");
+        btnBuscarNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarNotaActionPerformed(evt);
+            }
+        });
+        formTipoBoleta.getContentPane().add(btnBuscarNota, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 320, 50));
 
         setTitle("Anulaciones");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -494,13 +533,24 @@ public class Anulaciones extends javax.swing.JFrame {
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         try {
             int numVenta = Integer.parseInt(txt_num_venta.getText());
-            if (new VentaDAO().anular(numVenta)) {
+            if (tipoTicket == 1) {//ticket normal
+                if (new VentaEntradaDAO().anular(numVenta)) {
 //                new AnulacionesControl().sumarStock(tblDetalle);
 //                new VentaProductoDAO().updateVentaProducto(numVenta);
-                JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
-            } else {
-                System.out.println("error");
+                    JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
+                } else {
+                    System.out.println("error");
+                }
+            } else {//nota de pedido
+                if (new NotaPedidoDAO().anular(numVenta)) {
+//                new AnulacionesControl().sumarStock(tblDetalle);
+//                new VentaProductoDAO().updateVentaProducto(numVenta);
+                    JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
+                } else {
+                    System.out.println("error");
+                }
             }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -568,36 +618,19 @@ public class Anulaciones extends javax.swing.JFrame {
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
         txt_num_venta.setText("");
+        limpiarTabla(tblDetalle, modeloDetalle);
+        limpiarCampos();
     }//GEN-LAST:event_btnDelActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            int numBoleta = Integer.parseInt(txt_num_venta.getText());
-            if (new AnulacionesControl().getEstadoDeVenta(numBoleta)) {
-                lblEstado.setText("ACTIVO");
-                //lblEstado.setBackground(Color.GREEN);
-                panelEstado.setBackground(Color.GREEN);
-            } else {
-                lblEstado.setText("ANULADO");
-                //lblEstado.setBackground(Color.RED);
-                panelEstado.setBackground(Color.RED);
-            }
-
-            AnulacionesControl ac = new AnulacionesControl();
-            //String datos[] = new String[5];
-            String array[] = ac.CargarDatos(numBoleta);
-            txtnumVenta.setText(array[0]);
-            txtConcepto.setText(array[1]);
-            txtCaja.setText(new AnulacionesControl().getCajaConId(Integer.parseInt(array[2])));
-            //txtUsuario.setText(array[3]);
-            txtUsuario.setText(new AnulacionesControl().getNomUsuario(Integer.parseInt(array[3])));
-            txtHora.setText(array[4]);
-            txtFecha.setText(array[5]);
-            //txtMonto.setText("" + new VentaProductoDAO().getMontoDeVenta(numBoleta));
-//            new AnulacionesControl().cargarTabla(numBoleta, tblDetalle);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+        if (!txt_num_venta.getText().trim().isEmpty()) {
+            formTipoBoleta.setVisible(true);
+            formTipoBoleta.setBounds(750, 450, 351, 161);
+        } else {
+            JOptionPane.showMessageDialog(getRootPane(), "INDIQUE NUMERO DE TICKET");
         }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnListaAnulacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListaAnulacionesActionPerformed
@@ -612,6 +645,76 @@ public class Anulaciones extends javax.swing.JFrame {
             Logger.getLogger(Anulaciones.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnListaAnulacionesActionPerformed
+
+    private void btnBuscarTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTicketActionPerformed
+        tipoTicket = 1;
+        formTipoBoleta.dispose();
+        try {
+            int numBoleta = Integer.parseInt(txt_num_venta.getText());
+            EntradaGeneral eg = new EntradaGeneralDAO().Obtener(numBoleta);
+            if (eg.getEstado() > 0) {
+                lblEstado.setText("ACTIVO");
+                //lblEstado.setBackground(Color.GREEN);
+                panelEstado.setBackground(Color.GREEN);
+            } else {
+                lblEstado.setText("ANULADO");
+                //lblEstado.setBackground(Color.RED);
+                panelEstado.setBackground(Color.RED);
+            }
+
+            cargarTabla(numBoleta);
+            VentaEntrada ve = new VentaEntradaDAO().Obtener(numBoleta);
+            //AnulacionesControl ac = new AnulacionesControl();
+            //String datos[] = new String[5];
+            //String array[] = ac.CargarDatos(numBoleta);
+            txtnumVenta.setText("" + eg.getIdEntradaGeneral());
+            txtConcepto.setText(ve.getTipoEntrada());
+            txtCaja.setText(new AnulacionesControl().getCajaConId(eg.getIdCaja()));
+            //txtUsuario.setText(array[3]);
+            txtUsuario.setText(new AnulacionesControl().getNomUsuario(eg.getIdUsuario()));
+            txtHora.setText(eg.getHora());
+            txtFecha.setText(eg.getFecha());
+            txtMonto.setText("" + ve.getTotal());
+//            new AnulacionesControl().cargarTabla(numBoleta, tblDetalle);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarTicketActionPerformed
+
+    private void btnBuscarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarNotaActionPerformed
+        tipoTicket = 2;
+        formTipoBoleta.dispose();
+        try {
+            int numBoleta = Integer.parseInt(txt_num_venta.getText());
+            NotaPedido eg = new NotaPedidoDAO().obtener(numBoleta);
+            if (eg.getEstado() > 0) {
+                lblEstado.setText("ACTIVO");
+                //lblEstado.setBackground(Color.GREEN);
+                panelEstado.setBackground(Color.GREEN);
+            } else {
+                lblEstado.setText("ANULADO");
+                //lblEstado.setBackground(Color.RED);
+                panelEstado.setBackground(Color.RED);
+            }
+
+            cargarTablaNotaPedido(numBoleta);
+            VentaNota ve = new VentaNotaDAO().obtener(numBoleta);
+            //AnulacionesControl ac = new AnulacionesControl();
+            //String datos[] = new String[5];
+            //String array[] = ac.CargarDatos(numBoleta);
+            txtnumVenta.setText("" + eg.getIdNotaPedido());
+            txtConcepto.setText(ve.getTipoEntrada());
+            txtCaja.setText(new AnulacionesControl().getCajaConId(eg.getIdcaja()));
+            //txtUsuario.setText(array[3]);
+            txtUsuario.setText(new AnulacionesControl().getNomUsuario(eg.getIdUsuario()));
+            txtHora.setText(eg.getHora());
+            txtFecha.setText(eg.getFecha());
+            txtMonto.setText("" + ve.getTotal());
+//            new AnulacionesControl().cargarTabla(numBoleta, tblDetalle);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_btnBuscarNotaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -660,8 +763,11 @@ public class Anulaciones extends javax.swing.JFrame {
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnAnular;
+    private javax.swing.JButton btnBuscarNota;
+    private javax.swing.JButton btnBuscarTicket;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnListaAnulaciones;
+    private javax.swing.JDialog formTipoBoleta;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
@@ -696,4 +802,88 @@ public class Anulaciones extends javax.swing.JFrame {
     private javax.swing.JTextField txt_num_venta;
     private javax.swing.JTextField txtnumVenta;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTabla(int idEntrada) throws SQLException {
+        limpiarTabla(tblDetalle, modeloDetalle);
+        Conexion con = new Conexion();
+        try {
+            con.conectar();
+            String sql = "select p.nombre, pre.descripcion, ve.numCovers, ve.total from entradageneral eg\n"
+                    + "inner join ventaentrada ve on eg.identradageneral = ve.venta_idventa\n"
+                    + "inner join productopresentacion pp on ve.idproducto = pp.idproductopresentacion\n"
+                    + "inner join producto p on pp.idproducto = p.idproducto\n"
+                    + "inner join presentacion pre on pp.idpresentacion = pre.idpresentacion\n"
+                    + "where eg.identradageneral = ?";
+            PreparedStatement pst = con.getConexion().prepareStatement(sql);
+            pst.setInt(1, idEntrada);
+
+            ResultSet res = pst.executeQuery();
+            Object datos[] = new Object[4];
+
+            while (res.next()) {
+                datos[0] = res.getString(1);
+                datos[1] = res.getString(2);
+                datos[2] = res.getString(3);
+                datos[3] = res.getString(4);
+
+                modeloDetalle.addRow(datos);
+            }
+            tblDetalle.setModel(modeloDetalle);
+
+            pst.close();
+            res.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            con.cerrar();
+        }
+    }
+
+    private void cargarTablaNotaPedido(int idNota) throws SQLException {
+        limpiarTabla(tblDetalle, modeloDetalle);
+        Conexion con = new Conexion();
+        try {
+            con.conectar();
+            String sql = "select producto.nombre, presentacion.descripcion, ventanota.numCovers, ventanota.total from notapedido\n"
+                    + "inner join ventanota on notapedido.idnotapedido = ventanota.idnotapedido\n"
+                    + "inner join prodpromocion on ventanota.idprodpromocion = prodpromocion.idprodpromocion\n"
+                    + "inner join productopresentacion on prodpromocion.idproductopresentacion = productopresentacion.idproductopresentacion\n"
+                    + "inner join producto on producto.idproducto = productopresentacion.idproducto\n"
+                    + "inner join presentacion on productopresentacion.idpresentacion = presentacion.idpresentacion\n"
+                    + "where notapedido.idnotapedido = ?";
+            PreparedStatement pst = con.getConexion().prepareStatement(sql);
+            pst.setInt(1, idNota);
+
+            ResultSet res = pst.executeQuery();
+            Object datos[] = new Object[4];
+
+            while (res.next()) {
+                datos[0] = res.getString(1);
+                datos[1] = res.getString(2);
+                datos[2] = res.getString(3);
+                datos[3] = res.getString(4);
+
+                modeloDetalle.addRow(datos);
+            }
+            tblDetalle.setModel(modeloDetalle);
+
+            pst.close();
+            res.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            con.cerrar();
+        }
+    }
+
+    public void limpiarTabla(JTable tabla, DefaultTableModel modelo) {
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+        cargarTitulosTabla();
+    }
+
 }

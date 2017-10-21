@@ -7,6 +7,8 @@ package Vista;
 
 import Controlador.ColumnasTablas;
 import Modelo.Conexion;
+import Modelo.Configuracion;
+import Modelo.MySQLDAO.ConfiguracionDAO;
 import Modelo.MySQLDAO.ProdPromocionDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,10 +25,16 @@ import javax.swing.table.DefaultTableModel;
 public class ConfigPrecioVip extends javax.swing.JFrame {
 
     DefaultTableModel modelo;
+    Configuracion c = null;
 
     public ConfigPrecioVip() throws Exception {
         initComponents();
         setLocationRelativeTo(null);
+        
+        c = new ConfiguracionDAO().Obtener(1);
+        
+        txtPrecioEntradaVip.setText(""+c.getPrecioVip());
+        
         LlenarTabla();
     }
 
@@ -194,12 +202,13 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnGuardarPrecioEntradaVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPrecioEntradaVipActionPerformed
-        if (!txtPrecioEntradaVip.getText().trim().isEmpty()) {
-            double precioVip = Double.parseDouble(txtPrecioEntradaVip.getText());
-            //ACTUALIZAR LA TABLA
-        } else {
-            JOptionPane.showMessageDialog(getRootPane(), "INGRESE UN PRECIO PARA ENTRADA VIP");
-        }
+//        if (!txtPrecioEntradaVip.getText().trim().isEmpty()) {
+//            double precioVip = Double.parseDouble(txtPrecioEntradaVip.getText());
+//            //ACTUALIZAR LA TABLA
+//        } else {
+//            JOptionPane.showMessageDialog(getRootPane(), "INGRESE UN PRECIO PARA ENTRADA VIP");
+//        }
+        JOptionPane.showMessageDialog(getRootPane(), "NO JODAS BURRO");
     }//GEN-LAST:event_btnGuardarPrecioEntradaVipActionPerformed
 
     /**

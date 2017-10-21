@@ -481,7 +481,7 @@ public class ConfigPrecioGeneral extends javax.swing.JFrame {
         try {
             con.conectar();
             String sql = "SELECT productopresentacion.idproductopresentacion, producto.nombre, productopresentacion.precio3\n"
-                    + "FROM mrjuerga_barras.productopresentacion\n"
+                    + "FROM productopresentacion\n"
                     + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
                     + "where stock3 = 1 and idalmacen = 2";
 

@@ -1,6 +1,7 @@
 package Vista;
 
 import Controlador.AbrirCajaControl;
+import Controlador.ColumnasTablas;
 import Controlador.Cronometro;
 import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
@@ -63,7 +64,6 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
 
     public EntradaGeneralVista() {
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -411,7 +411,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 btnCobrarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 820, 710, 110));
+        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 820, 710, 110));
 
         txtTotalCobrar.setEditable(false);
         txtTotalCobrar.setBackground(new java.awt.Color(0, 102, 102));
@@ -424,37 +424,37 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 txtTotalCobrarActionPerformed(evt);
             }
         });
-        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 680, 450, 130));
+        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 680, 450, 130));
 
         jLabel13.setFont(new java.awt.Font("Consolas", 1, 60)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("TOTAL");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(335, 681, 190, 130));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 680, 190, 130));
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("S/.");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 680, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 680, -1, -1));
 
         lblProducto.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
         lblProducto.setForeground(new java.awt.Color(255, 255, 255));
         lblProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jPanel3.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 610, 710, 50));
+        jPanel3.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 610, 710, 50));
 
         txtNumPersonas.setEditable(false);
         txtNumPersonas.setBackground(new java.awt.Color(0, 102, 102));
         txtNumPersonas.setFont(new java.awt.Font("Consolas", 0, 60)); // NOI18N
         txtNumPersonas.setForeground(new java.awt.Color(255, 255, 255));
         txtNumPersonas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel3.add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 710, 110));
+        jPanel3.add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 710, 110));
 
         jLabel4.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("CANTIDAD");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, 120, 20));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, 120, 20));
 
-        tblProductos.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        tblProductos.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -466,7 +466,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblProductos.setRowHeight(25);
+        tblProductos.setRowHeight(40);
         tblProductos.setRowMargin(2);
         tblProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -475,7 +475,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblProductos);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, 710, 430));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 970, 430));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 1200, 950));
 
@@ -547,7 +547,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 int numerodeCopias = ve.getNumCovers();
                 for (int i = 1; i <= numerodeCopias; i++) {
                     pp = new ProductoPresentacionDAO().Obtener(producto);
-                    System.out.println("EL ID DE PROD A ANALIZAR ES: "+pp.getIdProducto());
+                    System.out.println("EL ID DE PROD A ANALIZAR ES: " + pp.getIdProducto());
                     StockBebidasPreparadas sbp = new StockBebidasPreparadas(pp.getIdProducto(), 2);
                     sbp.updateStockVenta();
                     mrv2.exportarADocxConCopia("covers" + i + ".docx");
@@ -555,6 +555,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 txtNumPersonas.setText("");
                 txtTotalCobrar.setText("");
                 lblProducto.setText("");
+                tblProductos.clearSelection();
                 producto = c.getIdProfuctoDefecto();
             }
 
@@ -649,7 +650,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
 
             producto = Integer.parseInt(tblProductos.getValueAt(fila, 0).toString());
 
-            double precio = Double.parseDouble(tblProductos.getValueAt(fila, 2).toString());
+            double precio = Double.parseDouble(tblProductos.getValueAt(fila, 3).toString());
             double cantidad = Double.parseDouble(txtNumPersonas.getText());
             lblProducto.setText(tblProductos.getValueAt(fila, 1).toString());
             txtTotalCobrar.setText("" + (precio * cantidad));
@@ -743,7 +744,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void titulos() {
-        String titulos[] = {"COD", "PRODUCTO", "PRECIO"};
+        String titulos[] = {"COD", "PRODUCTO", "PRESENTACION", "PRECIO"};
         modelo = new DefaultTableModel(null, titulos);
         tblProductos.setModel(modelo);
     }
@@ -752,24 +753,28 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
         Conexion con = new Conexion();
         try {
             con.conectar();
-            String sql = "SELECT productopresentacion.idproductopresentacion, producto.nombre, productopresentacion.precio3\n"
-                    + "FROM mrjuerga_barras.productopresentacion\n"
+            String sql = "SELECT productopresentacion.idproductopresentacion, producto.nombre,presentacion.descripcion ,productopresentacion.precio3\n"
+                    + "FROM productopresentacion\n"
                     + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
+                    + "inner join presentacion on productopresentacion.idpresentacion = presentacion.idpresentacion\n"
                     + "where stock3 = 1 and idalmacen = 2";
 
             PreparedStatement pst = con.getConexion().prepareStatement(sql);
             ResultSet res = pst.executeQuery();
 
-            Object datos[] = new Object[3];
+            Object datos[] = new Object[4];
 
             while (res.next()) {
                 datos[0] = res.getInt(1);
                 datos[1] = res.getString(2);
-                datos[2] = res.getDouble(3);
+                datos[2] = res.getString(3);
+                datos[3] = res.getDouble(4);
                 modelo.addRow(datos);
             }
 
             tblProductos.setModel(modelo);
+
+            new ColumnasTablas().cuatroColumnas(tblProductos, 60, 450,180 ,80);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {

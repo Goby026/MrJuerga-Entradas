@@ -1,28 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controlador;
 
 import Modelo.Caja;
 import Modelo.MySQLDAO.CajaDAO;
-//import Modelo.Presentacion;
-//import Modelo.PresentacionDAO;
 import Modelo.Producto;
 import Modelo.MySQLDAO.ProductoDAO;
-//import Modelo.ProductoPresentacion;
-//import Modelo.ProductoPresentacionDAO;
 import Modelo.Usuario;
 import Modelo.MySQLDAO.UsuarioDAO;
 import Modelo.Venta;
 import Modelo.MySQLDAO.VentaDAO;
-//import Modelo.VentaProducto;
-//import Modelo.VentaProductoDAO;
-//import Modelo.VentaEntrada;
-//import Modelo.VentaEntradaDAO;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,13 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AnulacionesControl {
 
-    DefaultTableModel modeloDetalle;
-
-    public void cargarTitulosTabla(JTable tabla) {
-        String titulos[] = {"PRODUCTO","PRESENTACION" ,"PRECIO", "CANTIDAD", "SUBTOTAL"};
-        modeloDetalle = new DefaultTableModel(null, titulos);
-        tabla.setModel(modeloDetalle);
-    }
+    
 
     public String[] CargarDatos(int numboleta) throws Exception {
         try {
@@ -244,12 +224,6 @@ public class AnulacionesControl {
 //        }
 //    }
 
-    public void limpiarTabla(JTable tabla) {
-        for (int i = 0; i < tabla.getRowCount(); i++) {
-            modeloDetalle.removeRow(i);
-            i -= 1;
-        }
-        cargarTitulosTabla(tabla);
-    }
+    
 
 }

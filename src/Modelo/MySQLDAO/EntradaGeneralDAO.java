@@ -148,7 +148,34 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
 
     @Override
     public EntradaGeneral Obtener(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntradaGeneral v = null;
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("select * from EntradaGeneral where identradageneral = ?");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                v = new EntradaGeneral();
+                v.setIdEntradaGeneral(rs.getInt(1));
+                v.setFecha(rs.getString(2));
+                v.setHora(rs.getString(3));
+                v.setIdUsuario(rs.getInt(4));
+                v.setIdCliente(rs.getInt(5));
+                v.setIdTipoComprobante(rs.getInt(6));
+                v.setEstado(rs.getInt(7));
+                v.setTipopago(rs.getInt(8));
+                v.setnOperacion(rs.getString(9));
+                v.setIdCaja(rs.getInt(10));
+                v.setIdFlujoCaja(rs.getInt(11));
+            }
+            rs.close();
+            pst.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return v;
     }
     
     public int getIdDeUltimaEntradaGeneralRegistrada() throws Exception{

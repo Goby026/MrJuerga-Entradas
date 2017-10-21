@@ -49,7 +49,7 @@ public class CerrarCaja extends javax.swing.JFrame {
             //txtBalance.setText("" + calcularBalanceTotal());
             double total = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText());
             lblIngresos.setText("" + total);
-            lblTotalEfectivo.setText(""+total);
+            lblTotalEfectivo.setText("" + total);
         } else {
             lblEstado.setText("CAJA CERRADA");
         }
@@ -428,17 +428,15 @@ public class CerrarCaja extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "SE CERRO LA CAJA CORRECTAMENTE");
                             //datosIniciales(txtUsuario.getText());
                             int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(txtUsuario.getText()), new CerrarCajaControl().getIdCaja(lblCaja.getText()));
-                            if (lblCaja.getText().equals("ENTRADA GENERAL")) {
-                                parametros.put("idflujo", idFlujoCaja);
-                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral.jrxml", parametros, getPageSize());
-                                mrv.setNombreArchivo("CierreEntradasGeneral");
-                                mrv.exportarADocxConCopia("CierreEntradasGeneral.docx");
-                            } else {
-                                parametros.put("idflujo", idFlujoCaja);
-                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIP.jrxml", parametros, getPageSize());
-                                mrv.setNombreArchivo("CierreEntradasGeneral");
-                                mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
-                            }
+
+                            parametros.put("idflujo", idFlujoCaja);
+                            parametros.put("visa", txtVisa.getText());
+                            parametros.put("master", txtMasterCard.getText());
+                            parametros.put("subTotal", lblIngresos.getText());
+                            parametros.put("total", lblTotalEfectivo.getText());
+                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral.jrxml", parametros, getPageSize());
+                            mrv.setNombreArchivo("CierreEntradasGeneral");
+                            mrv.exportarADocxConCopia("CierreEntradasGeneral.docx");
 
                             dispose();
                         } else {
@@ -464,13 +462,13 @@ public class CerrarCaja extends javax.swing.JFrame {
         if (opc == 1) {
             txtVisa.setText(txtMontos.getText());
             txtMontos.setText("");
-            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));            
-            lblTotalEfectivo.setText(""+ subtotal);
+            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
+            lblTotalEfectivo.setText("" + subtotal);
             panelMontos.dispose();
         } else {
             txtMasterCard.setText(txtMontos.getText());
             txtMontos.setText("");
-            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));            
+            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
             lblTotalEfectivo.setText("" + subtotal);
             panelMontos.dispose();
         }

@@ -13,6 +13,8 @@ import Modelo.FlujoCaja;
 import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.MySQLDAO.VentaNotaDAO;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -115,6 +117,7 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        btnResumenNotaPedido = new javax.swing.JButton();
 
         panelMontos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -294,7 +297,7 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
 
         lblTotalEfectivo.setFont(new java.awt.Font("Consolas", 0, 36)); // NOI18N
         lblTotalEfectivo.setForeground(new java.awt.Color(0, 102, 51));
-        getContentPane().add(lblTotalEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 490, 410, 50));
+        getContentPane().add(lblTotalEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 540, 280, 50));
 
         btnCerrarCaja.setBackground(new java.awt.Color(255, 0, 0));
         btnCerrarCaja.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
@@ -306,7 +309,7 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
                 btnCerrarCajaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCerrarCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 570, 470, 110));
+        getContentPane().add(btnCerrarCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 660, 470, 110));
 
         lblFecha.setFont(new java.awt.Font("Consolas", 0, 18)); // NOI18N
         lblFecha.setText("____________");
@@ -364,11 +367,13 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         txtVisa.setEditable(false);
         txtVisa.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         txtVisa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtVisa.setText("0.0");
         jPanel3.add(txtVisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 120, 30));
 
         txtMasterCard.setEditable(false);
         txtMasterCard.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
         txtMasterCard.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMasterCard.setText("0.0");
         jPanel3.add(txtMasterCard, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 120, 30));
 
         jLabel33.setFont(new java.awt.Font("Consolas", 0, 16)); // NOI18N
@@ -412,6 +417,15 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         jLabel19.setText("TOTAL EFECTIVO");
         getContentPane().add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 490, 300, 50));
 
+        btnResumenNotaPedido.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        btnResumenNotaPedido.setText("RESUMEN NOTA DE PEDIDO");
+        btnResumenNotaPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResumenNotaPedidoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnResumenNotaPedido, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 610, 470, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -438,20 +452,14 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, "SE CERRO LA CAJA CORRECTAMENTE");
                             //datosIniciales(txtUsuario.getText());
                             int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(txtUsuario.getText()), new CerrarCajaControl().getIdCaja(lblCaja.getText()));
-                            if (lblCaja.getText().equals("ENTRADA GENERAL")) {
-                                parametros.put("idflujo", idFlujoCaja);
-                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral.jrxml", parametros, getPageSize());
-                                mrv.setNombreArchivo("CierreEntradasGeneral");
-                                mrv.exportarADocxConCopia("CierreEntradasGeneral.docx");
-                            } else {
-                                parametros.put("idflujo", idFlujoCaja);
-                                parametros.put("usuario", txtUsuario.getText());
-                                parametros.put("total", lblIngresos.getText());
-                                parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
-                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIP.jrxml", parametros, getPageSizeVIP());
-                                mrv.setNombreArchivo("CierreEntradasGeneral");
-                                mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
-                            }
+
+                            parametros.put("idflujo", idFlujoCaja);
+                            parametros.put("usuario", txtUsuario.getText());
+                            parametros.put("total", lblIngresos.getText());
+                            parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
+                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIP.jrxml", parametros, getPageSizeVIP());
+                            mrv.setNombreArchivo("CierreEntradasGeneral");
+                            mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
 
                             dispose();
                         } else {
@@ -471,14 +479,28 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
 
     private void jarraCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarraCalcularActionPerformed
 
+//        if (opc == 1) {
+//            txtVisa.setText(txtMontos.getText());
+//            txtMontos.setText("");
+//            panelMontos.dispose();
+//
+//        } else {
+//            txtMasterCard.setText(txtMontos.getText());
+//            txtMontos.setText("");
+//            panelMontos.dispose();
+//        }
+        double subtotal = 0.0;
         if (opc == 1) {
             txtVisa.setText(txtMontos.getText());
             txtMontos.setText("");
+            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
+            lblTotalEfectivo.setText("" + subtotal);
             panelMontos.dispose();
-
         } else {
             txtMasterCard.setText(txtMontos.getText());
             txtMontos.setText("");
+            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
+            lblTotalEfectivo.setText("" + subtotal);
             panelMontos.dispose();
         }
     }//GEN-LAST:event_jarraCalcularActionPerformed
@@ -554,6 +576,19 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         panelMontos.setBounds(700, 150, 268, 458);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnResumenNotaPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResumenNotaPedidoActionPerformed
+        try {
+            int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(txtUsuario.getText()), new CerrarCajaControl().getIdCaja(lblCaja.getText()));
+            parametros.put("idflujo", idFlujoCaja);
+            parametros.put("usuario", txtUsuario.getText());
+            parametros.put("caja", lblCaja.getText());
+            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\ResumenProductosNotaPedido.jrxml", parametros);
+            mrv.exportarAPdf();
+        } catch (Exception ex) {
+            Logger.getLogger(CerrarCajaVIP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnResumenNotaPedidoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -590,6 +625,7 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCerrarCaja;
+    private javax.swing.JButton btnResumenNotaPedido;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

@@ -616,90 +616,96 @@ public class VipNotaPedido extends javax.swing.JFrame {
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         try {
             int fila = tblBox.getSelectedRow();
-            if (!txtNumPersonas.getText().trim().isEmpty()) {
-                //REGISTRAR LA NOTA DE PEDIDO
-                NotaPedido np = new NotaPedido();
-                np.setFecha(new ManejadorFechas().getFechaActualMySQL());
-                np.setHora(new ManejadorFechas().getHoraActual());
-                np.setIdUsuario(new UsuarioDAO().getIdUsuario(txtUsuario.getText()));
-                np.setIdcliente(1);
-                np.setIdTipoComprobante(3);//nota de pedido
-                np.setEstado(1);//activo
-                np.setTipopago(1);//efectivo
-                np.setnOperacion("0");//sin operacion
-                np.setIdcaja(2);
-                //System.out.println(v.getIdcaja());
-                np.setIdFlujoCaja(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
-                System.out.println(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
-                //v.setIdFlujoCaja(2);
+            if (fila >= 0) {
 
-                NotaPedidoDAO npdao = new NotaPedidoDAO();
-                if (npdao.registrar(np)) {
-                    System.out.println("Nota de pedido registrada");
-                }
+                if (!txtNumPersonas.getText().trim().isEmpty()) {
+                    //REGISTRAR LA NOTA DE PEDIDO
+                    NotaPedido np = new NotaPedido();
+                    np.setFecha(new ManejadorFechas().getFechaActualMySQL());
+                    np.setHora(new ManejadorFechas().getHoraActual());
+                    np.setIdUsuario(new UsuarioDAO().getIdUsuario(txtUsuario.getText()));
+                    np.setIdcliente(1);
+                    np.setIdTipoComprobante(3);//nota de pedido
+                    np.setEstado(1);//activo
+                    np.setTipopago(1);//efectivo
+                    np.setnOperacion("0");//sin operacion
+                    np.setIdcaja(2);
+                    //System.out.println(v.getIdcaja());
+                    np.setIdFlujoCaja(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
+                    System.out.println(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
+                    //v.setIdFlujoCaja(2);
 
-                //segundo se registra la ventaNota
-                VentaNota vn = new VentaNota();
-                int ultimaNotaPedido = npdao.ultimaNotaPedido();
-                System.out.println(ultimaNotaPedido);
-                vn.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
-                vn.setNumCovers(Integer.parseInt(txtNumPersonas.getText()));
-                vn.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
-                if (fila >= 0) {
-                    vn.setTipoEntrada("BOX");
-                    ProdPromocion pp = new ProdPromocionDAO().obtener(Integer.parseInt(tblBox.getValueAt(fila, 0).toString()), 2);
-                    vn.setIdProdPromocion(pp.getIdProdPromocion());
-                } else {
-                    vn.setTipoEntrada("ENTRADA VIP");
-                    //vn.setIdProdPromocion(//); MODAL PARA ELEGIR PRODUCTO DE ENTRADA VIP
-                }
+                    NotaPedidoDAO npdao = new NotaPedidoDAO();
+                    if (npdao.registrar(np)) {
+                        System.out.println("Nota de pedido registrada");
+                    }
 
-                vn.setIdNotaPedido(ultimaNotaPedido);
+                    //segundo se registra la ventaNota
+                    VentaNota vn = new VentaNota();
+                    int ultimaNotaPedido = npdao.ultimaNotaPedido();
+                    System.out.println(ultimaNotaPedido);
+                    vn.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
+                    vn.setNumCovers(Integer.parseInt(txtNumPersonas.getText()));
+                    vn.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
+                    if (fila >= 0) {
+                        vn.setTipoEntrada("BOX");
+                        ProdPromocion pp = new ProdPromocionDAO().obtener(Integer.parseInt(tblBox.getValueAt(fila, 0).toString()), 2);
+                        vn.setIdProdPromocion(pp.getIdProdPromocion());
+                    } else {
+                        vn.setTipoEntrada("ENTRADA VIP");
+                        //vn.setIdProdPromocion(//); MODAL PARA ELEGIR PRODUCTO DE ENTRADA VIP
+                    }
 
-                VentaNotaDAO vndao = new VentaNotaDAO();
-                if (vndao.registrar(vn)) {
-                    System.out.println("ingreso al if");
-                    //RESTAR STOCK
-                    restarStock(vn.getNumCovers());
+                    vn.setIdNotaPedido(ultimaNotaPedido);
+
+                    VentaNotaDAO vndao = new VentaNotaDAO();
+                    if (vndao.registrar(vn)) {
+                        System.out.println("ingreso al if");
+                        //RESTAR STOCK
+                        restarStock(vn.getNumCovers());
 
 //                JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
-                    if (fila >= 0) {
-                        //box
-                        parametros.put("producto", lblProducto.getText());
-                        parametros.put("personas", Integer.parseInt(txtNumPersonas.getText()));
-                        parametros.put("total", Double.parseDouble(txtTotalCobrar.getText()));
-                        parametros.put("nom_cajero", txtUsuario.getText());
-                        parametros.put("idventa", ultimaNotaPedido);
-                        mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\NotaEntradaBOX.jrxml", parametros, getPageSize());
-                        mrv.setNombreArchivo("NotaBOX");
-                        //mrv.exportarADocxConCopia("Notabox.docx");
-                        try {
-                            mrv.exportarAPdfConCopia();
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                        }
+                        if (fila >= 0) {
+                            //box
+                            parametros.put("producto", lblProducto.getText());
+                            parametros.put("personas", Integer.parseInt(txtNumPersonas.getText()));
+                            parametros.put("total", Double.parseDouble(txtTotalCobrar.getText()));
+                            parametros.put("nom_cajero", txtUsuario.getText());
+                            parametros.put("idventa", ultimaNotaPedido);
+                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\NotaEntradaBOX.jrxml", parametros, getPageSize());
+                            mrv.setNombreArchivo("NotaBOX");
+                            //mrv.exportarADocxConCopia("Notabox.docx");
+                            try {
+                                mrv.exportarAPdfConCopia();
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
 
-                    } else {
-                        //entrada vip
-                        parametros.put("personas", Integer.parseInt(txtNumPersonas.getText()));
-                        parametros.put("nom_cajero", txtUsuario.getText());
-                        parametros.put("idventa", ultimaNotaPedido);
-                        mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\NotaEntradaVip.jrxml", parametros, getPageSize());
-                        mrv.setNombreArchivo("NotaVIP");
-                        //mrv.exportarADocxConCopia("Notavip.docx");
-                        try {
-                            mrv.exportarAPdfConCopia();
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
+                        } else {
+                            //entrada vip
+                            parametros.put("personas", Integer.parseInt(txtNumPersonas.getText()));
+                            parametros.put("nom_cajero", txtUsuario.getText());
+                            parametros.put("idventa", ultimaNotaPedido);
+                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\NotaEntradaVip.jrxml", parametros, getPageSize());
+                            mrv.setNombreArchivo("NotaVIP");
+                            //mrv.exportarADocxConCopia("Notavip.docx");
+                            try {
+                                mrv.exportarAPdfConCopia();
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
                         }
-                    }
 //                    desseleccionarBotones();
-                    btnDel.doClick();
+                        btnDel.doClick();
 
-                    LlenarTabla();
+                        LlenarTabla();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(getRootPane(), "INGRESE NUMERO DE PERSONAS");
                 }
+
             } else {
-                JOptionPane.showMessageDialog(getRootPane(), "INGRESE NUMERO DE PERSONAS");
+                JOptionPane.showMessageDialog(null, "INDIQUE PRODUCTO DE ENTRADA");
             }
 
         } catch (Exception ex) {
@@ -717,8 +723,9 @@ public class VipNotaPedido extends javax.swing.JFrame {
 
     private void tblBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBoxMouseClicked
         int fila = tblBox.getSelectedRow();
+        double cantidad = Double.parseDouble(txtNumPersonas.getText());
         lblProducto.setText(tblBox.getValueAt(fila, 1).toString());
-        txtTotalCobrar.setText(tblBox.getValueAt(fila, 2).toString());
+        txtTotalCobrar.setText(""+(cantidad * Double.parseDouble(tblBox.getValueAt(fila, 2).toString())));
     }//GEN-LAST:event_tblBoxMouseClicked
     /**
      * @param args the command line arguments
