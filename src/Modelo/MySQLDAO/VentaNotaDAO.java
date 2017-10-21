@@ -176,6 +176,8 @@ public class VentaNotaDAO extends Conexion implements VentaNotaCRUD {
             }
         } catch (Exception e) {
             throw e;
+        }finally{
+            this.cerrar();
         }
         return 0;
     }

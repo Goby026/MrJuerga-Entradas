@@ -1,9 +1,16 @@
 package Vista;
 
+import Controlador.AbrirCajaControl;
+import Controlador.CerrarCajaControl;
+import Controlador.ColumnasTablas;
 import Controlador.MyiReportVisor;
 import Controlador.EntradaGeneralControl;
-import Controlador.ResumenEntradasGeneralControl;
+import Modelo.Conexion;
+import Modelo.MySQLDAO.FlujoCajaDAO;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashMap;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -11,21 +18,24 @@ import java.util.HashMap;
  */
 public class ResumenEntradasGeneral extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ResumenEntradasGeneral
-     *
-     * @throws java.lang.Exception
-     */
+    DefaultTableModel modelo;
     MyiReportVisor mrv;
     HashMap parametros = new HashMap();
-    ResumenEntradasGeneralControl reg;
 
     public ResumenEntradasGeneral(String Usuario) throws Exception {
-        
+
         initComponents();
         setLocationRelativeTo(null);
-        reg = new ResumenEntradasGeneralControl(this, Usuario);
-        
+
+        try {
+            txtUsuario.setText(Usuario);
+            txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(Usuario));
+            titulosColumnas();
+            int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(Usuario), new CerrarCajaControl().getIdCaja(txtCaja.getText()));
+            LlenarTablaBuscarProductos(idFlujoCaja);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }
 
@@ -197,4 +207,42 @@ public class ResumenEntradasGeneral extends javax.swing.JFrame {
     public javax.swing.JTextField txtHora;
     public javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
+
+    public void titulosColumnas() {
+        String cabecera[] = {"VENTA", "PRODUCTO", "MONTO"};
+        modelo = new DefaultTableModel(null, cabecera);
+        tblEntradas.setModel(modelo);
+    }
+
+    public void LlenarTablaBuscarProductos(int idFlujoCaja) throws Exception {
+        Conexion con = new Conexion();
+        try {
+            con.conectar();
+            String sql = "select entradageneral.identradageneral, producto.nombre, ventaentrada.total\n"
+                    + "from entradageneral \n"
+                    + "inner join ventaentrada on entradageneral.identradageneral = ventaentrada.venta_idventa\n"
+                    + "inner join productopresentacion on ventaentrada.idproducto = productopresentacion.idproductopresentacion\n"
+                    + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
+                    + "where idflujocaja = ?";
+            
+            PreparedStatement pst = con.getConexion().prepareStatement(sql);
+            pst.setInt(1, idFlujoCaja);
+            ResultSet res = pst.executeQuery();
+            
+            Object datos[] = new Object[3];
+
+            while (res.next()) {
+                datos[0] = res.getInt(1);
+                datos[1] = res.getString(2);
+                datos[2] = res.getDouble(3);
+                modelo.addRow(datos);
+            }
+            tblEntradas.setModel(modelo);
+            new ColumnasTablas().tresColumnas(tblEntradas, 10, 100, 100);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

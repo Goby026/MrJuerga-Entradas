@@ -9,9 +9,13 @@ import Controlador.AbrirCajaControl;
 import Controlador.CerrarCajaControl;
 import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
+import Modelo.Conexion;
 import Modelo.FlujoCaja;
 import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.MySQLDAO.VentaNotaDAO;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -453,13 +457,25 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
                             //datosIniciales(txtUsuario.getText());
                             int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(txtUsuario.getText()), new CerrarCajaControl().getIdCaja(lblCaja.getText()));
 
+                            if (validarVentaEntradas(idFlujoCaja) > 0) {
+                                parametros.put("idflujo", idFlujoCaja);
+                                parametros.put("usuario", txtUsuario.getText());
+                                parametros.put("total", lblIngresos.getText());
+                                parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
+                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIP.jrxml", parametros, getPageSizeVIP());
+                                mrv.setNombreArchivo("CierreEntradasGeneral");
+                                mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
+                            }
+
                             parametros.put("idflujo", idFlujoCaja);
                             parametros.put("usuario", txtUsuario.getText());
+                            parametros.put("visa", txtVisa.getText());
+                            parametros.put("master", txtMasterCard.getText());                            
                             parametros.put("total", lblIngresos.getText());
                             parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
-                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIP.jrxml", parametros, getPageSizeVIP());
-                            mrv.setNombreArchivo("CierreEntradasGeneral");
-                            mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
+                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIPNotaPedido.jrxml", parametros, getPageSizeVIP());
+                            mrv.setNombreArchivo("CierreEntradasVipNota");
+                            mrv.exportarADocxConCopia("CierreEntradasVIPNota.docx");
 
                             dispose();
                         } else {
@@ -674,6 +690,30 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsuario;
     private javax.swing.JTextField txtVisa;
     // End of variables declaration//GEN-END:variables
+
+    //METODO PARA VALIDAR SI SE REGISTRARON VENTAS VIP
+    private int validarVentaEntradas(int idFlujoCaja) throws SQLException {
+        Conexion con = new Conexion();
+        int total = 0;
+        try {
+            con.conectar();
+            String sql = "SELECT count(idEntradaVip) FROM entradavip\n"
+                    + "where idflujocaja = ?";
+            PreparedStatement pst = con.getConexion().prepareStatement(sql);
+            pst.setInt(1, idFlujoCaja);
+            ResultSet res = pst.executeQuery();
+            if (res.getInt(1) > 0) {
+                total++;
+            }
+            pst.close();
+            res.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            con.cerrar();
+        }
+        return total;
+    }
 
     //METODO PARA LOS TAMAÑOS DE LA IMPRESION
     private int getPageSize() {
