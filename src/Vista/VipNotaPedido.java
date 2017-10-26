@@ -39,6 +39,7 @@ public class VipNotaPedido extends javax.swing.JFrame {
     HashMap parametros = new HashMap();
     double costoVIP;
     VipNotaPedidoControl vnp = null;
+    int prod = 0;
 
     public VipNotaPedido(String usuario) throws Exception {
         initComponents();
@@ -68,15 +69,6 @@ public class VipNotaPedido extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        formProductoEntradaVip = new javax.swing.JDialog();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
-        jToggleButton5 = new javax.swing.JToggleButton();
-        jToggleButton6 = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -114,32 +106,6 @@ public class VipNotaPedido extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBox = new javax.swing.JTable();
-
-        formProductoEntradaVip.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jToggleButton1.setText("PRODUCTO 3");
-        formProductoEntradaVip.getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, 230, 270));
-
-        jToggleButton2.setText("PRODUCTO 1");
-        formProductoEntradaVip.getContentPane().add(jToggleButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 230, 270));
-
-        jToggleButton3.setText("PRODUCTO 2");
-        formProductoEntradaVip.getContentPane().add(jToggleButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 230, 270));
-
-        jToggleButton4.setText("PRODUCTO 4");
-        formProductoEntradaVip.getContentPane().add(jToggleButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 230, 270));
-
-        jToggleButton5.setText("PRODUCTO 4");
-        formProductoEntradaVip.getContentPane().add(jToggleButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 230, 270));
-
-        jToggleButton6.setText("PRODUCTO 5");
-        formProductoEntradaVip.getContentPane().add(jToggleButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, 230, 270));
-
-        jButton1.setText("ACEPTAR");
-        formProductoEntradaVip.getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 660, 220, 50));
-
-        jButton2.setText("CANCELAR");
-        formProductoEntradaVip.getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 660, 210, 50));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ENTRADAS VIP - BOX");
@@ -566,7 +532,6 @@ public class VipNotaPedido extends javax.swing.JFrame {
         int cantPersonas = Integer.parseInt(txtNumPersonas.getText());
         lblProducto.setText("ENTRADA VIP");
         txtTotalCobrar.setText("" + new ProductoControl().total(cantPersonas, costoVIP));
-
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
@@ -649,7 +614,8 @@ public class VipNotaPedido extends javax.swing.JFrame {
                     vn.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
                     if (fila >= 0) {
                         vn.setTipoEntrada("BOX");
-                        ProdPromocion pp = new ProdPromocionDAO().obtener(Integer.parseInt(tblBox.getValueAt(fila, 0).toString()), 2);
+                        //ProdPromocion pp = new ProdPromocionDAO().obtener(Integer.parseInt(tblBox.getValueAt(fila, 0).toString()), 2);
+                        ProdPromocion pp = new ProdPromocionDAO().obtener(prod, 2);
                         vn.setIdProdPromocion(pp.getIdProdPromocion());
                     } else {
                         vn.setTipoEntrada("ENTRADA VIP");
@@ -723,9 +689,11 @@ public class VipNotaPedido extends javax.swing.JFrame {
 
     private void tblBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBoxMouseClicked
         int fila = tblBox.getSelectedRow();
+        prod = Integer.parseInt(tblBox.getValueAt(fila, 0).toString());
         double cantidad = Double.parseDouble(txtNumPersonas.getText());
         lblProducto.setText(tblBox.getValueAt(fila, 1).toString());
-        txtTotalCobrar.setText(""+(cantidad * Double.parseDouble(tblBox.getValueAt(fila, 2).toString())));
+        txtTotalCobrar.setText("" + (cantidad * Double.parseDouble(tblBox.getValueAt(fila, 2).toString())));
+
     }//GEN-LAST:event_tblBoxMouseClicked
     /**
      * @param args the command line arguments
@@ -775,9 +743,6 @@ public class VipNotaPedido extends javax.swing.JFrame {
     public javax.swing.JButton btn9;
     public javax.swing.JButton btnCobrar;
     public javax.swing.JButton btnDel;
-    private javax.swing.JDialog formProductoEntradaVip;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -795,12 +760,6 @@ public class VipNotaPedido extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
-    private javax.swing.JToggleButton jToggleButton5;
-    private javax.swing.JToggleButton jToggleButton6;
     public javax.swing.JLabel lblProducto;
     public javax.swing.JTable tblBox;
     private javax.swing.JTextField txtCaja;
@@ -859,13 +818,14 @@ public class VipNotaPedido extends javax.swing.JFrame {
 
     public boolean restarStock(double quantity) throws Exception {
         try {
-            int fila = tblBox.getSelectedRow();
-            int id = Integer.parseInt(tblBox.getValueAt(fila, 0).toString());
-            System.out.println("id: " + id);
+            //int fila = tblBox.getSelectedRow();
+            //int id = Integer.parseInt(tblBox.getValueAt(fila, 0).toString());
+
+            System.out.println("id: " + prod);
             ProductoPresentacionDAO pdao = new ProductoPresentacionDAO();
-            double stock = pdao.getStockProductoPresentacion(id, 2) - quantity;//-------
+            double stock = pdao.getStockProductoPresentacion(prod, 2) - quantity;//-------
             System.out.println(stock);
-            pdao.modificar(id, stock, 2);//tercer parametro 1 => ventas reales ; 2=>nota de pedido
+            pdao.modificar(prod, stock, 2);//tercer parametro 1 => ventas reales ; 2=>nota de pedido
 
         } catch (Exception e) {
             throw e;

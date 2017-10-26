@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-10-21T01:55:40 -->
+<!-- 2017-10-21T19:59:08 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="215" pageHeight="842" columnWidth="169" leftMargin="26" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1912b1d8-e61d-40c2-910c-27c5bc36be0c">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -38,17 +38,17 @@
 	<detail>
 		<band height="63" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="170" height="20" uuid="990c07e4-81e5-410f-a8e7-d95490680a8f">
+				<reportElement x="0" y="0" width="170" height="23" uuid="990c07e4-81e5-410f-a8e7-d95490680a8f">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="16" pdfEncoding=""/>
+					<font fontName="Arial" size="20" pdfEncoding=""/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nombreCover}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="47" width="60" height="14" uuid="94c22d3b-34ef-4af7-ae88-f4af0ea3a966">
+				<reportElement x="110" y="45" width="60" height="18" uuid="94c22d3b-34ef-4af7-ae88-f4af0ea3a966">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
@@ -57,11 +57,11 @@
 				<textFieldExpression><![CDATA[$P{nroComprobante}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="0" y="20" width="170" height="25" uuid="754b1188-9a80-4e35-aff9-a5f9df342efd">
+				<reportElement x="0" y="23" width="170" height="22" uuid="754b1188-9a80-4e35-aff9-a5f9df342efd">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Arial" size="18" isBold="true"/>
+					<font fontName="Arial" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>

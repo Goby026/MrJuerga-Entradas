@@ -460,22 +460,24 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
                             if (validarVentaEntradas(idFlujoCaja) > 0) {
                                 parametros.put("idflujo", idFlujoCaja);
                                 parametros.put("usuario", txtUsuario.getText());
-                                parametros.put("total", lblIngresos.getText());
+                                parametros.put("total", lblTotalEfectivo.getText());
                                 parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
                                 mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIP.jrxml", parametros, getPageSizeVIP());
-                                mrv.setNombreArchivo("CierreEntradasGeneral");
-                                mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
+                                mrv.setNombreArchivo("CierreEntradasVip");
+                                //mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
+                                mrv.exportarAPdfConCopia();
                             }
 
                             parametros.put("idflujo", idFlujoCaja);
                             parametros.put("usuario", txtUsuario.getText());
                             parametros.put("visa", txtVisa.getText());
                             parametros.put("master", txtMasterCard.getText());                            
-                            parametros.put("total", lblIngresos.getText());
+                            parametros.put("total", lblTotalEfectivo.getText());
                             parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
                             mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIPNotaPedido.jrxml", parametros, getPageSizeVIP());
                             mrv.setNombreArchivo("CierreEntradasVipNota");
-                            mrv.exportarADocxConCopia("CierreEntradasVIPNota.docx");
+                            //mrv.exportarADocxConCopia("CierreEntradasVIPNota.docx");
+                            mrv.exportarAPdfConCopia();
 
                             dispose();
                         } else {
