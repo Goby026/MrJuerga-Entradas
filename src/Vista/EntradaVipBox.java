@@ -1,14 +1,16 @@
 package Vista;
 
 import Controlador.AbrirCajaControl;
+import Controlador.ColumnasTablas;
 import Controlador.Cronometro;
-import Controlador.EntradaVipControl;
 import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
 import Controlador.ProductoControl;
-import Controlador.EntradaGeneralControl;
+import Modelo.Conexion;
+import Modelo.EntradaVip;
 import Modelo.MySQLDAO.CajaDAO;
 import Modelo.MySQLDAO.ConfiguracionDAO;
+import Modelo.MySQLDAO.EntradaVipDAO;
 import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.MySQLDAO.UsuarioDAO;
 
@@ -16,22 +18,26 @@ import Modelo.Venta;
 import Modelo.MySQLDAO.VentaDAO;
 import Modelo.VentaEntrada;
 import Modelo.MySQLDAO.VentaEntradaDAO;
+import Modelo.MySQLDAO.VentaEntradaVipDAO;
+import Modelo.VentaEntradaVip;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author
+ * @author Grover
  */
 public class EntradaVipBox extends javax.swing.JFrame {
 
-    /**
-     * Creates new form EntradaVipBox
-     */
+    DefaultTableModel modelo = null;
     MyiReportVisor mrv;
     HashMap parametros = new HashMap();
     double costoVIP;
-    int producto;
+    int producto = 0;
 
     public EntradaVipBox(String usuario) throws Exception {
         initComponents();
@@ -42,58 +48,7 @@ public class EntradaVipBox extends javax.swing.JFrame {
         new Cronometro().iniciarCronometro(txtHora);
         txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
         costoVIP = new ConfiguracionDAO().getPrecios(2);
-        producto = 192;
-        botones();
-    }
-
-    private void botones() {
-        grupoBotones.add(btnBlackLabel);
-        grupoBotones.add(btnRedLabel);
-        grupoBotones.add(btnFlorDeCa);
-        grupoBotones.add(btnSmirnoffRojo);
-        grupoBotones.add(btnSmirnoffVerde);
-        grupoBotones.add(btnRusskaya);
-        grupoBotones.add(btnCapMorgan);
-        grupoBotones.add(btnVat69);
-        grupoBotones.add(btnGrants);
-        grupoBotones.add(btnHavanaClub);
-        grupoBotones.add(btnOldTimes);
-        grupoBotones.add(btnAppleton);
-        grupoBotones.add(btnBaccardi);
-        grupoBotones.add(btnChivasRegal);
-        grupoBotones.add(btnOldTimesBlack);
-        grupoBotones.add(btnVodkaSky);
-        grupoBotones.add(btnSolera);
-        grupoBotones.add(btnSelecto);
-        grupoBotones.add(btnRusskayaBlack);
-        grupoBotones.add(btnJagger);
-        grupoBotones.add(btnGrantsAzul);
-        grupoBotones.add(btnBarcelo);
-        grupoBotones.add(btnVodkaOrange);
-    }
-
-    public void desseleccionarBotones() {
-        btnBlackLabel.setSelected(false);
-        btnCapMorgan.setSelected(false);
-        btnFlorDeCa.setSelected(false);
-        btnRedLabel.setSelected(false);
-        btnRusskaya.setSelected(false);
-        btnSmirnoffRojo.setSelected(false);
-        btnSmirnoffVerde.setSelected(false);
-        btnRusskaya.setSelected(false);
-        btnCapMorgan.setSelected(false);
-        btnVat69.setSelected(false);
-        btnGrants.setSelected(false);
-        btnHavanaClub.setSelected(false);
-        btnOldTimes.setSelected(false);
-        btnAppleton.setSelected(false);
-        btnBaccardi.setSelected(false);
-        btnChivasRegal.setSelected(false);
-        btnOldTimesBlack.setSelected(false);
-        btnVodkaSky.setSelected(false);
-        btnSolera.setSelected(false);
-        btnSelecto.setSelected(false);
-        btnBarcelo.setSelected(false);
+        LlenarTabla();
     }
 
     public EntradaVipBox() {
@@ -143,30 +98,9 @@ public class EntradaVipBox extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNumPersonas = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        btnCapMorgan = new javax.swing.JToggleButton();
-        btnBlackLabel = new javax.swing.JToggleButton();
-        btnRedLabel = new javax.swing.JToggleButton();
-        btnFlorDeCa = new javax.swing.JToggleButton();
-        btnSmirnoffRojo = new javax.swing.JToggleButton();
-        btnSmirnoffVerde = new javax.swing.JToggleButton();
-        btnRusskaya = new javax.swing.JToggleButton();
         jLabel14 = new javax.swing.JLabel();
-        btnVat69 = new javax.swing.JToggleButton();
-        btnOldTimes = new javax.swing.JToggleButton();
-        btnAppleton = new javax.swing.JToggleButton();
-        btnHavanaClub = new javax.swing.JToggleButton();
-        btnBaccardi = new javax.swing.JToggleButton();
-        btnGrants = new javax.swing.JToggleButton();
-        btnChivasRegal = new javax.swing.JToggleButton();
-        btnOldTimesBlack = new javax.swing.JToggleButton();
-        btnVodkaSky = new javax.swing.JToggleButton();
-        btnSolera = new javax.swing.JToggleButton();
-        btnSelecto = new javax.swing.JToggleButton();
-        btnRusskayaBlack = new javax.swing.JToggleButton();
-        btnJagger = new javax.swing.JToggleButton();
-        btnGrantsAzul = new javax.swing.JToggleButton();
-        btnBarcelo = new javax.swing.JToggleButton();
-        btnVodkaOrange = new javax.swing.JToggleButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblBox = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("ENTRADAS VIP - BOX");
@@ -429,7 +363,7 @@ public class EntradaVipBox extends javax.swing.JFrame {
                 btnCobrarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 780, 730, 110));
+        jPanel3.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 820, 730, 110));
 
         txtTotalCobrar.setEditable(false);
         txtTotalCobrar.setBackground(new java.awt.Color(51, 51, 51));
@@ -442,18 +376,18 @@ public class EntradaVipBox extends javax.swing.JFrame {
                 txtTotalCobrarActionPerformed(evt);
             }
         });
-        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 620, 730, 140));
+        jPanel3.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 660, 730, 140));
 
         lblProducto.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
         lblProducto.setForeground(new java.awt.Color(255, 255, 255));
         lblProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblProducto.setText("PRODUCTO...");
-        jPanel3.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 510, 730, 50));
+        jPanel3.add(lblProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 550, 730, 50));
 
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("S/.");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 580, -1, -1));
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 620, -1, -1));
 
         txtNumPersonas.setEditable(false);
         txtNumPersonas.setBackground(new java.awt.Color(51, 51, 51));
@@ -465,270 +399,48 @@ public class EntradaVipBox extends javax.swing.JFrame {
                 txtNumPersonasActionPerformed(evt);
             }
         });
-        jPanel3.add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 730, 150));
+        jPanel3.add(txtNumPersonas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 250, 150));
 
         jLabel3.setFont(new java.awt.Font("Consolas", 0, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("NUMERO DE PERSONAS");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, 240, 30));
-
-        btnCapMorgan.setBackground(new java.awt.Color(255, 102, 51));
-        btnCapMorgan.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnCapMorgan.setForeground(new java.awt.Color(255, 255, 255));
-        btnCapMorgan.setText("CAP. MORGAN");
-        btnCapMorgan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCapMorganActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnCapMorgan, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 140, 50));
-
-        btnBlackLabel.setBackground(new java.awt.Color(255, 102, 51));
-        btnBlackLabel.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnBlackLabel.setForeground(new java.awt.Color(255, 255, 255));
-        btnBlackLabel.setText("BLACK LABEL");
-        btnBlackLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBlackLabelActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnBlackLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, 140, 50));
-
-        btnRedLabel.setBackground(new java.awt.Color(255, 102, 51));
-        btnRedLabel.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnRedLabel.setForeground(new java.awt.Color(255, 255, 255));
-        btnRedLabel.setText("RED LABEL");
-        btnRedLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRedLabelActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnRedLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 200, 140, 50));
-
-        btnFlorDeCa.setBackground(new java.awt.Color(255, 102, 51));
-        btnFlorDeCa.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnFlorDeCa.setForeground(new java.awt.Color(255, 255, 255));
-        btnFlorDeCa.setText("FLOR DE CAÑA");
-        btnFlorDeCa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFlorDeCaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnFlorDeCa, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 200, 140, 50));
-
-        btnSmirnoffRojo.setBackground(new java.awt.Color(255, 102, 51));
-        btnSmirnoffRojo.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnSmirnoffRojo.setForeground(new java.awt.Color(255, 255, 255));
-        btnSmirnoffRojo.setText("SMIRNOFF ROJO");
-        btnSmirnoffRojo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSmirnoffRojoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnSmirnoffRojo, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 140, 50));
-
-        btnSmirnoffVerde.setBackground(new java.awt.Color(255, 102, 51));
-        btnSmirnoffVerde.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnSmirnoffVerde.setForeground(new java.awt.Color(255, 255, 255));
-        btnSmirnoffVerde.setText("SMIRNOFF VERDE");
-        btnSmirnoffVerde.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSmirnoffVerdeActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnSmirnoffVerde, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, 140, 50));
-
-        btnRusskaya.setBackground(new java.awt.Color(255, 102, 51));
-        btnRusskaya.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnRusskaya.setForeground(new java.awt.Color(255, 255, 255));
-        btnRusskaya.setText("RUSSKAYA");
-        btnRusskaya.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRusskayaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnRusskaya, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 140, 50));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("CANTIDAD");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 250, 30));
 
         jLabel14.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("TOTAL");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, -1, -1));
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 620, -1, -1));
 
-        btnVat69.setBackground(new java.awt.Color(255, 102, 51));
-        btnVat69.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnVat69.setForeground(new java.awt.Color(255, 255, 255));
-        btnVat69.setText("VAT 69");
-        btnVat69.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVat69ActionPerformed(evt);
+        tblBox.setBackground(new java.awt.Color(153, 153, 255));
+        tblBox.setFont(new java.awt.Font("Microsoft Yi Baiti", 0, 25)); // NOI18N
+        tblBox.setForeground(new java.awt.Color(255, 255, 255));
+        tblBox.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblBox.setDragEnabled(true);
+        tblBox.setFocusable(false);
+        tblBox.setRowHeight(26);
+        tblBox.setRowMargin(2);
+        tblBox.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblBox.getTableHeader().setResizingAllowed(false);
+        tblBox.getTableHeader().setReorderingAllowed(false);
+        tblBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBoxMouseClicked(evt);
             }
         });
-        jPanel3.add(btnVat69, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 260, 140, 50));
+        jScrollPane1.setViewportView(tblBox);
 
-        btnOldTimes.setBackground(new java.awt.Color(255, 102, 51));
-        btnOldTimes.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnOldTimes.setForeground(new java.awt.Color(255, 255, 255));
-        btnOldTimes.setText("OLD TIMES RED");
-        btnOldTimes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOldTimesActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnOldTimes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, 140, 50));
-
-        btnAppleton.setBackground(new java.awt.Color(255, 102, 51));
-        btnAppleton.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnAppleton.setForeground(new java.awt.Color(255, 255, 255));
-        btnAppleton.setText("APPLETON");
-        btnAppleton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAppletonActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnAppleton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 140, 50));
-
-        btnHavanaClub.setBackground(new java.awt.Color(255, 102, 51));
-        btnHavanaClub.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnHavanaClub.setForeground(new java.awt.Color(255, 255, 255));
-        btnHavanaClub.setText("HAVANA CLUB");
-        btnHavanaClub.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHavanaClubActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnHavanaClub, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 320, 140, 50));
-
-        btnBaccardi.setBackground(new java.awt.Color(255, 102, 51));
-        btnBaccardi.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnBaccardi.setForeground(new java.awt.Color(255, 255, 255));
-        btnBaccardi.setText("BACARDI");
-        btnBaccardi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBaccardiActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnBaccardi, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, 140, 50));
-
-        btnGrants.setBackground(new java.awt.Color(255, 102, 51));
-        btnGrants.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnGrants.setForeground(new java.awt.Color(255, 255, 255));
-        btnGrants.setText("GRANTS");
-        btnGrants.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGrantsActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnGrants, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 380, 140, 50));
-
-        btnChivasRegal.setBackground(new java.awt.Color(255, 102, 51));
-        btnChivasRegal.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnChivasRegal.setForeground(new java.awt.Color(255, 255, 255));
-        btnChivasRegal.setText("CHIVAS REGAL");
-        btnChivasRegal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChivasRegalActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnChivasRegal, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, 140, 50));
-
-        btnOldTimesBlack.setBackground(new java.awt.Color(255, 102, 51));
-        btnOldTimesBlack.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnOldTimesBlack.setForeground(new java.awt.Color(255, 255, 255));
-        btnOldTimesBlack.setText("OLD TIMES BLACK");
-        btnOldTimesBlack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOldTimesBlackActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnOldTimesBlack, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 380, 140, 50));
-
-        btnVodkaSky.setBackground(new java.awt.Color(255, 102, 51));
-        btnVodkaSky.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnVodkaSky.setForeground(new java.awt.Color(255, 255, 255));
-        btnVodkaSky.setText("SKYY VODKA");
-        btnVodkaSky.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVodkaSkyActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnVodkaSky, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 380, 140, 50));
-
-        btnSolera.setBackground(new java.awt.Color(255, 102, 51));
-        btnSolera.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnSolera.setForeground(new java.awt.Color(255, 255, 255));
-        btnSolera.setText("CARTAVIO SOLERA");
-        btnSolera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSoleraActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnSolera, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 320, 140, 50));
-
-        btnSelecto.setBackground(new java.awt.Color(255, 102, 51));
-        btnSelecto.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnSelecto.setForeground(new java.awt.Color(255, 255, 255));
-        btnSelecto.setText("CARTAVIO SELECTO");
-        btnSelecto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnSelecto, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 260, 140, 50));
-
-        btnRusskayaBlack.setBackground(new java.awt.Color(255, 102, 51));
-        btnRusskayaBlack.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnRusskayaBlack.setForeground(new java.awt.Color(255, 255, 255));
-        btnRusskayaBlack.setText("RUSSKAYA BLACK");
-        btnRusskayaBlack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRusskayaBlackActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnRusskayaBlack, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 200, 140, 50));
-
-        btnJagger.setBackground(new java.awt.Color(255, 102, 51));
-        btnJagger.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnJagger.setForeground(new java.awt.Color(255, 255, 255));
-        btnJagger.setText("JAGERMEISTER");
-        btnJagger.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnJaggerActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnJagger, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 380, 140, 50));
-
-        btnGrantsAzul.setBackground(new java.awt.Color(255, 102, 51));
-        btnGrantsAzul.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnGrantsAzul.setForeground(new java.awt.Color(255, 255, 255));
-        btnGrantsAzul.setText("GRANTS AZUL");
-        btnGrantsAzul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGrantsAzulActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnGrantsAzul, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 200, 140, 50));
-
-        btnBarcelo.setBackground(new java.awt.Color(255, 102, 51));
-        btnBarcelo.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnBarcelo.setForeground(new java.awt.Color(255, 255, 255));
-        btnBarcelo.setText("RON BARCELO");
-        btnBarcelo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBarceloActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnBarcelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 260, 140, 50));
-
-        btnVodkaOrange.setBackground(new java.awt.Color(51, 102, 255));
-        btnVodkaOrange.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
-        btnVodkaOrange.setForeground(new java.awt.Color(255, 255, 255));
-        btnVodkaOrange.setText("VODKA ORANGE");
-        btnVodkaOrange.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVodkaOrangeActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnVodkaOrange, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 140, 50));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 730, 530));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 1210, 940));
 
@@ -854,19 +566,19 @@ public class EntradaVipBox extends javax.swing.JFrame {
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
-        desseleccionarBotones();
+
         txtNumPersonas.setText("");
 //        txtCovers.setText("");
         txtTotalCobrar.setText("");
         lblProducto.setText("ENTRADA VIP");
-        producto = 192;
+        tblBox.clearSelection();
     }//GEN-LAST:event_btnDelActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         try {
             if (!txtNumPersonas.getText().trim().isEmpty()) {
                 //REGISTRAR LA VENTA
-                Venta v = new Venta();
+                EntradaVip v = new EntradaVip();
                 v.setFecha(new ManejadorFechas().getFechaActualMySQL());
                 v.setHora(new ManejadorFechas().getHoraActual());
                 v.setIdUsuario(new UsuarioDAO().getIdUsuario(txtUsuario.getText()));
@@ -875,35 +587,35 @@ public class EntradaVipBox extends javax.swing.JFrame {
                 v.setEstado(1);
                 v.setTipopago(1);
                 v.setnOperacion("0");
-                v.setIdcaja(2);
-                System.out.println(v.getIdcaja());
+                v.setIdCaja(2);
+                System.out.println(v.getIdCaja());
                 v.setIdFlujoCaja(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
                 System.out.println(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
                 //v.setIdFlujoCaja(2);
 
-                VentaDAO vdao = new VentaDAO();
-                if (vdao.registrar(v)) {
-                    System.out.println("Venta registrada");
+                EntradaVipDAO vdao = new EntradaVipDAO();
+                if (vdao.Registrar(v)) {
+                    System.out.println("Entrada VIP registrada");
                 }
                 //segundo se registra las entradas
 
-                VentaEntrada ve = new VentaEntrada();
-    int idVenta =1;// new EntradaGeneralControl().getIdDeUltimaVentaRegistrada();
-                System.out.println(idVenta);
+                VentaEntradaVip ve = new VentaEntradaVip();
+                int idEntrada = new EntradaVipDAO().getIdUltimaEntradaVip();
+                System.out.println("Ultima entrada vip! "+idEntrada);
                 ve.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
-                ve.setNumCovers(0);
+                ve.setNumCovers(Integer.parseInt(txtNumPersonas.getText()));
                 ve.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
-                if (producto != 192) {
+                if (producto != 0) {
                     ve.setTipoEntrada("BOX");
                 } else {
                     ve.setTipoEntrada("ENTRADA VIP");
                 }
 
-                ve.setIdVenta(idVenta);
+                ve.setIdEntradaVip(idEntrada);
                 ve.setIdProd(producto);
 
-                VentaEntradaDAO vedao = new VentaEntradaDAO();
-                if (vedao.registrar(ve)) {
+                VentaEntradaVipDAO vedao = new VentaEntradaVipDAO();
+                if (vedao.Registrar(ve)) {
                     System.out.println("ingreso al if");
 //                JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
                     if (producto != 192) {
@@ -911,18 +623,17 @@ public class EntradaVipBox extends javax.swing.JFrame {
                         parametros.put("personas", Integer.parseInt(txtNumPersonas.getText()));
                         parametros.put("total", Double.parseDouble(txtTotalCobrar.getText()));
                         parametros.put("nom_cajero", txtUsuario.getText());
-                        parametros.put("idventa", idVenta);
+                        parametros.put("idventa", idEntrada);
                         mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaBOX.jrxml", parametros, getPageSize());
                         mrv.setNombreArchivo("BoletaBOX");
                         mrv.exportarADocxConCopia("boletabox.docx");
                     } else {
                         parametros.put("nom_cajero", txtUsuario.getText());
-                        parametros.put("idventa", idVenta);
+                        parametros.put("idventa", idEntrada);
                         mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaVip.jrxml", parametros, getPageSize());
                         mrv.setNombreArchivo("BoletaVIP");
                         mrv.exportarADocxConCopia("Boletavip.docx");
                     }
-                    desseleccionarBotones();
                     btnDel.doClick();
                 }
             } else {
@@ -942,239 +653,20 @@ public class EntradaVipBox extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalCobrarActionPerformed
 
-    private void btnBlackLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBlackLabelActionPerformed
-        //id de black label es: 90
-        if (btnBlackLabel.isSelected()) {
-            txtTotalCobrar.setText("" + 210);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY J.W BLACK LABEL");
-            producto = 90;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnBlackLabelActionPerformed
+    private void tblBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBoxMouseClicked
 
-    private void btnRedLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedLabelActionPerformed
-        //id es: 89
-        if (btnRedLabel.isSelected()) {
-            txtTotalCobrar.setText("" + 160);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY J.W RED LABEL");
-            producto = 89;
+        if (!txtNumPersonas.getText().trim().isEmpty()) {
+            int fila = tblBox.getSelectedRow();
+            producto = Integer.parseInt(tblBox.getValueAt(fila, 0).toString());
+            double cantidad = Double.parseDouble(txtNumPersonas.getText());
+            lblProducto.setText(tblBox.getValueAt(fila, 1).toString());
+            txtTotalCobrar.setText("" + (cantidad * Double.parseDouble(tblBox.getValueAt(fila, 2).toString())));
         } else {
-            lblProducto.setText("");
+            JOptionPane.showMessageDialog(getRootPane(), "INDIQUE CANTIDAD");
+            tblBox.clearSelection();
         }
-    }//GEN-LAST:event_btnRedLabelActionPerformed
 
-    private void btnFlorDeCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFlorDeCaActionPerformed
-        //id es: 89
-        if (btnFlorDeCa.isSelected()) {
-            txtTotalCobrar.setText("" + 130);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("RON FLOR DE CAÑA");
-            producto = 72;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnFlorDeCaActionPerformed
-
-    private void btnSmirnoffRojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSmirnoffRojoActionPerformed
-        if (btnSmirnoffRojo.isSelected()) {
-            txtTotalCobrar.setText("" + 140);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("VKA SMIRNOFF RED");
-            producto = 85;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnSmirnoffRojoActionPerformed
-
-    private void btnSmirnoffVerdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSmirnoffVerdeActionPerformed
-        if (btnSmirnoffVerde.isSelected()) {
-            txtTotalCobrar.setText("" + 140);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("VKA SMIRNOFF GREEN");
-            producto = 84;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnSmirnoffVerdeActionPerformed
-
-    private void btnRusskayaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRusskayaActionPerformed
-        if (btnRusskaya.isSelected()) {
-            txtTotalCobrar.setText("" + 100);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("VKA RUSSKAYA");
-            producto = 81;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnRusskayaActionPerformed
-
-    private void btnCapMorganActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapMorganActionPerformed
-        if (btnCapMorgan.isSelected()) {
-            txtTotalCobrar.setText("" + 110);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("RON CAP. MORGAN");
-            producto = 65;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnCapMorganActionPerformed
-
-    private void btnVat69ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVat69ActionPerformed
-        if (btnVat69.isSelected()) {
-            txtTotalCobrar.setText("" + 90);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY VAT 69");
-            producto = 97;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnVat69ActionPerformed
-
-    private void btnOldTimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOldTimesActionPerformed
-        if (btnOldTimes.isSelected()) {
-            txtTotalCobrar.setText("" + 110);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY OLD TIMES RED");
-            producto = 98;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnOldTimesActionPerformed
-
-    private void btnAppletonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppletonActionPerformed
-        if (btnAppleton.isSelected()) {
-            txtTotalCobrar.setText("" + 120);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("RON APPLETON");
-            producto = 63;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnAppletonActionPerformed
-
-    private void btnHavanaClubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHavanaClubActionPerformed
-        if (btnHavanaClub.isSelected()) {
-            txtTotalCobrar.setText("" + 110);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("RON HAVANA CLUB");
-            producto = 73;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnHavanaClubActionPerformed
-
-    private void btnBaccardiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaccardiActionPerformed
-        if (btnBaccardi.isSelected()) {
-            txtTotalCobrar.setText("" + 110);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("RON BACARDI");
-            producto = 64;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnBaccardiActionPerformed
-
-    private void btnGrantsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrantsActionPerformed
-        if (btnGrants.isSelected()) {
-            txtTotalCobrar.setText("" + 150);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY GRANTS");
-            producto = 191;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnGrantsActionPerformed
-
-    private void btnChivasRegalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChivasRegalActionPerformed
-        if (btnChivasRegal.isSelected()) {
-            txtTotalCobrar.setText("" + 270);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY CHIVAS REGAL");
-            producto = 96;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnChivasRegalActionPerformed
-
-    private void btnOldTimesBlackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOldTimesBlackActionPerformed
-        if (btnOldTimesBlack.isSelected()) {
-            txtTotalCobrar.setText("" + 130);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY OLD TIMES BLACK");
-            producto = 99;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnOldTimesBlackActionPerformed
-
-    private void btnVodkaSkyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVodkaSkyActionPerformed
-        if (btnVodkaSky.isSelected()) {
-            txtTotalCobrar.setText("" + 130);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("SKYY VODKA");
-            producto = 82;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnVodkaSkyActionPerformed
-
-    private void btnSoleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSoleraActionPerformed
-        if (btnSolera.isSelected()) {
-            txtTotalCobrar.setText("" + 160);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("CARTAVIO SOLERA");
-            producto = 70;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnSoleraActionPerformed
-
-    private void btnSelectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectoActionPerformed
-        if (btnSelecto.isSelected()) {
-            txtTotalCobrar.setText("" + 110);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("SELECTO 5 AÑOS");
-            producto = 69;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnSelectoActionPerformed
-
-    private void btnRusskayaBlackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRusskayaBlackActionPerformed
-       if (btnRusskayaBlack.isSelected()) {
-            txtTotalCobrar.setText("" + 120);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("VKA RUSSKAYA BLACK");
-            producto = 193;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnRusskayaBlackActionPerformed
-
-    private void btnJaggerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJaggerActionPerformed
-         if (btnJagger.isSelected()) {
-            txtTotalCobrar.setText("" + 160);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("JAGERMEISTER");
-            producto = 194;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnJaggerActionPerformed
-
-    private void btnGrantsAzulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrantsAzulActionPerformed
-      if (btnGrantsAzul.isSelected()) {
-            txtTotalCobrar.setText("" + 160);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("WHISKY GRANTS AZUL");
-            producto = 195;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnGrantsAzulActionPerformed
-
-    private void btnBarceloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBarceloActionPerformed
-         if (btnBarcelo.isSelected()) {
-            txtTotalCobrar.setText("" + 130);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("RON BARCELO");
-            producto = 196;
-        } else {
-            lblProducto.setText("");
-        }
-             
-    }//GEN-LAST:event_btnBarceloActionPerformed
-
-    private void btnVodkaOrangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVodkaOrangeActionPerformed
-        if (btnVodkaOrange.isSelected()) {
-            txtTotalCobrar.setText("" + costoVIP);//precio se debe jalar de base de datosvvvv
-            lblProducto.setText("VODKA ORANGE");
-            producto = 17;
-        } else {
-            lblProducto.setText("");
-        }
-    }//GEN-LAST:event_btnVodkaOrangeActionPerformed
+    }//GEN-LAST:event_tblBoxMouseClicked
     /**
      * @param args the command line arguments
      */
@@ -1221,31 +713,8 @@ public class EntradaVipBox extends javax.swing.JFrame {
     private javax.swing.JButton btn7;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
-    private javax.swing.JToggleButton btnAppleton;
-    private javax.swing.JToggleButton btnBaccardi;
-    private javax.swing.JToggleButton btnBarcelo;
-    private javax.swing.JToggleButton btnBlackLabel;
-    private javax.swing.JToggleButton btnCapMorgan;
-    private javax.swing.JToggleButton btnChivasRegal;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnDel;
-    private javax.swing.JToggleButton btnFlorDeCa;
-    private javax.swing.JToggleButton btnGrants;
-    private javax.swing.JToggleButton btnGrantsAzul;
-    private javax.swing.JToggleButton btnHavanaClub;
-    private javax.swing.JToggleButton btnJagger;
-    private javax.swing.JToggleButton btnOldTimes;
-    private javax.swing.JToggleButton btnOldTimesBlack;
-    private javax.swing.JToggleButton btnRedLabel;
-    private javax.swing.JToggleButton btnRusskaya;
-    private javax.swing.JToggleButton btnRusskayaBlack;
-    private javax.swing.JToggleButton btnSelecto;
-    private javax.swing.JToggleButton btnSmirnoffRojo;
-    private javax.swing.JToggleButton btnSmirnoffVerde;
-    private javax.swing.JToggleButton btnSolera;
-    private javax.swing.JToggleButton btnVat69;
-    private javax.swing.JToggleButton btnVodkaOrange;
-    private javax.swing.JToggleButton btnVodkaSky;
     private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -1263,7 +732,9 @@ public class EntradaVipBox extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblProducto;
+    public javax.swing.JTable tblBox;
     private javax.swing.JTextField txtCaja;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtHora;
@@ -1271,7 +742,61 @@ public class EntradaVipBox extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalCobrar;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-       private int getPageSize() {
+
+    private void titulos() {
+        String titulos[] = {"COD", "PRODUCTO", "PRECIO", "STOCK"};
+        modelo = new DefaultTableModel(null, titulos);
+        tblBox.setModel(modelo);
+    }
+
+    private void LlenarTabla() throws Exception {
+        titulos();
+        LimpiarTabla(tblBox, modelo);
+        Conexion con = new Conexion();
+        try {
+            con.conectar();
+            String sql = "SELECT prodpromocion.idproductopresentacion, producto.nombre, prodpromocion.precio1, productopresentacion.stock2\n"
+                    + "FROM prodpromocion\n"
+                    + "inner join productopresentacion on prodpromocion.idproductopresentacion = productopresentacion.idproductopresentacion\n"
+                    + "inner join producto on productopresentacion.idproducto = producto.idproducto";
+            PreparedStatement pst = con.getConexion().prepareStatement(sql);
+
+            ResultSet res = pst.executeQuery();
+
+            Object datos[] = new Object[4];
+
+            while (res.next()) {
+                datos[0] = res.getInt(1);
+                datos[1] = res.getString(2);
+                //crear condicional de la hora para modificar el precio(precio1->precio2) despues de las 12:00 de la noche            
+                datos[2] = res.getDouble(3);
+                datos[3] = res.getDouble(4);
+
+                modelo.addRow(datos);
+            }
+
+            tblBox.setModel(modelo);
+
+            pst.close();
+            res.close();
+
+            new ColumnasTablas().cuatroColumnas(tblBox, 50, 500, 100, 100);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            con.cerrar();
+        }
+
+    }
+
+    private void LimpiarTabla(JTable tabla, DefaultTableModel model) {
+        for (int i = 0; i < tabla.getRowCount(); i++) {
+            model.removeRow(i);
+            i -= 1;
+        }
+    }
+
+    private int getPageSize() {
         int filas = 1;
         System.out.println("cantidad de filas: " + filas);
         int rowCount = 1;//FILAS DE GRACIA

@@ -5,7 +5,7 @@
  */
 package Modelo.MySQLDAO;
 
-import Interfaces.VentaEntradaVipCRUD;
+import Interfaces.DAO;
 import Modelo.Conexion;
 import Modelo.VentaEntradaVip;
 import java.sql.PreparedStatement;
@@ -17,25 +17,24 @@ import java.util.List;
  *
  * @author USER
  */
-public class VentaEntradaVipDAO extends Conexion implements VentaEntradaVipCRUD {
+public class VentaEntradaVipDAO extends Conexion implements DAO<VentaEntradaVip> {
 
     @Override
-    public void registrar(VentaEntradaVip vevip) throws Exception {
+    public boolean Registrar(VentaEntradaVip vevip) throws Exception {
         try {
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("INSERT INTO `promocion`(`producto`, `cantidadproducto`, `complemento`, `cantidadcomplemento`, `precio`) VALUES (?,?,?,?,?)");
+            PreparedStatement pst = this.conexion.prepareStatement("INSERT INTO `ventaentradavip`(`numPersonas`,`numCovers`,`total`,`tipoEntrada`,`venta_idventa`,`idproducto`) VALUES (?,?,?,?,?,?)");
 
 //            pst.setInt(1, vevip.getIdpromocion());
-            pst.setInt(1, vevip.getCantidadproducto());
-            pst.setString(2, vevip.getProducto());
-            pst.setInt(3, vevip.getCantidadcomplemento());
-            pst.setString(4, vevip.getComplemento());
-            pst.setDouble(5, vevip.getPrecio());
+            pst.setInt(1, vevip.getNumPersonas());
+            pst.setInt(2, vevip.getNumCovers());
+            pst.setDouble(3, vevip.getTotal());
+            pst.setString(4, vevip.getTipoEntrada());
+            pst.setInt(5, vevip.getIdEntradaVip());
+            pst.setInt(6, vevip.getIdProd());
             int res = pst.executeUpdate();
             if (res > 0) {
-                System.out.println("Se registro la entrada");
-            } else {
-                System.out.println("Error");
+                return true;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -43,34 +42,37 @@ public class VentaEntradaVipDAO extends Conexion implements VentaEntradaVipCRUD 
         } finally {
             this.cerrar();
         }
+        return false;
     }
 
     @Override
-    public void modificar(VentaEntradaVip vevip) throws Exception {
+    public boolean Modificar(VentaEntradaVip vevip) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void eliminar(VentaEntradaVip vevip) throws Exception {
+    public boolean Eliminar(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<VentaEntradaVip> listar() throws Exception {
+    public List<VentaEntradaVip> Listar() throws Exception {
         List<VentaEntradaVip> lista = null;
         try {
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("select * from promocion");
+            PreparedStatement pst = this.conexion.prepareStatement("select * from ventaentradavip");
             lista = new ArrayList();
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 VentaEntradaVip vevip = new VentaEntradaVip();
 //                vevip.setIdpromocion(rs.getInt("Idpromocion"));
-                vevip.setCantidadproducto(rs.getInt("cantidadproducto"));
-                vevip.setProducto(rs.getString("producto"));
-                vevip.setCantidadcomplemento(rs.getInt("cantidadcomplemento"));
-                vevip.setComplemento(rs.getString("complemento"));
-                vevip.setPrecio(rs.getDouble("precio"));
+                vevip.setIdVentaEntradaVip(rs.getInt(1));
+                vevip.setNumPersonas(rs.getInt(2));
+                vevip.setNumCovers(rs.getInt(3));
+                vevip.setTotal(rs.getDouble(4));
+                vevip.setTipoEntrada(rs.getString(5));
+                vevip.setIdEntradaVip(rs.getInt(6));
+                vevip.setIdProd(rs.getInt(7));
                 lista.add(vevip);
             }
             rs.close();
@@ -83,4 +85,13 @@ public class VentaEntradaVipDAO extends Conexion implements VentaEntradaVipCRUD 
         return lista;
     }
 
+    @Override
+    public boolean Anular(int id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public VentaEntradaVip Obtener(int id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

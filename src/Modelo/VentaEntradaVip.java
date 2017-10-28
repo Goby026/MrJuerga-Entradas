@@ -11,65 +11,91 @@ package Modelo;
  */
 public class VentaEntradaVip {
 //    int idpromocion;
-    String producto;
-    int cantidadproducto;
-    String complemento;
-    int cantidadcomplemento;
-    double precio;
+//    String producto;
+//    int cantidadproducto;
+//    String complemento;
+//    int cantidadcomplemento;
+//    double precio;
     
-    public VentaEntradaVip( String producto, int cantidadproducto, String complemento , int cantidadcomplemento, double precio){
-//        this.idpromocion=idpromocion;
-        this. producto=producto;
-        this.cantidadproducto=cantidadproducto;
-        this.complemento=complemento;
-        this.cantidadcomplemento=cantidadcomplemento;
-        this.precio=precio;
-              
-        
+    int idVentaEntradaVip;
+    int numPersonas;
+    int numCovers;
+    double total;
+    String tipoEntrada;
+    int idEntradaVip;
+    int idProd;
+
+    public VentaEntradaVip(int idVentaEntradaVip, int numPersonas, int numCovers, double total, String tipoEntrada, int idEntradaVip, int idProd) {
+        this.idVentaEntradaVip = idVentaEntradaVip;
+        this.numPersonas = numPersonas;
+        this.numCovers = numCovers;
+        this.total = total;
+        this.tipoEntrada = tipoEntrada;
+        this.idEntradaVip = idEntradaVip;
+        this.idProd = idProd;
     }
+    
+
     public VentaEntradaVip(){
         
     }
 
- 
-
-    public String getProducto() {
-        return producto;
+    public int getIdVentaEntradaVip() {
+        return idVentaEntradaVip;
     }
 
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setIdVentaEntradaVip(int idVentaEntradaVip) {
+        this.idVentaEntradaVip = idVentaEntradaVip;
     }
 
-    public int getCantidadproducto() {
-        return cantidadproducto;
+    public int getNumPersonas() {
+        return numPersonas;
     }
 
-    public void setCantidadproducto(int cantidadproducto) {
-        this.cantidadproducto = cantidadproducto;
+    public void setNumPersonas(int numPersonas) {
+        this.numPersonas = numPersonas;
     }
 
-    public String getComplemento() {
-        return complemento;
+    public int getNumCovers() {
+        return numCovers;
     }
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
+    public void setNumCovers(int numCovers) {
+        this.numCovers = numCovers;
     }
 
-    public int getCantidadcomplemento() {
-        return cantidadcomplemento;
+    public double getTotal() {
+        return total;
     }
 
-    public void setCantidadcomplemento(int cantidadcomplemento) {
-        this.cantidadcomplemento = cantidadcomplemento;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
-    public double getPrecio() {
-        return precio;
+    public String getTipoEntrada() {
+        return tipoEntrada;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setTipoEntrada(String tipoEntrada) {
+        this.tipoEntrada = tipoEntrada;
     }
+
+    public int getIdEntradaVip() {
+        return idEntradaVip;
+    }
+
+    public void setIdEntradaVip(int idEntradaVip) {
+        this.idEntradaVip = idEntradaVip;
+    }
+
+    public int getIdProd() {
+        return idProd;
+    }
+
+    public void setIdProd(int idProd) {
+        this.idProd = idProd;
+    }
+    
+    
+
 }

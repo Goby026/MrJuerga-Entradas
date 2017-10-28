@@ -1,4 +1,3 @@
-
 package Modelo.MySQLDAO;
 
 import Interfaces.DAO;
@@ -13,8 +12,8 @@ import java.util.List;
  *
  * @author MARCEL
  */
-public class EntradaVipDAO extends Conexion implements DAO<EntradaVip>{
-    
+public class EntradaVipDAO extends Conexion implements DAO<EntradaVip> {
+
     @Override
     public boolean Registrar(EntradaVip p) throws Exception {
         try {
@@ -36,7 +35,7 @@ public class EntradaVipDAO extends Conexion implements DAO<EntradaVip>{
             if (pst.executeUpdate() > 0) {
                 return true;
             }
-            
+
             pst.close();
 
         } catch (Exception e) {
@@ -59,8 +58,8 @@ public class EntradaVipDAO extends Conexion implements DAO<EntradaVip>{
             pst.setInt(4, p.getIdCliente());
             pst.setInt(5, p.getIdTipoComprobante());
             pst.setInt(6, p.getEstado());
-            pst.setInt(7,p.getTipopago());
-            pst.setString(8,p.getnOperacion());
+            pst.setInt(7, p.getTipopago());
+            pst.setString(8, p.getnOperacion());
             pst.setInt(9, p.getIdCaja());
             pst.setInt(10, p.getIdFlujoCaja());
             pst.setInt(11, p.getIdEntradaVip());
@@ -86,16 +85,16 @@ public class EntradaVipDAO extends Conexion implements DAO<EntradaVip>{
     public boolean Anular(int id) throws Exception {
         try {
             //estado 0=anulado - 1=activo
-            String sqlAnularVenta = "UPDATE EntradaVip SET estado = 0 WHERE idEntradaGeneral = "+id+"";
-            String sqlAnularDetalleVenta = "UPDATE ventaentradavip SET numCovers = 0, total = 0 WHERE venta_idventa = "+id+"";
+            String sqlAnularVenta = "UPDATE EntradaVip SET estado = 0 WHERE idEntradaGeneral = " + id + "";
+            String sqlAnularDetalleVenta = "UPDATE ventaentradavip SET numCovers = 0, total = 0 WHERE venta_idventa = " + id + "";
             this.conectar();
-            
+
             PreparedStatement pst = this.conexion.prepareStatement(sqlAnularVenta);
             PreparedStatement pst2 = this.conexion.prepareStatement(sqlAnularDetalleVenta);
-            
+
             int res = pst.executeUpdate();
             int res2 = pst2.executeUpdate();
-            
+
             if (res > 0 && res2 > 0) {
                 return true;
             }
@@ -144,6 +143,27 @@ public class EntradaVipDAO extends Conexion implements DAO<EntradaVip>{
     @Override
     public EntradaVip Obtener(int id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public int getIdUltimaEntradaVip() throws Exception {
+        try {
+            this.conectar();
+            String sql = "SELECT idEntradaVip FROM entradavip order by idEntradaVip DESC LIMIT 1";
+            PreparedStatement pst = this.conexion.prepareStatement(sql);
+             ResultSet res = pst.executeQuery();
+             
+             if (res.next()) {
+                return res.getInt(1);
+            }
+             
+             pst.close();
+             res.close();
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            this.cerrar();
+        }
+        return -1;
     }
 
 }
