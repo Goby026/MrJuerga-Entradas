@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-02-04T19:42:49 -->
+<!-- 2017-10-27T20:27:16 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="215" pageHeight="842" columnWidth="169" leftMargin="26" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a97fe6d1-d240-40da-aa44-d168058947d1">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
@@ -15,7 +15,7 @@
 	<parameter name="producto" class="java.lang.String"/>
 	<parameter name="total" class="java.lang.Double"/>
 	<queryString>
-		<![CDATA[SELECT numPersonas, numCovers, total, tipoEntrada from ventaentrada where venta_idventa =$P{idventa}]]>
+		<![CDATA[SELECT numPersonas, numCovers, total, tipoEntrada from ventaentradavip where venta_idventa =$P{idventa}]]>
 	</queryString>
 	<field name="numPersonas" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -96,7 +96,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[Nro.TICKETERA: FFCF282925]]></text>
+				<text><![CDATA[Nro.TICKETERA: FFCF292760]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="22" width="169" height="11" uuid="a2c11174-affb-475c-9a55-e2db9f44d2ee"/>
@@ -133,7 +133,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[002-]]></text>
+				<text><![CDATA[001-]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="34" y="55" width="49" height="11" uuid="d9a701ff-8147-473e-a056-fa411d8778be">
@@ -185,7 +185,7 @@
 				<reportElement x="94" y="44" width="75" height="11" uuid="29ea9c64-f287-4293-a516-f66bb5c65fa9">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
-				<textElement>
+				<textElement textAlignment="Left">
 					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{idventa}]]></textFieldExpression>
@@ -195,13 +195,13 @@
 				<textElement textAlignment="Left">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[PERSONAS:]]></text>
+				<text><![CDATA[CANTIDAD:]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="40" y="66" width="129" height="11" uuid="64ad842a-9dca-4b5d-9f91-aaf92a21c243">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
-				<textElement>
+				<textElement textAlignment="Center">
 					<font fontName="Arial" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nom_cajero}]]></textFieldExpression>
@@ -212,9 +212,9 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="16" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
-				<reportElement x="1" y="0" width="128" height="12" uuid="77d67ed8-3a72-42fa-a577-5d7a4553ee97">
+				<reportElement x="1" y="2" width="128" height="12" uuid="77d67ed8-3a72-42fa-a577-5d7a4553ee97">
 					<property name="com.jaspersoft.studio.unit.height" value="cm"/>
 				</reportElement>
 				<textElement>
@@ -223,7 +223,7 @@
 				<textFieldExpression><![CDATA[$P{producto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="130" y="0" width="38" height="12" uuid="a657191d-3020-4d7f-82e7-1a13704ee3fe"/>
+				<reportElement x="130" y="2" width="38" height="12" uuid="a657191d-3020-4d7f-82e7-1a13704ee3fe"/>
 				<textElement>
 					<font fontName="Consolas" size="9"/>
 				</textElement>
@@ -248,7 +248,7 @@
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="-3" width="169" height="1" uuid="3176f213-61d2-4cce-be3b-bb753c45b16d"/>
+				<reportElement x="0" y="-1" width="169" height="1" uuid="3176f213-61d2-4cce-be3b-bb753c45b16d"/>
 			</line>
 		</band>
 	</columnFooter>

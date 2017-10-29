@@ -89,18 +89,20 @@ public class CerrarCajaControl {
     }
     
     /*METODO PARA OBTENER EL MONTO DE TARJETAS A PARTIR DE LA APERTURA DE CAJA */
-    public double getMontoTarjetas(int idUsuario, int idCaja) throws Exception{
-        try {
-            String fechaInicial=null;
-            String horaInicial= null;
-            int tipoPago=3;
-            //primero obtengo el id de flujo de caja para obtener la fecha inicial y la hora inical
-            int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(idUsuario, idCaja);
-            return new FlujoCajaDAO().getMontoFlujo(idFlujoCaja);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+//    public double getMontoTarjetas(int idUsuario, int idCaja) throws Exception{
+//        try {
+//            String fechaInicial=null;
+//            String horaInicial= null;
+//            int tipoPago=3;
+//            //primero obtengo el id de flujo de caja para obtener la fecha inicial y la hora inical
+//            int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(idUsuario, idCaja);
+//            return new FlujoCajaDAO().getMontoFlujo(idFlujoCaja);
+//        } catch (Exception e) {
+//            throw e;
+//        }
+//    }
+    
+    
     /* METODO PARA OBTENER EL MONTO TOTAL DE VENTAS A PARTIR DE LA APERTURA DE CAJA */
 //    public double getMontoVentas(int idUsuario, int idCaja) throws Exception{
 //        try {

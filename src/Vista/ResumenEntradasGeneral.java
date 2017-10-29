@@ -32,7 +32,12 @@ public class ResumenEntradasGeneral extends javax.swing.JFrame {
             txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(Usuario));
             titulosColumnas();
             int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(Usuario), new CerrarCajaControl().getIdCaja(txtCaja.getText()));
-            LlenarTablaBuscarProductos(idFlujoCaja);
+            if (txtCaja.getText().equals("ENTRADA GENERAL")) {
+                LlenarTablaBuscarProductos(idFlujoCaja,2);
+            } else {
+                LlenarTablaBuscarProductos(idFlujoCaja,6);
+            }
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -214,16 +219,30 @@ public class ResumenEntradasGeneral extends javax.swing.JFrame {
         tblEntradas.setModel(modelo);
     }
 
-    public void LlenarTablaBuscarProductos(int idFlujoCaja) throws Exception {
+    public void LlenarTablaBuscarProductos(int idFlujoCaja, int caja) throws Exception {
         Conexion con = new Conexion();
         try {
             con.conectar();
-            String sql = "select entradageneral.identradageneral, producto.nombre, ventaentrada.total\n"
+            
+            String sql = null;
+            
+            if (caja == 2) {
+                sql = "select entradageneral.identradageneral, producto.nombre, ventaentrada.total\n"
                     + "from entradageneral \n"
                     + "inner join ventaentrada on entradageneral.identradageneral = ventaentrada.venta_idventa\n"
                     + "inner join productopresentacion on ventaentrada.idproducto = productopresentacion.idproductopresentacion\n"
                     + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
                     + "where idflujocaja = ?";
+            }else{
+                sql = "select entradageneral2.identradageneral2, producto.nombre, ventaentrada2.total\n"
+                    + "from entradageneral2 \n"
+                    + "inner join ventaentrada2 on entradageneral2.identradageneral2 = ventaentrada2.venta_idventa\n"
+                    + "inner join productopresentacion on ventaentrada2.idproducto = productopresentacion.idproductopresentacion\n"
+                    + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
+                    + "where idflujocaja = ?";
+            }
+            
+            
             
             PreparedStatement pst = con.getConexion().prepareStatement(sql);
             pst.setInt(1, idFlujoCaja);

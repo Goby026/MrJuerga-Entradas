@@ -42,6 +42,8 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
     int producto = 0;
     String prodGeneral = "COVER";
 
+    int CAJA = 0;
+
     public EntradaGeneralVista(String usuario) throws Exception {
         initComponents();
         setLocationRelativeTo(null);
@@ -58,6 +60,12 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
         lblProductoCover.setText("" + p.getNombre());
         new Cronometro().iniciarCronometro(txtHora);
         txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
+
+        if (txtCaja.getText().equals("ENTRADA GENERAL")) {
+            CAJA = 2;
+        } else {
+            CAJA = 6;
+        }
 
         producto = c.getIdProfuctoDefecto();
     }
@@ -508,12 +516,25 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
             //v.setIdFlujoCaja(1);
 
             EntradaGeneralDAO vdao = new EntradaGeneralDAO();
-            if (vdao.Registrar(v)) {
-                System.out.println("Entrada general registrada");
+            if (CAJA == 2) {
+                if (vdao.Registrar(v)) {
+                    System.out.println("Entrada general registrada");
+                }
+            } else {
+                if (vdao.RegistrarEntrada2(v)) {
+                    System.out.println("Entrada general 2 registrada");
+                }
+            }
+
+            int idVenta = 0;
+            
+            if (CAJA == 2) {
+                idVenta= new EntradaGeneralDAO().getIdDeUltimaEntradaGeneralRegistrada();/////////////////////////////
+            } else {
+                idVenta= new EntradaGeneralDAO().getIdDeUltimaEntradaGeneral2Registrada();/////////////////////////////
             }
             //segundo se registra las ENTRADAS
-
-            int idVenta = new EntradaGeneralDAO().getIdDeUltimaEntradaGeneralRegistrada();/////////////////////////////
+             
             System.out.println("ultima entrada: " + idVenta);
 
             VentaEntrada ve = new VentaEntrada();
@@ -526,7 +547,9 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
             //la fecha es automatica
 
             VentaEntradaDAO vedao = new VentaEntradaDAO();
-            if (vedao.registrar(ve)) {
+            
+            if (CAJA == 2) {//JAIME
+                if (vedao.registrar(ve)) {
                 //restar Stock
                 restarStock(ve.getNumCovers());
 
@@ -543,7 +566,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 String flagCover = lblProducto.getText();
                 par2.put("nombreCover", flagCover);
                 MyiReportVisor mrv2 = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\coversNormalT1.jrxml", par2, getPageSize(1, 28, 40, 50));
-                mrv2.setNombreArchivo("Cover Cerveza");
+                mrv2.setNombreArchivo("Cover Entrada 1");
                 int numerodeCopias = ve.getNumCovers();
                 for (int i = 1; i <= numerodeCopias; i++) {
                     pp = new ProductoPresentacionDAO().Obtener(producto);
@@ -558,6 +581,42 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 tblProductos.clearSelection();
                 producto = c.getIdProfuctoDefecto();
             }
+            } else {//ALEJANDRO
+                if (vedao.registrar2(ve)) {
+                //restar Stock
+                restarStock(ve.getNumCovers());
+
+                parametros.put("nom_cajero", txtUsuario.getText());
+                parametros.put("id_venta", idVenta);
+                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\boleta2.jrxml", parametros, getPageSize());
+                mrv.setNombreArchivo("BoletaEntrada2");
+
+                mrv.exportarADocxConCopia("boletas2.docx");
+
+                HashMap par2 = new HashMap();
+                System.out.println("Imprimiendo Cover general 2");
+                par2.put("nroComprobante", idVenta);
+                String flagCover = lblProducto.getText();
+                par2.put("nombreCover", flagCover);
+                MyiReportVisor mrv2 = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\coversNormalT2.jrxml", par2, getPageSize(1, 28, 40, 50));
+                mrv2.setNombreArchivo("Cover Entrada 2");
+                int numerodeCopias = ve.getNumCovers();
+                for (int i = 1; i <= numerodeCopias; i++) {
+                    pp = new ProductoPresentacionDAO().Obtener(producto);
+                    System.out.println("EL ID DE PROD A ANALIZAR ES: " + pp.getIdProducto());
+                    StockBebidasPreparadas sbp = new StockBebidasPreparadas(pp.getIdProducto(), 2);
+                    sbp.updateStockVenta();
+                    mrv2.exportarADocxConCopia("covers" + i + ".docx");
+                }
+                txtNumPersonas.setText("");
+                txtTotalCobrar.setText("");
+                lblProducto.setText("");
+                tblProductos.clearSelection();
+                producto = c.getIdProfuctoDefecto();
+            }
+            }
+            
+            
 
 //            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaPorPersona.jrxml", parametros);
 //            mrv.exportarAPdf();
@@ -774,7 +833,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
 
             tblProductos.setModel(modelo);
 
-            new ColumnasTablas().cuatroColumnas(tblProductos, 60, 450,180 ,80);
+            new ColumnasTablas().cuatroColumnas(tblProductos, 60, 450, 180, 80);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         } finally {
@@ -830,7 +889,8 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
         /*Para el cover el valor de Filas es 1*/
         System.out.println("cantidad de filas: " + filas);
         int rowSize = fontSize + 2;//TAMAÑO DE LA FILA
-        int caracteresPorLinea = 16;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA
+        //int caracteresPorLinea = 16;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA 1, 28, 40, 50
+        int caracteresPorLinea = 26;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA 1, 28, 40, 50
         int rowCount = 0;
         for (int i = 0; i < filas; i++) {
             //String descripcionDeProducto = tbl_venta.getValueAt(i, 1).toString();

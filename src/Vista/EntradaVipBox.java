@@ -440,7 +440,7 @@ public class EntradaVipBox extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblBox);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 730, 530));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 840, 530));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 70, 1210, 940));
 
@@ -577,69 +577,74 @@ public class EntradaVipBox extends javax.swing.JFrame {
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         try {
             if (!txtNumPersonas.getText().trim().isEmpty()) {
-                //REGISTRAR LA VENTA
-                EntradaVip v = new EntradaVip();
-                v.setFecha(new ManejadorFechas().getFechaActualMySQL());
-                v.setHora(new ManejadorFechas().getHoraActual());
-                v.setIdUsuario(new UsuarioDAO().getIdUsuario(txtUsuario.getText()));
-                v.setIdCliente(1);
-                v.setIdTipoComprobante(1);
-                v.setEstado(1);
-                v.setTipopago(1);
-                v.setnOperacion("0");
-                v.setIdCaja(2);
-                System.out.println(v.getIdCaja());
-                v.setIdFlujoCaja(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
-                System.out.println(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
-                //v.setIdFlujoCaja(2);
+                int fila = tblBox.getSelectedRow();
+                if (fila >= 0) {
 
-                EntradaVipDAO vdao = new EntradaVipDAO();
-                if (vdao.Registrar(v)) {
-                    System.out.println("Entrada VIP registrada");
-                }
-                //segundo se registra las entradas
+                    //REGISTRAR LA VENTA
+                    EntradaVip v = new EntradaVip();
+                    v.setFecha(new ManejadorFechas().getFechaActualMySQL());
+                    v.setHora(new ManejadorFechas().getHoraActual());
+                    v.setIdUsuario(new UsuarioDAO().getIdUsuario(txtUsuario.getText()));
+                    v.setIdCliente(1);
+                    v.setIdTipoComprobante(1);
+                    v.setEstado(1);
+                    v.setTipopago(1);
+                    v.setnOperacion("0");
+                    v.setIdCaja(2);
+                    System.out.println(v.getIdCaja());
+                    v.setIdFlujoCaja(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
+                    System.out.println(new FlujoCajaDAO().getIdFlujo(new UsuarioDAO().getIdUsuario(txtUsuario.getText()), new CajaDAO().getIdCaja(txtCaja.getText())));
+                    //v.setIdFlujoCaja(2);
 
-                VentaEntradaVip ve = new VentaEntradaVip();
-                int idEntrada = new EntradaVipDAO().getIdUltimaEntradaVip();
-                System.out.println("Ultima entrada vip! "+idEntrada);
-                ve.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
-                ve.setNumCovers(Integer.parseInt(txtNumPersonas.getText()));
-                ve.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
-                if (producto != 0) {
-                    ve.setTipoEntrada("BOX");
-                } else {
-                    ve.setTipoEntrada("ENTRADA VIP");
-                }
-
-                ve.setIdEntradaVip(idEntrada);
-                ve.setIdProd(producto);
-
-                VentaEntradaVipDAO vedao = new VentaEntradaVipDAO();
-                if (vedao.Registrar(ve)) {
-                    System.out.println("ingreso al if");
-//                JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
-                    if (producto != 192) {
-                        parametros.put("producto", lblProducto.getText());
-                        parametros.put("personas", Integer.parseInt(txtNumPersonas.getText()));
-                        parametros.put("total", Double.parseDouble(txtTotalCobrar.getText()));
-                        parametros.put("nom_cajero", txtUsuario.getText());
-                        parametros.put("idventa", idEntrada);
-                        mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaBOX.jrxml", parametros, getPageSize());
-                        mrv.setNombreArchivo("BoletaBOX");
-                        mrv.exportarADocxConCopia("boletabox.docx");
-                    } else {
-                        parametros.put("nom_cajero", txtUsuario.getText());
-                        parametros.put("idventa", idEntrada);
-                        mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaVip.jrxml", parametros, getPageSize());
-                        mrv.setNombreArchivo("BoletaVIP");
-                        mrv.exportarADocxConCopia("Boletavip.docx");
+                    EntradaVipDAO vdao = new EntradaVipDAO();
+                    if (vdao.Registrar(v)) {
+                        System.out.println("Entrada VIP registrada");
                     }
-                    btnDel.doClick();
+                    //segundo se registra las entradas
+
+                    VentaEntradaVip ve = new VentaEntradaVip();
+                    int idEntrada = new EntradaVipDAO().getIdUltimaEntradaVip();
+                    System.out.println("Ultima entrada vip! " + idEntrada);
+                    ve.setNumPersonas(Integer.parseInt(txtNumPersonas.getText()));
+                    ve.setNumCovers(Integer.parseInt(txtNumPersonas.getText()));
+                    ve.setTotal(Double.parseDouble(txtTotalCobrar.getText()));
+                    if (producto != 0) {
+                        ve.setTipoEntrada("BOX");
+                    } else {
+                        ve.setTipoEntrada("ENTRADA VIP");
+                    }
+
+                    ve.setIdEntradaVip(idEntrada);
+                    ve.setIdProd(producto);
+
+                    VentaEntradaVipDAO vedao = new VentaEntradaVipDAO();
+                    if (vedao.Registrar(ve)) {
+                        System.out.println("ingreso al if");
+//                JOptionPane.showMessageDialog(rootPane, "VENTA REGISTRADA");
+                        if (producto != 0) {
+                            parametros.put("producto", lblProducto.getText());
+                            parametros.put("personas", Integer.parseInt(txtNumPersonas.getText()));
+                            parametros.put("total", Double.parseDouble(txtTotalCobrar.getText()));
+                            parametros.put("nom_cajero", txtUsuario.getText());
+                            parametros.put("idventa", idEntrada);
+                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaBOX.jrxml", parametros, getPageSize());
+                            mrv.setNombreArchivo("BoletaBOX");
+                            mrv.exportarADocxConCopia("boletabox.docx");
+                        } else {
+                            parametros.put("nom_cajero", txtUsuario.getText());
+                            parametros.put("idventa", idEntrada);
+                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\BoletaEntradaVip.jrxml", parametros, getPageSize());
+                            mrv.setNombreArchivo("BoletaVIP");
+                            mrv.exportarADocxConCopia("Boletavip.docx");
+                        }
+                        btnDel.doClick();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(getRootPane(), "SELECCIONE UN PRODUCTO DE LA LISTA");
                 }
             } else {
-                JOptionPane.showMessageDialog(getRootPane(), "INGRESE NUMERO DE PERSONAS");
+                JOptionPane.showMessageDialog(getRootPane(), "INGRESE CANTIDAD");
             }
-
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -807,8 +812,8 @@ public class EntradaVipBox extends javax.swing.JFrame {
             //String descripcionDeProducto = tbl_venta.getValueAt(i, 1).toString();
             rowCount += 1;//(1 + (int) (descripcionDeProducto.length() / caracteresPorLinea));
         }
-        int cabecera = 80;
-        int piePagina = 190;
+        int cabecera = 175;
+        int piePagina = 85;
 //        int pageSize = (rowCount * rowSize) + cabecera + piePagina;
         int pageSize = (rowCount) + cabecera + piePagina;
         System.out.println("Cantidad de Filas finale:" + rowCount);

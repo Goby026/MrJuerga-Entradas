@@ -55,8 +55,8 @@ public class Menu extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEntradaGeneral = new javax.swing.JButton();
+        btnEntradaVip = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -99,23 +99,23 @@ public class Menu extends javax.swing.JFrame {
         });
         getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 620, -1, -1));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL.png"))); // NOI18N
-        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL - copia.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEntradaGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL.png"))); // NOI18N
+        btnEntradaGeneral.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL - copia.png"))); // NOI18N
+        btnEntradaGeneral.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEntradaGeneralActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 390, -1, -1));
+        getContentPane().add(btnEntradaGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 390, -1, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA VIP.png"))); // NOI18N
-        jButton2.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRAD VIP 2.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEntradaVip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA VIP.png"))); // NOI18N
+        btnEntradaVip.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRAD VIP 2.png"))); // NOI18N
+        btnEntradaVip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEntradaVipActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 390, -1, -1));
+        getContentPane().add(btnEntradaVip, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 390, -1, -1));
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/APERTURAR CAJA 01.png"))); // NOI18N
         jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/APERTURAR CAJA.png"))); // NOI18N
@@ -164,7 +164,7 @@ public class Menu extends javax.swing.JFrame {
 
         lbl_caja.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbl_caja.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(lbl_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 160, 30));
+        jPanel1.add(lbl_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 350, 30));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -174,7 +174,7 @@ public class Menu extends javax.swing.JFrame {
 
         lbl_Usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbl_Usuario.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 160, 30));
+        jPanel1.add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 350, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 160));
 
@@ -200,7 +200,7 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnEntradaVipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaVipActionPerformed
         try {
 
             if (lbl_caja.getText().equals("ENTRADA VIP")) {
@@ -220,7 +220,7 @@ public class Menu extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "DEBE APERTURAR CAJA PARA REALIZAR VENTAS");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "ESTA ASIGNADO A ENTRADAS VIP, NO PUEDE RELIZAR VENTAS DE ENTRADA GENERAL");
+                JOptionPane.showMessageDialog(null, "ESTA ASIGNADO A ENTRADA GENERAL, NO PUEDE RELIZAR VENTAS DE ENTRADA VIP");
             }
 
             //dispose();
@@ -241,12 +241,12 @@ public class Menu extends javax.swing.JFrame {
 //        } catch (Exception e) {
 //            System.out.println(e.getMessage());
 //        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnEntradaVipActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEntradaGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaGeneralActionPerformed
         try {
 
-            if (lbl_caja.getText().equals("ENTRADA GENERAL")) {
+            if (lbl_caja.getText().equals("ENTRADA GENERAL") || lbl_caja.getText().equals("ENTRADA GENERAL 2")) {
                 int flag = 0;
                 int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new AbrirCajaControl().getIdUsuario(lbl_Usuario.getText()), new AbrirCajaControl().getIdCaja(lbl_caja.getText()));
                 FlujoCajaDAO fcdao = new FlujoCajaDAO();
@@ -271,11 +271,11 @@ public class Menu extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEntradaGeneralActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {
-            if (lbl_caja.getText().equals("ENTRADA GENERAL")) {
+            if (lbl_caja.getText().equals("ENTRADA GENERAL") || lbl_caja.getText().equals("ENTRADA GENERAL 2")) {
                 String usuario = lbl_Usuario.getText();
                 ResumenEntradasGeneral le = new ResumenEntradasGeneral(usuario);
                 le.setVisible(true);
@@ -395,8 +395,8 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEntradaGeneral;
+    private javax.swing.JButton btnEntradaVip;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

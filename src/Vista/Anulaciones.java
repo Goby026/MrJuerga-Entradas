@@ -1,19 +1,24 @@
 package Vista;
 
+import Controlador.AbrirCajaControl;
 import Controlador.AnulacionesControl;
 import Controlador.Cronometro;
 import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
 import Modelo.Conexion;
 import Modelo.EntradaGeneral;
+import Modelo.EntradaVip;
 import Modelo.MySQLDAO.EntradaGeneralDAO;
+import Modelo.MySQLDAO.EntradaVipDAO;
 import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.MySQLDAO.NotaPedidoDAO;
 import Modelo.MySQLDAO.VentaDAO;
 import Modelo.MySQLDAO.VentaEntradaDAO;
+import Modelo.MySQLDAO.VentaEntradaVipDAO;
 import Modelo.MySQLDAO.VentaNotaDAO;
 import Modelo.NotaPedido;
 import Modelo.VentaEntrada;
+import Modelo.VentaEntradaVip;
 import Modelo.VentaNota;
 import java.awt.Color;
 import java.sql.Connection;
@@ -42,11 +47,12 @@ public class Anulaciones extends javax.swing.JFrame {
 
     int tipoTicket = 0;
 
-    public Anulaciones(String Usuario) {
+    public Anulaciones(String Usuario) throws Exception {
         initComponents();
         setLocationRelativeTo(null);
         lblUsuario.setText(Usuario);
         lblFecha.setText(new ManejadorFechas().getFechaActual());
+        lblCaja.setText(new AbrirCajaControl().getCajaDeUsuario(Usuario));
         new Cronometro().iniciarCronometro(txtHoraCronometro);
         cargarTitulosTabla();
     }
@@ -116,12 +122,14 @@ public class Anulaciones extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblCaja = new javax.swing.JLabel();
         lblUsuario = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtHoraCronometro = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalle = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -449,32 +457,32 @@ public class Anulaciones extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("ANULACIONES");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 930, 60));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 420, 60));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("USUARIO:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+        lblCaja.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lblCaja.setForeground(new java.awt.Color(255, 255, 255));
+        lblCaja.setText("__________");
+        jPanel1.add(lblCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 250, -1));
 
         lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblUsuario.setText("_______");
-        jPanel1.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, -1, -1));
+        jPanel1.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 240, -1));
 
         lblFecha.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         lblFecha.setForeground(new java.awt.Color(255, 255, 255));
         lblFecha.setText("_____");
-        jPanel1.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 160, -1));
+        jPanel1.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 160, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("FECHA:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("HORA:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 120, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 50, -1, -1));
 
         txtHoraCronometro.setEditable(false);
         txtHoraCronometro.setBackground(new java.awt.Color(255, 51, 51));
@@ -482,7 +490,17 @@ public class Anulaciones extends javax.swing.JFrame {
         txtHoraCronometro.setForeground(new java.awt.Color(255, 255, 255));
         txtHoraCronometro.setText("______");
         txtHoraCronometro.setBorder(null);
-        jPanel1.add(txtHoraCronometro, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 120, 120, -1));
+        jPanel1.add(txtHoraCronometro, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, 120, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("USUARIO:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("CAJA:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 940, 160));
 
@@ -534,17 +552,29 @@ public class Anulaciones extends javax.swing.JFrame {
         try {
             int numVenta = Integer.parseInt(txt_num_venta.getText());
             if (tipoTicket == 1) {//ticket normal
-                if (new VentaEntradaDAO().anular(numVenta)) {
-//                new AnulacionesControl().sumarStock(tblDetalle);
-//                new VentaProductoDAO().updateVentaProducto(numVenta);
-                    JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
-                } else {
-                    System.out.println("error");
+
+                if (lblCaja.getText().equals("ENTRADA GENERAL")) {
+                    if (new VentaEntradaDAO().anular(numVenta)) {
+                        JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
+                    } else {
+                        System.out.println("error");
+                    }
+                } else if (lblCaja.getText().equals("ENTRADA GENERAL 2")) {
+                    if (new VentaEntradaDAO().anular2(numVenta)) {
+                        JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
+                    } else {
+                        System.out.println("error");
+                    }
+                }else{
+                    if (new EntradaVipDAO().Anular(numVenta)) {
+                        JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
+                    } else {
+                        System.out.println("error");
+                    }
                 }
+
             } else {//nota de pedido
                 if (new NotaPedidoDAO().anular(numVenta)) {
-//                new AnulacionesControl().sumarStock(tblDetalle);
-//                new VentaProductoDAO().updateVentaProducto(numVenta);
                     JOptionPane.showMessageDialog(getRootPane(), "LA VENTA: " + numVenta + " FUE ANULADA EXITOSAMENTE");
                 } else {
                     System.out.println("error");
@@ -651,31 +681,69 @@ public class Anulaciones extends javax.swing.JFrame {
         formTipoBoleta.dispose();
         try {
             int numBoleta = Integer.parseInt(txt_num_venta.getText());
-            EntradaGeneral eg = new EntradaGeneralDAO().Obtener(numBoleta);
-            if (eg.getEstado() > 0) {
-                lblEstado.setText("ACTIVO");
-                //lblEstado.setBackground(Color.GREEN);
-                panelEstado.setBackground(Color.GREEN);
+            EntradaGeneral eg = null;
+            EntradaVip ev = null;
+            if (lblCaja.getText().equals("ENTRADA GENERAL")) {
+                eg = new EntradaGeneralDAO().Obtener(numBoleta);
+                cargarTabla(numBoleta, 2);
+                if (eg.getEstado() > 0) {
+                    lblEstado.setText("ACTIVO");
+                    //lblEstado.setBackground(Color.GREEN);
+                    panelEstado.setBackground(Color.GREEN);
+                } else {
+                    lblEstado.setText("ANULADO");
+                    //lblEstado.setBackground(Color.RED);
+                    panelEstado.setBackground(Color.RED);
+                }
+            } else if (lblCaja.getText().equals("ENTRADA GENERAL 2")) {
+                eg = new EntradaGeneralDAO().ObtenerEntradaGeneral2(numBoleta);
+                cargarTabla(numBoleta, 6);
+                if (eg.getEstado() > 0) {
+                    lblEstado.setText("ACTIVO");
+                    //lblEstado.setBackground(Color.GREEN);
+                    panelEstado.setBackground(Color.GREEN);
+                } else {
+                    lblEstado.setText("ANULADO");
+                    //lblEstado.setBackground(Color.RED);
+                    panelEstado.setBackground(Color.RED);
+                }
             } else {
-                lblEstado.setText("ANULADO");
-                //lblEstado.setBackground(Color.RED);
-                panelEstado.setBackground(Color.RED);
+                ev = new EntradaVipDAO().Obtener(numBoleta);
+                cargarTabla(numBoleta, 1);
             }
 
-            cargarTabla(numBoleta);
-            VentaEntrada ve = new VentaEntradaDAO().Obtener(numBoleta);
-            //AnulacionesControl ac = new AnulacionesControl();
-            //String datos[] = new String[5];
-            //String array[] = ac.CargarDatos(numBoleta);
-            txtnumVenta.setText("" + eg.getIdEntradaGeneral());
-            txtConcepto.setText(ve.getTipoEntrada());
-            txtCaja.setText(new AnulacionesControl().getCajaConId(eg.getIdCaja()));
-            //txtUsuario.setText(array[3]);
-            txtUsuario.setText(new AnulacionesControl().getNomUsuario(eg.getIdUsuario()));
-            txtHora.setText(eg.getHora());
-            txtFecha.setText(eg.getFecha());
-            txtMonto.setText("" + ve.getTotal());
-//            new AnulacionesControl().cargarTabla(numBoleta, tblDetalle);
+            VentaEntrada ve = null;
+            VentaEntradaVip vip = null;
+
+            if (lblCaja.getText().equals("ENTRADA GENERAL")) {
+                ve = new VentaEntradaDAO().Obtener(numBoleta);
+                txtnumVenta.setText("" + eg.getIdEntradaGeneral());
+                txtConcepto.setText(ve.getTipoEntrada());
+                txtCaja.setText(new AnulacionesControl().getCajaConId(eg.getIdCaja()));
+                txtUsuario.setText(new AnulacionesControl().getNomUsuario(eg.getIdUsuario()));
+                txtHora.setText(eg.getHora());
+                txtFecha.setText(eg.getFecha());
+                txtMonto.setText("" + ve.getTotal());
+            } else if (lblCaja.getText().equals("ENTRADA GENERAL 2")) {
+                ve = new VentaEntradaDAO().Obtener2(numBoleta);
+                txtnumVenta.setText("" + eg.getIdEntradaGeneral());
+                txtConcepto.setText(ve.getTipoEntrada());
+                txtCaja.setText(new AnulacionesControl().getCajaConId(eg.getIdCaja()));
+                txtUsuario.setText(new AnulacionesControl().getNomUsuario(eg.getIdUsuario()));
+                txtHora.setText(eg.getHora());
+                txtFecha.setText(eg.getFecha());
+                txtMonto.setText("" + ve.getTotal());
+            } else {
+                vip = new VentaEntradaVipDAO().Obtener(numBoleta);
+                txtnumVenta.setText("" + vip.getIdEntradaVip());
+                txtConcepto.setText(vip.getTipoEntrada());
+                txtCaja.setText(new AnulacionesControl().getCajaConId(ev.getIdCaja()));
+                txtUsuario.setText(new AnulacionesControl().getNomUsuario(ev.getIdUsuario()));
+                txtHora.setText(ev.getHora());
+                txtFecha.setText(ev.getFecha());
+                txtMonto.setText("" + vip.getTotal());
+            }
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -780,13 +848,15 @@ public class Anulaciones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCaja;
     private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblUsuario;
@@ -803,17 +873,36 @@ public class Anulaciones extends javax.swing.JFrame {
     private javax.swing.JTextField txtnumVenta;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarTabla(int idEntrada) throws SQLException {
+    private void cargarTabla(int idEntrada, int serie) throws SQLException {
         limpiarTabla(tblDetalle, modeloDetalle);
         Conexion con = new Conexion();
         try {
             con.conectar();
-            String sql = "select p.nombre, pre.descripcion, ve.numCovers, ve.total from entradageneral eg\n"
-                    + "inner join ventaentrada ve on eg.identradageneral = ve.venta_idventa\n"
-                    + "inner join productopresentacion pp on ve.idproducto = pp.idproductopresentacion\n"
-                    + "inner join producto p on pp.idproducto = p.idproducto\n"
-                    + "inner join presentacion pre on pp.idpresentacion = pre.idpresentacion\n"
-                    + "where eg.identradageneral = ?";
+            String sql = null;
+
+            if (serie == 2) {
+                sql = "select p.nombre, pre.descripcion, ve.numCovers, ve.total from entradageneral eg\n"
+                        + "inner join ventaentrada ve on eg.identradageneral = ve.venta_idventa\n"
+                        + "inner join productopresentacion pp on ve.idproducto = pp.idproductopresentacion\n"
+                        + "inner join producto p on pp.idproducto = p.idproducto\n"
+                        + "inner join presentacion pre on pp.idpresentacion = pre.idpresentacion\n"
+                        + "where eg.identradageneral = ?";
+            } else if (serie == 6) {
+                sql = "select p.nombre, pre.descripcion, ve.numCovers, ve.total from entradageneral2 eg\n"
+                        + "inner join ventaentrada2 ve on eg.identradageneral2 = ve.venta_idventa\n"
+                        + "inner join productopresentacion pp on ve.idproducto = pp.idproductopresentacion\n"
+                        + "inner join producto p on pp.idproducto = p.idproducto\n"
+                        + "inner join presentacion pre on pp.idpresentacion = pre.idpresentacion\n"
+                        + "where eg.identradageneral2 = ?";
+            } else {
+                sql = "select p.nombre, pre.descripcion, ve.numCovers, ve.total from entradavip ev\n"
+                        + "inner join ventaentradavip ve on ev.identradavip = ve.venta_idventa\n"
+                        + "inner join productopresentacion pp on ve.idproducto = pp.idproductopresentacion\n"
+                        + "inner join producto p on pp.idproducto = p.idproducto\n"
+                        + "inner join presentacion pre on pp.idpresentacion = pre.idpresentacion\n"
+                        + "where ev.identradavip = ?";
+            }
+
             PreparedStatement pst = con.getConexion().prepareStatement(sql);
             pst.setInt(1, idEntrada);
 

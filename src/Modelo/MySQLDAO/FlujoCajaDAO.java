@@ -159,16 +159,51 @@ public class FlujoCajaDAO extends Conexion implements FlujoCajaCRUD {
     }
 
     /* METODO PARA CARGAR LAS VENTAS DESDE QUE SE APERTURA LA CAJA */
-    public double getMontoFlujo(int idFlujoCaja) throws Exception {
+    public double getMontoFlujo(int idFlujoCaja, int serie) throws Exception {
         double monto = 0.0;
         try {
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("select sum(ventaentrada.total) from entradageneral\n"
+            
+            PreparedStatement pst = null;
+            
+            if (serie == 2) {
+                pst = this.conexion.prepareStatement("select sum(ventaentrada.total) from entradageneral\n"
                     + "inner join ventaentrada on entradageneral.identradageneral = ventaentrada.venta_idventa \n"
                     + "where entradageneral.idflujocaja = " + idFlujoCaja + "");
+            }else{
+                pst = this.conexion.prepareStatement("select sum(ventaentrada2.total) from entradageneral2\n"
+                    + "inner join ventaentrada2 on entradageneral2.identradageneral2 = ventaentrada2.venta_idventa \n"
+                    + "where entradageneral2.idflujocaja = " + idFlujoCaja + "");
+            }
+            
+            
             ResultSet res = pst.executeQuery();
             while (res.next()) {
-                monto = res.getDouble("sum(ventaentrada.total)");
+                monto = res.getDouble(1);
+            }
+            pst.close();
+            res.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return monto;
+    }
+    
+    //metodo para obtener el total de ventas de entrada vip
+    public double getMontoFlujoVIP(int idFlujoCaja) throws Exception {
+        double monto = 0.0;
+        try {
+            this.conectar();
+            
+            PreparedStatement pst = this.conexion.prepareStatement("select sum(ventaentradavip.total) from entradavip\n"
+                    + "inner join ventaentradavip on entradavip.identradavip = ventaentradavip.venta_idventa \n"
+                    + "where entradavip.idflujocaja = " + idFlujoCaja + "");
+            
+            ResultSet res = pst.executeQuery();
+            while (res.next()) {
+                monto = res.getDouble(1);
             }
             pst.close();
             res.close();

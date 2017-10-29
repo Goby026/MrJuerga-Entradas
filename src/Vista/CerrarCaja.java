@@ -44,7 +44,13 @@ public class CerrarCaja extends javax.swing.JFrame {
             lblEstado.setText("CAJA APERTURADA");
             txtMontoApertura.setText("" + fc.getSaldo());
             //txtVisa.setText("" + new FlujoCajaDAO().getMontoVISA(idFlujoCaja));
-            txtTotalVentas.setText("" + new FlujoCajaDAO().getMontoFlujo(idFlujoCaja));
+
+            if (lblCaja.getText().equals("ENTRADA GENERAL")) {
+                txtTotalVentas.setText("" + new FlujoCajaDAO().getMontoFlujo(idFlujoCaja, 2));
+            } else {
+                txtTotalVentas.setText("" + new FlujoCajaDAO().getMontoFlujo(idFlujoCaja, 6));
+            }
+
             //txtEgresos.setText("" + new UsuarioGastosDAO().getMontoEgresos(idFlujoCaja));
             //txtBalance.setText("" + calcularBalanceTotal());
             double total = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText());
@@ -434,10 +440,15 @@ public class CerrarCaja extends javax.swing.JFrame {
                             parametros.put("master", txtMasterCard.getText());
                             parametros.put("subTotal", lblIngresos.getText());
                             parametros.put("total", lblTotalEfectivo.getText());
-                            mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral.jrxml", parametros, getPageSize());
-                            mrv.setNombreArchivo("CierreEntradasGeneral");
-                            mrv.exportarADocxConCopia("CierreEntradasGeneral.docx");
-
+                            if (lblCaja.getText().equals("ENTRADA GENERAL")) {
+                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral.jrxml", parametros, getPageSize());
+                                mrv.setNombreArchivo("CierreEntradasGeneral");
+                                mrv.exportarADocxConCopia("CierreEntradasGeneral.docx");
+                            } else {
+                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral2.jrxml", parametros, getPageSize());
+                                mrv.setNombreArchivo("CierreEntradasGeneral2");
+                                mrv.exportarADocxConCopia("CierreEntradasGeneral2.docx");
+                            }
                             dispose();
                         } else {
                             JOptionPane.showMessageDialog(null, "ERROR AL CERRAR LA CAJA");

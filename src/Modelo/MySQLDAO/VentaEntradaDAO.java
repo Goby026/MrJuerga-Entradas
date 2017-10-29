@@ -33,6 +33,29 @@ public class VentaEntradaDAO extends Conexion implements VentaEntradaCRUD {
         }
         return false;
     }
+    
+    //registrar venta general 2
+    public boolean registrar2(VentaEntrada ve) throws Exception {
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("INSERT INTO `ventaentrada2`(`numPersonas`, `numCovers`, `total`, `tipoEntrada`, `venta_idventa`, `idproducto`) VALUES (?,?,?,?,?,?)");
+            pst.setInt(1, ve.getNumPersonas());
+            pst.setInt(2, ve.getNumCovers());
+            pst.setDouble(3, ve.getTotal());
+            pst.setString(4, ve.getTipoEntrada());
+            pst.setInt(5, ve.getIdVenta());
+            pst.setInt(6, ve.getIdProd());
+            int res = pst.executeUpdate();
+            if (res > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.cerrar();
+        }
+        return false;
+    }
 
     @Override
     public boolean modificar(VentaEntrada ve) throws Exception {
@@ -102,6 +125,32 @@ public class VentaEntradaDAO extends Conexion implements VentaEntradaCRUD {
         return false;
     }
     
+    //metodo para anular ventaentrada 2 ALEJANDRO
+    public boolean anular2(int numEntrada) throws Exception {
+        try {
+            //estado 0=anulado - 1=activo
+            String sqlAnularEntrada = "UPDATE entradageneral2 SET estado = 0 WHERE identradageneral2 = "+numEntrada+"";
+            String sqlAnularDetalleEntrada = "UPDATE ventaentrada2 SET numCovers = 0, total = 0 WHERE venta_idventa = "+numEntrada+"";
+            this.conectar();
+            
+            PreparedStatement pst = this.conexion.prepareStatement(sqlAnularEntrada);
+            PreparedStatement pst2 = this.conexion.prepareStatement(sqlAnularDetalleEntrada);
+            
+            int res = pst.executeUpdate();
+            int res2 = pst2.executeUpdate();
+            
+            if (res > 0 && res2 > 0) {
+                return true;
+            }
+            pst.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return false;
+    }
+    
 
     @Override
     public List<VentaEntrada> listar() throws Exception {
@@ -114,6 +163,36 @@ public class VentaEntradaDAO extends Conexion implements VentaEntradaCRUD {
             while (rs.next()) {
                 VentaEntrada ve = new VentaEntrada();
                 ve.setIdVentaEntrada(rs.getInt("idventaEntrada"));
+                ve.setNumPersonas(rs.getInt("numPersonas"));
+                ve.setNumCovers(rs.getInt("numCovers"));
+                ve.setTotal(rs.getDouble("total"));
+                ve.setTipoEntrada(rs.getString("tipoEntrada"));
+                ve.setIdVenta(rs.getInt("venta_idventa"));
+                ve.setIdProd(rs.getInt("idproducto"));
+                ve.setFeha(rs.getString("fecha"));
+                lista.add(ve);
+            }
+            rs.close();
+            pst.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return lista;
+    }
+    
+    //metodo para listar venta entrada 2 ALEJANDRO
+    public List<VentaEntrada> listar2() throws Exception {
+        List<VentaEntrada> lista = null;
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("SELECT * FROM ventaentrada2");
+            lista = new ArrayList();
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                VentaEntrada ve = new VentaEntrada();
+                ve.setIdVentaEntrada(rs.getInt("idventaEntrada2"));
                 ve.setNumPersonas(rs.getInt("numPersonas"));
                 ve.setNumCovers(rs.getInt("numCovers"));
                 ve.setTotal(rs.getDouble("total"));
@@ -174,6 +253,35 @@ public class VentaEntradaDAO extends Conexion implements VentaEntradaCRUD {
             while (rs.next()) {
                 ve = new VentaEntrada();
                 ve.setIdVentaEntrada(rs.getInt("idventaEntrada"));
+                ve.setNumPersonas(rs.getInt("numPersonas"));
+                ve.setNumCovers(rs.getInt("numCovers"));
+                ve.setTotal(rs.getDouble("total"));
+                ve.setTipoEntrada(rs.getString("tipoEntrada"));
+                ve.setIdVenta(rs.getInt("venta_idventa"));
+                ve.setIdProd(rs.getInt("idproducto"));
+                ve.setFeha(rs.getString("fecha"));
+            }
+            rs.close();
+            pst.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return ve;
+    }
+    
+    //metodo para obtener ventaentrada de caja general 2 : alejandro
+    public VentaEntrada Obtener2(int idVentaEntrada) throws Exception {
+        VentaEntrada ve = null;
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("SELECT * FROM ventaentrada2 WHERE venta_idventa = ?");
+            pst.setInt(1, idVentaEntrada);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                ve = new VentaEntrada();
+                ve.setIdVentaEntrada(rs.getInt("idventaEntrada2"));
                 ve.setNumPersonas(rs.getInt("numPersonas"));
                 ve.setNumCovers(rs.getInt("numCovers"));
                 ve.setTotal(rs.getDouble("total"));

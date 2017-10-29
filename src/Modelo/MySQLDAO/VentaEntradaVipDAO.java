@@ -87,11 +87,35 @@ public class VentaEntradaVipDAO extends Conexion implements DAO<VentaEntradaVip>
 
     @Override
     public boolean Anular(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
     }
 
     @Override
     public VentaEntradaVip Obtener(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        VentaEntradaVip vevip = null;
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("select * from ventaentradavip where venta_idventa = ?");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                vevip = new VentaEntradaVip();
+//                vevip.setIdpromocion(rs.getInt("Idpromocion"));
+                vevip.setIdVentaEntradaVip(rs.getInt(1));
+                vevip.setNumPersonas(rs.getInt(2));
+                vevip.setNumCovers(rs.getInt(3));
+                vevip.setTotal(rs.getDouble(4));
+                vevip.setTipoEntrada(rs.getString(5));
+                vevip.setIdEntradaVip(rs.getInt(6));
+                vevip.setIdProd(rs.getInt(7));
+            }
+            rs.close();
+            pst.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return vevip;
     }
 }

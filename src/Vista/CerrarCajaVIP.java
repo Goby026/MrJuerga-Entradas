@@ -50,7 +50,7 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
             FlujoCaja fc = new FlujoCajaDAO().obtener(idFlujoCaja);
             txtMontoApertura.setText("" + fc.getSaldo());
             //txtTotalVentas.setText("" + new CerrarCajaControl().getMontoVentas(new CerrarCajaControl().getIdUsuario(usuario), new CerrarCajaControl().getIdCaja(lblCaja.getText())));            
-            txtTotalVentas.setText("" + new FlujoCajaDAO().getMontoFlujo(idFlujoCaja));
+            txtTotalVentas.setText("" + new FlujoCajaDAO().getMontoFlujoVIP(idFlujoCaja));
             txtTotalNotaPedido.setText("" + new VentaNotaDAO().getTotalNotaPedido(idFlujoCaja));
             double ingresos = (Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText()) + Double.parseDouble(txtTotalNotaPedido.getText()));
             lblIngresos.setText("" + ingresos);
@@ -471,7 +471,7 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
                             parametros.put("idflujo", idFlujoCaja);
                             parametros.put("usuario", txtUsuario.getText());
                             parametros.put("visa", txtVisa.getText());
-                            parametros.put("master", txtMasterCard.getText());                            
+                            parametros.put("master", txtMasterCard.getText());
                             parametros.put("total", lblTotalEfectivo.getText());
                             parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
                             mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIPNotaPedido.jrxml", parametros, getPageSizeVIP());

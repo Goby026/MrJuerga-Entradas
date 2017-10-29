@@ -85,7 +85,7 @@ public class EntradaVipDAO extends Conexion implements DAO<EntradaVip> {
     public boolean Anular(int id) throws Exception {
         try {
             //estado 0=anulado - 1=activo
-            String sqlAnularVenta = "UPDATE EntradaVip SET estado = 0 WHERE idEntradaGeneral = " + id + "";
+            String sqlAnularVenta = "UPDATE EntradaVip SET estado = 0 WHERE idEntradaVip = " + id + "";
             String sqlAnularDetalleVenta = "UPDATE ventaentradavip SET numCovers = 0, total = 0 WHERE venta_idventa = " + id + "";
             this.conectar();
 
@@ -112,7 +112,7 @@ public class EntradaVipDAO extends Conexion implements DAO<EntradaVip> {
         List<EntradaVip> lista = null;
         try {
             this.conectar();
-            PreparedStatement pst = this.conexion.prepareStatement("select * from EntradaGeneral");
+            PreparedStatement pst = this.conexion.prepareStatement("select * from entradavip");
             lista = new ArrayList();
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -142,7 +142,34 @@ public class EntradaVipDAO extends Conexion implements DAO<EntradaVip> {
 
     @Override
     public EntradaVip Obtener(int id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntradaVip v = null;
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("select * from EntradaVip where identradavip = ?");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                v = new EntradaVip();
+                v.setIdEntradaVip(rs.getInt(1));
+                v.setFecha(rs.getString(2));
+                v.setHora(rs.getString(3));
+                v.setIdUsuario(rs.getInt(4));
+                v.setIdCliente(rs.getInt(5));
+                v.setIdTipoComprobante(rs.getInt(6));
+                v.setEstado(rs.getInt(7));
+                v.setTipopago(rs.getInt(8));
+                v.setnOperacion(rs.getString(9));
+                v.setIdCaja(rs.getInt(10));
+                v.setIdFlujoCaja(rs.getInt(11));
+            }
+            rs.close();
+            pst.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return v;
     }
 
     public int getIdUltimaEntradaVip() throws Exception {
