@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-10-28T05:39:59 -->
+<!-- 2017-11-01T19:57:09 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="215" pageHeight="842" columnWidth="169" leftMargin="26" rightMargin="20" topMargin="20" bottomMargin="20" uuid="19e61c6a-b76f-421f-97ef-bf76f3fd8df7">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MrJuerga-Server"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MrJuerga-Local"/>
 	<property name="ireport.zoom" value="4.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="278"/>
@@ -18,6 +18,8 @@
 	<parameter name="usuario" class="java.lang.String"/>
 	<parameter name="total" class="java.lang.String"/>
 	<parameter name="nota" class="java.lang.Double"/>
+	<parameter name="visa" class="java.lang.String"/>
+	<parameter name="master" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select producto.nombre ,if(producto.nombre = 'BOX',sum(ventaentradavip.numPersonas),count(ventaentradavip.numPersonas)) as cantidad,sum(ventaentradavip.total) AS subtotal from entradavip 
 inner join ventaentradavip on entradavip.identradavip = ventaentradavip.venta_idventa
@@ -194,16 +196,6 @@ group by producto.nombre]]>
 				<text><![CDATA[GASTO 2:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="40" y="54" width="40" height="11" uuid="dda74a42-675e-483f-90ba-f3672e6ac020">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
-				</reportElement>
-				<textElement textAlignment="Left">
-					<font fontName="Consolas" size="9"/>
-				</textElement>
-				<text><![CDATA[GASTO 3:]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="83" y="28" width="86" height="11" uuid="f5016202-ce7d-4a33-bbcc-7def61a38959">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
@@ -215,16 +207,6 @@ group by producto.nombre]]>
 			</staticText>
 			<staticText>
 				<reportElement x="83" y="41" width="86" height="11" uuid="cc2ee09e-708d-497e-96ca-6961b2ec79fb">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
-				</reportElement>
-				<textElement textAlignment="Left">
-					<font fontName="Consolas" size="9"/>
-				</textElement>
-				<text><![CDATA[_ _ _ _ _ _]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="83" y="54" width="86" height="11" uuid="aff07311-0660-495c-84a9-f018658b6774">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
 				</reportElement>
@@ -254,7 +236,7 @@ group by producto.nombre]]>
 				<text><![CDATA[_ _ _ _ _ _]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="40" y="68" width="40" height="11" uuid="db1e0172-e984-49c2-94b3-dfe8047ba685">
+				<reportElement x="40" y="55" width="40" height="11" uuid="db1e0172-e984-49c2-94b3-dfe8047ba685">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
 				</reportElement>
@@ -262,16 +244,6 @@ group by producto.nombre]]>
 					<font fontName="Consolas" size="9"/>
 				</textElement>
 				<text><![CDATA[VISA:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="83" y="68" width="86" height="11" uuid="8677526d-622a-4399-aa62-a5ec8b7c9496">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
-				</reportElement>
-				<textElement textAlignment="Left">
-					<font fontName="Consolas" size="9"/>
-				</textElement>
-				<text><![CDATA[_ _ _ _ _ _]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="100" width="80" height="11" uuid="f656881a-f1e1-46fd-b60c-4e10b0c04009">
@@ -333,6 +305,34 @@ group by producto.nombre]]>
 					<font fontName="Consolas" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{nota}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="70" width="40" height="11" uuid="f5a9c6a0-ffd4-411d-a3cc-e0955b890a85">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="cm"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<text><![CDATA[MASTER:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="83" y="55" width="86" height="11" uuid="03fd9f55-f97c-48b6-a75e-d29a0530d78c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{visa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="83" y="70" width="86" height="11" uuid="61f8c6c6-fb34-4dc9-a44b-267a422fb4a1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Consolas" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{master}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
