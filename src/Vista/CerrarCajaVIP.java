@@ -459,20 +459,20 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
                             int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(txtUsuario.getText()), new CerrarCajaControl().getIdCaja(lblCaja.getText()));
                             
                             int c = 0;
-
-                            if ((validarVentaEntradas(idFlujoCaja) > 0) && (validarNotasPedido(idFlujoCaja) > 0)) {//imprimir ambos
+                            
+                            if ((validarVentaEntradas(idFlujoCaja)) && (validarNotasPedido(idFlujoCaja))) {//imprimir ambos
                                 System.out.println("imprime ambos");
                                 System.out.println("cantidad de entradas normales :"+validarVentaEntradas(idFlujoCaja));
                                 System.out.println("cantidad de notas de pedido :"+validarNotasPedido(idFlujoCaja));
-                                c++;
                                 //imprimirCierreVip(idFlujoCaja);
                                 //imprimirCierreVipNotaPedido(idFlujoCaja);
-                            } else if ((validarVentaEntradas(idFlujoCaja) > 0) && (validarNotasPedido(idFlujoCaja) < 0)) {//imprimir cierre ventas reales
+                                c++;
+                            } else if ((validarVentaEntradas(idFlujoCaja)) && (!validarNotasPedido(idFlujoCaja))) {//imprimir cierre ventas reales
                                 System.out.println("imprime cierre ventas normales");
                                 //imprimirCierreVip(idFlujoCaja);
                                 System.out.println("cantidad de entradas normales :"+validarVentaEntradas(idFlujoCaja));
                                 c++;
-                            } else if((validarVentaEntradas(idFlujoCaja) < 0) && (validarNotasPedido(idFlujoCaja) > 0)){//imprimir cierre nota de pedido
+                            } else if((!validarVentaEntradas(idFlujoCaja)) && (validarNotasPedido(idFlujoCaja))){//imprimir cierre nota de pedido
                                 System.out.println("imprime cierre notas de pedido");
                                 //imprimirCierreVipNotaPedido(idFlujoCaja);
                                 System.out.println("cantidad de notas de pedido :"+validarNotasPedido(idFlujoCaja));
@@ -734,17 +734,18 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
     }
     
     //METODO PARA VALIDAR SI SE REGISTRARON VENTAS VIP
-    private int validarVentaEntradas(int idFlujoCaja) throws SQLException {
+    private boolean validarVentaEntradas(int idFlujoCaja) throws SQLException {
         Conexion con = new Conexion();
         try {
             con.conectar();
             String sql = "SELECT count(idEntradaVip) FROM entradavip\n"
-                    + "where idflujocaja = ?";
+                    + "where idflujocaja = "+ idFlujoCaja;
             PreparedStatement pst = con.getConexion().prepareStatement(sql);
-            pst.setInt(1, idFlujoCaja);
             ResultSet res = pst.executeQuery();
             if (res.next()) {
-                return res.getInt(1);
+                if (res.getInt(1)> 0) {
+                    return true;
+                }                
             }
             pst.close();
             res.close();
@@ -753,21 +754,22 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         } finally {
             con.cerrar();
         }
-        return -1;
+        return false;
     }
 
     //METODO PARA VALIDAR SI SE REGISTRARON NOTAS DE PEDIDO
-    private int validarNotasPedido(int idFlujoCaja) throws SQLException {
+    private boolean validarNotasPedido(int idFlujoCaja) throws SQLException {
         Conexion con = new Conexion();
         try {
             con.conectar();
             String sql = "SELECT count(idnotapedido) FROM notapedido\n"
-                    + "where idflujocaja = ?";
+                    + "where idflujocaja = "+idFlujoCaja;
             PreparedStatement pst = con.getConexion().prepareStatement(sql);
-            pst.setInt(1, idFlujoCaja);
             ResultSet res = pst.executeQuery();
             if (res.next()) {
-                return res.getInt(1);
+                if (res.getInt(1)> 0) {
+                    return true;
+                }                
             }
             pst.close();
             res.close();
@@ -776,7 +778,7 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         } finally {
             con.cerrar();
         }
-        return -1;
+        return false;
     }
 
     //METODO PARA LOS TAMAÑOS DE LA IMPRESION
