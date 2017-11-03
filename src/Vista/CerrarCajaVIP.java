@@ -461,21 +461,21 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
                             int c = 0;
                             
                             if ((validarVentaEntradas(idFlujoCaja)) && (validarNotasPedido(idFlujoCaja))) {//imprimir ambos
-                                System.out.println("imprime ambos");
-                                System.out.println("cantidad de entradas normales :"+validarVentaEntradas(idFlujoCaja));
-                                System.out.println("cantidad de notas de pedido :"+validarNotasPedido(idFlujoCaja));
-                                //imprimirCierreVip(idFlujoCaja);
-                                //imprimirCierreVipNotaPedido(idFlujoCaja);
+//                                System.out.println("imprime ambos");
+//                                System.out.println("cantidad de entradas normales :"+validarVentaEntradas(idFlujoCaja));
+//                                System.out.println("cantidad de notas de pedido :"+validarNotasPedido(idFlujoCaja));
+                                imprimirCierreVip(idFlujoCaja);
+                                imprimirCierreVipNotaPedido(idFlujoCaja);
                                 c++;
                             } else if ((validarVentaEntradas(idFlujoCaja)) && (!validarNotasPedido(idFlujoCaja))) {//imprimir cierre ventas reales
-                                System.out.println("imprime cierre ventas normales");
-                                //imprimirCierreVip(idFlujoCaja);
-                                System.out.println("cantidad de entradas normales :"+validarVentaEntradas(idFlujoCaja));
+                                //System.out.println("imprime cierre ventas normales");
+                                imprimirCierreVip(idFlujoCaja);
+                                //System.out.println("cantidad de entradas normales :"+validarVentaEntradas(idFlujoCaja));
                                 c++;
                             } else if((!validarVentaEntradas(idFlujoCaja)) && (validarNotasPedido(idFlujoCaja))){//imprimir cierre nota de pedido
-                                System.out.println("imprime cierre notas de pedido");
-                                //imprimirCierreVipNotaPedido(idFlujoCaja);
-                                System.out.println("cantidad de notas de pedido :"+validarNotasPedido(idFlujoCaja));
+                                //System.out.println("imprime cierre notas de pedido");
+                                imprimirCierreVipNotaPedido(idFlujoCaja);
+                                //System.out.println("cantidad de notas de pedido :"+validarNotasPedido(idFlujoCaja));
                                 c++;
                             }
                             
