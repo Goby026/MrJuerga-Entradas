@@ -13,6 +13,8 @@ import Modelo.Conexion;
 import Modelo.FlujoCaja;
 import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.MySQLDAO.VentaNotaDAO;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,6 +39,20 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         datosIniciales(usuario);
+        
+        
+        panelMontos.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+               panelMontos.setVisible(false);
+            }
+        });
+        
     }
 
     public CerrarCajaVIP() {
@@ -709,8 +725,8 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
             parametros.put("nota", Double.parseDouble(txtTotalNotaPedido.getText()));
             mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasVIP.jrxml", parametros, getPageSizeVIP());
             mrv.setNombreArchivo("CierreEntradasVip");
-            //mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
-            mrv.exportarAPdfConCopia();
+            mrv.exportarADocxConCopia("CierreEntradasVIP.docx");
+            //mrv.exportarAPdfConCopia();
         } catch (IOException ex) {
             Logger.getLogger(CerrarCajaVIP.class.getName()).log(Level.SEVERE, null, ex);
         }

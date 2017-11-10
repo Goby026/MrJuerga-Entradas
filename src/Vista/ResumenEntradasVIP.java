@@ -2,6 +2,8 @@ package Vista;
 
 import Controlador.MyiReportVisor;
 import Controlador.EntradaGeneralControl;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.HashMap;
 
 /**
@@ -27,6 +29,18 @@ public class ResumenEntradasVIP extends javax.swing.JFrame {
 //        } catch (Exception e) {
 //            System.out.println(e.getMessage());
 //        }
+
+        this.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                dispose();
+            }
+        });
 
     }
 

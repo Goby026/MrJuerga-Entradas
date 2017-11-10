@@ -21,6 +21,8 @@ import Modelo.MySQLDAO.VentaNotaDAO;
 import Modelo.NotaPedido;
 import Modelo.ProdPromocion;
 import Modelo.VentaNota;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;

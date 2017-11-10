@@ -11,6 +11,8 @@ import Controlador.MyiReportVisor;
 import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.UsuarioGastos;
 import Modelo.MySQLDAO.UsuarioGastosDAO;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -27,6 +29,19 @@ public class Gastos extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         cargarDatos(usuario);
+        
+        this.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+               dispose();
+            }
+        });
+        
     }
 
     public Gastos() {

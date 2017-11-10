@@ -7,6 +7,8 @@ import Controlador.MyiReportVisor;
 import Controlador.EntradaGeneralControl;
 import Modelo.Conexion;
 import Modelo.MySQLDAO.FlujoCajaDAO;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -33,11 +35,23 @@ public class ResumenEntradasGeneral extends javax.swing.JFrame {
             titulosColumnas();
             int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(Usuario), new CerrarCajaControl().getIdCaja(txtCaja.getText()));
             if (txtCaja.getText().equals("ENTRADA GENERAL")) {
-                LlenarTablaBuscarProductos(idFlujoCaja,2);
+                LlenarTablaBuscarProductos(idFlujoCaja, 2);
             } else {
-                LlenarTablaBuscarProductos(idFlujoCaja,6);
+                LlenarTablaBuscarProductos(idFlujoCaja, 6);
             }
-            
+
+            this.addWindowFocusListener(new WindowFocusListener() {
+                @Override
+                public void windowGainedFocus(WindowEvent e) {
+
+                }
+
+                @Override
+                public void windowLostFocus(WindowEvent e) {
+                    dispose();
+                }
+            });
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -223,31 +237,29 @@ public class ResumenEntradasGeneral extends javax.swing.JFrame {
         Conexion con = new Conexion();
         try {
             con.conectar();
-            
+
             String sql = null;
-            
+
             if (caja == 2) {
                 sql = "select entradageneral.identradageneral, producto.nombre, ventaentrada.total\n"
-                    + "from entradageneral \n"
-                    + "inner join ventaentrada on entradageneral.identradageneral = ventaentrada.venta_idventa\n"
-                    + "inner join productopresentacion on ventaentrada.idproducto = productopresentacion.idproductopresentacion\n"
-                    + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
-                    + "where idflujocaja = ?";
-            }else{
+                        + "from entradageneral \n"
+                        + "inner join ventaentrada on entradageneral.identradageneral = ventaentrada.venta_idventa\n"
+                        + "inner join productopresentacion on ventaentrada.idproducto = productopresentacion.idproductopresentacion\n"
+                        + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
+                        + "where idflujocaja = ?";
+            } else {
                 sql = "select entradageneral2.identradageneral2, producto.nombre, ventaentrada2.total\n"
-                    + "from entradageneral2 \n"
-                    + "inner join ventaentrada2 on entradageneral2.identradageneral2 = ventaentrada2.venta_idventa\n"
-                    + "inner join productopresentacion on ventaentrada2.idproducto = productopresentacion.idproductopresentacion\n"
-                    + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
-                    + "where idflujocaja = ?";
+                        + "from entradageneral2 \n"
+                        + "inner join ventaentrada2 on entradageneral2.identradageneral2 = ventaentrada2.venta_idventa\n"
+                        + "inner join productopresentacion on ventaentrada2.idproducto = productopresentacion.idproductopresentacion\n"
+                        + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
+                        + "where idflujocaja = ?";
             }
-            
-            
-            
+
             PreparedStatement pst = con.getConexion().prepareStatement(sql);
             pst.setInt(1, idFlujoCaja);
             ResultSet res = pst.executeQuery();
-            
+
             Object datos[] = new Object[3];
 
             while (res.next()) {

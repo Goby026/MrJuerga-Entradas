@@ -13,6 +13,8 @@ import Modelo.MySQLDAO.ProductoDAO;
 import Modelo.MySQLDAO.ProductoPresentacionDAO;
 import Modelo.Producto;
 import Modelo.ProductoPresentacion;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,6 +55,19 @@ public class ConfigPrecioGeneral extends javax.swing.JFrame {
         p = new ProductoDAO().obtenerProducto(pp.getIdProducto());
         
         txtProductoCover.setText(p.getNombre());
+        
+        this.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+               dispose();
+            }
+        });
+        
         
     }
 

@@ -21,6 +21,8 @@ import Modelo.VentaEntrada;
 import Modelo.VentaEntradaVip;
 import Modelo.VentaNota;
 import java.awt.Color;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,6 +57,19 @@ public class Anulaciones extends javax.swing.JFrame {
         lblCaja.setText(new AbrirCajaControl().getCajaDeUsuario(Usuario));
         new Cronometro().iniciarCronometro(txtHoraCronometro);
         cargarTitulosTabla();
+        
+        formTipoBoleta.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+               formTipoBoleta.setVisible(false);
+            }
+        });
+        
     }
 
     public Anulaciones() {

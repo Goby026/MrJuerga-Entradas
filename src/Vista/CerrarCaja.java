@@ -11,6 +11,8 @@ import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
 import Modelo.FlujoCaja;
 import Modelo.MySQLDAO.FlujoCajaDAO;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -28,6 +30,19 @@ public class CerrarCaja extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         datosIniciales(usuario);
+        
+        panelMontos.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+               panelMontos.setVisible(false);
+            }
+        });
+        
     }
 
     public CerrarCaja() {

@@ -20,6 +20,8 @@ import Modelo.VentaEntrada;
 import Modelo.MySQLDAO.VentaEntradaDAO;
 import Modelo.MySQLDAO.VentaEntradaVipDAO;
 import Modelo.VentaEntradaVip;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -49,6 +51,8 @@ public class EntradaVipBox extends javax.swing.JFrame {
         txtCaja.setText(new AbrirCajaControl().getCajaDeUsuario(usuario));
         costoVIP = new ConfiguracionDAO().getPrecios(2);
         LlenarTabla();
+        
+        
     }
 
     public EntradaVipBox() {

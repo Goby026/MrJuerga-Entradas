@@ -21,6 +21,8 @@ import Modelo.Producto;
 import Modelo.ProductoPresentacion;
 import Modelo.VentaEntrada;
 import java.awt.Color;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

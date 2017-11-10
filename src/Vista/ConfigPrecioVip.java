@@ -10,6 +10,8 @@ import Modelo.Conexion;
 import Modelo.Configuracion;
 import Modelo.MySQLDAO.ConfiguracionDAO;
 import Modelo.MySQLDAO.ProdPromocionDAO;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
@@ -36,6 +38,20 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
         txtPrecioEntradaVip.setText(""+c.getPrecioVip());
         
         LlenarTabla();
+        
+        
+        this.addWindowFocusListener(new WindowFocusListener() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+               dispose();
+            }
+        });
+        
     }
 
     /**
