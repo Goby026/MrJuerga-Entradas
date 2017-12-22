@@ -569,7 +569,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 par2.put("nombreCover", flagCover);
                 MyiReportVisor mrv2 = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\coversNormalT1.jrxml", par2, getPageSize(1, 28, 40, 50));
                 mrv2.setNombreArchivo("Cover Entrada 1");
-                int numerodeCopias = ve.getNumCovers();
+                int numerodeCopias = Integer.parseInt(txtNumPersonas.getText());
                 for (int i = 1; i <= numerodeCopias; i++) {
                     pp = new ProductoPresentacionDAO().Obtener(producto);
                     System.out.println("EL ID DE PROD A ANALIZAR ES: " + pp.getIdProducto());
@@ -602,7 +602,7 @@ public class EntradaGeneralVista extends javax.swing.JFrame {
                 par2.put("nombreCover", flagCover);
                 MyiReportVisor mrv2 = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\coversNormalT2.jrxml", par2, getPageSize(1, 28, 40, 50));
                 mrv2.setNombreArchivo("Cover Entrada 2");
-                int numerodeCopias = ve.getNumCovers();
+                int numerodeCopias = Integer.parseInt(txtNumPersonas.getText());
                 for (int i = 1; i <= numerodeCopias; i++) {
                     pp = new ProductoPresentacionDAO().Obtener(producto);
                     System.out.println("EL ID DE PROD A ANALIZAR ES: " + pp.getIdProducto());
