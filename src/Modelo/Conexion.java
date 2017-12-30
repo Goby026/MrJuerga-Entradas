@@ -11,7 +11,7 @@ public class Conexion {
     private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     
 //CONEXION LOCAL
-    private final String DB_URL = "jdbc:mysql://localhost/mrjuerga_barras";
+    private final String DB_URL = "jdbc:mysql://localhost/mrjuerga";
     private final String USER = "root";
     private final String PASS = "";
   

@@ -67,6 +67,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lbl_Usuario = new javax.swing.JLabel();
         lblImg = new javax.swing.JLabel();
+        btnGastos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -185,6 +186,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(lblImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 880, 210, 160));
+
+        btnGastos.setText("GASTOS");
+        btnGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGastosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 410, 230, 170));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -359,6 +368,31 @@ public class Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lblImgMouseClicked
 
+    private void btnGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGastosActionPerformed
+        try {
+
+            int flag = 0;
+            int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new AbrirCajaControl().getIdUsuario(lbl_Usuario.getText()), new AbrirCajaControl().getIdCaja(lbl_caja.getText()));
+            FlujoCajaDAO fcdao = new FlujoCajaDAO();
+            for (FlujoCaja fc : fcdao.Listar()) {
+                if (fc.getIdFlujoCaja() == idFlujoCaja && fc.getEstado().equals("1")) {
+                    flag++;
+                }
+            }
+            if (flag > 0) {
+                String usuario = lbl_Usuario.getText();
+                Gastos g = new Gastos(usuario);
+                g.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "DEBE APERTURAR CAJA PARA REGISTRAR GASTOS");
+            }
+
+            //dispose();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnGastosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -397,6 +431,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntradaGeneral;
     private javax.swing.JButton btnEntradaVip;
+    private javax.swing.JButton btnGastos;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
