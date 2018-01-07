@@ -40,17 +40,6 @@ public class ResumenEntradasGeneral extends javax.swing.JFrame {
                 LlenarTablaBuscarProductos(idFlujoCaja, 6);
             }
 
-            this.addWindowFocusListener(new WindowFocusListener() {
-                @Override
-                public void windowGainedFocus(WindowEvent e) {
-
-                }
-
-                @Override
-                public void windowLostFocus(WindowEvent e) {
-                    dispose();
-                }
-            });
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

@@ -193,7 +193,7 @@ public class Menu extends javax.swing.JFrame {
                 btnGastosActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1470, 410, 230, 170));
+        getContentPane().add(btnGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 390, 280, 220));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

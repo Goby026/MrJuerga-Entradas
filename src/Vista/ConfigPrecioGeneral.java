@@ -56,19 +56,6 @@ public class ConfigPrecioGeneral extends javax.swing.JFrame {
         
         txtProductoCover.setText(p.getNombre());
         
-        this.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-               dispose();
-            }
-        });
-        
-        
     }
 
     /**

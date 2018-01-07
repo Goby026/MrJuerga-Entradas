@@ -38,20 +38,6 @@ public class ConfigPrecioVip extends javax.swing.JFrame {
         txtPrecioEntradaVip.setText(""+c.getPrecioVip());
         
         LlenarTabla();
-        
-        
-        this.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-               dispose();
-            }
-        });
-        
     }
 
     /**

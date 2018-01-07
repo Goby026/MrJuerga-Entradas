@@ -58,17 +58,6 @@ public class Anulaciones extends javax.swing.JFrame {
         new Cronometro().iniciarCronometro(txtHoraCronometro);
         cargarTitulosTabla();
         
-        formTipoBoleta.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-               formTipoBoleta.setVisible(false);
-            }
-        });
         
     }
 

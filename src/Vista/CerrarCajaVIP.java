@@ -39,20 +39,6 @@ public class CerrarCajaVIP extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         datosIniciales(usuario);
-        
-        
-        panelMontos.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-               panelMontos.setVisible(false);
-            }
-        });
-        
     }
 
     public CerrarCajaVIP() {

@@ -32,17 +32,7 @@ public class CerrarCaja extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         datosIniciales(usuario);
 
-        panelMontos.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                panelMontos.setVisible(false);
-            }
-        });
+        
 
     }
 
@@ -74,7 +64,7 @@ public class CerrarCaja extends javax.swing.JFrame {
             double gastos = Double.parseDouble(txtGastos.getText());
             lblEgresos.setText("" + gastos);
             lblIngresos.setText("" + total);
-            lblTotalEfectivo.setText("" + (total - gastos));
+            lblTotalEfectivo.setText(""+(total - gastos));
         } else {
             lblEstado.setText("CAJA CERRADA");
         }
@@ -511,19 +501,21 @@ public class CerrarCaja extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarCajaActionPerformed
 
     private void jarraCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarraCalcularActionPerformed
-
+        double ingReal = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText());
         double subtotal = 0.0;
         if (opc == 1) {
             txtVisa.setText(txtMontos.getText());
             txtMontos.setText("");
             subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
             lblTotalEfectivo.setText("" + subtotal);
+            lblIngresos.setText(""+ (ingReal+ subtotal));
             panelMontos.dispose();
         } else {
             txtMasterCard.setText(txtMontos.getText());
             txtMontos.setText("");
             subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
             lblTotalEfectivo.setText("" + subtotal);
+            lblIngresos.setText(""+ (ingReal+ subtotal));
             panelMontos.dispose();
         }
     }//GEN-LAST:event_jarraCalcularActionPerformed

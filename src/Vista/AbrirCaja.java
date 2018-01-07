@@ -64,17 +64,6 @@ public class AbrirCaja extends javax.swing.JFrame {
             }
         });
 
-        this.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-               dispose();
-            }
-        });
     }
 
     /**
