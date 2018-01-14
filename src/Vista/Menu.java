@@ -32,7 +32,7 @@ public class Menu extends javax.swing.JFrame {
 
     public void cargarDatos(String Usuario) throws Exception {
         try {
-            Color c = new Color(0, 0, 1, 0.15f);
+            Color c = new Color(255,255,255);
             this.setBackground(c);
             setLocationRelativeTo(null);
             setExtendedState(MAXIMIZED_BOTH);
@@ -58,8 +58,6 @@ public class Menu extends javax.swing.JFrame {
         btnEntradaGeneral = new javax.swing.JButton();
         btnEntradaVip = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblSalir = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -68,86 +66,95 @@ public class Menu extends javax.swing.JFrame {
         lbl_Usuario = new javax.swing.JLabel();
         lblImg = new javax.swing.JLabel();
         btnGastos = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 0, 0));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/CERRAR CAJA.png"))); // NOI18N
-        jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/CERRAR CAJA 01.png"))); // NOI18N
+        jButton4.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Cash_Register_100px.png"))); // NOI18N
+        jButton4.setText("CIERRE");
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 620, -1, -1));
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 620, 330, 220));
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ANULAR ENTRADA.png"))); // NOI18N
-        jButton5.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ANULAR ENTRADA 1.png"))); // NOI18N
+        jButton5.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Delete_Ticket_100px.png"))); // NOI18N
+        jButton5.setText("ANULACIONES");
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 620, -1, -1));
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 620, 330, 220));
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LISTA ENTRADAS 01.png"))); // NOI18N
-        jButton6.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LISTA ENTRADAS.png"))); // NOI18N
+        jButton6.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Purchase_Order_100px.png"))); // NOI18N
+        jButton6.setText("LISTA DE VENTAS");
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 620, -1, -1));
+        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 620, 330, 220));
 
-        btnEntradaGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL.png"))); // NOI18N
-        btnEntradaGeneral.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA GENERAL - copia.png"))); // NOI18N
+        btnEntradaGeneral.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        btnEntradaGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Two_Tickets_100px.png"))); // NOI18N
+        btnEntradaGeneral.setText("VENTA GENERAL");
+        btnEntradaGeneral.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEntradaGeneral.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnEntradaGeneral.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntradaGeneralActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEntradaGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 390, -1, -1));
+        getContentPane().add(btnEntradaGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 330, 220));
 
-        btnEntradaVip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRADA VIP.png"))); // NOI18N
-        btnEntradaVip.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ENTRAD VIP 2.png"))); // NOI18N
+        btnEntradaVip.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        btnEntradaVip.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_POS_Terminal_100px.png"))); // NOI18N
+        btnEntradaVip.setText("VENTA VIP");
+        btnEntradaVip.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEntradaVip.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnEntradaVip.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEntradaVipActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEntradaVip, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 390, -1, -1));
+        getContentPane().add(btnEntradaVip, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 390, 330, 220));
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/APERTURAR CAJA 01.png"))); // NOI18N
-        jButton3.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/img/APERTURAR CAJA.png"))); // NOI18N
+        jButton3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Wallet_100px.png"))); // NOI18N
+        jButton3.setText("APERTURA");
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 390, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 330, 220));
 
-        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("MENU  DE ENTRADAS");
-        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 50, 670, 100));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_List_100px.png"))); // NOI18N
         jLabel2.setText("MENU  DE ENTRADAS");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(524, 50, 670, 100));
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 490, 90));
 
         lblSalir.setFont(new java.awt.Font("Consolas", 0, 24)); // NOI18N
-        lblSalir.setForeground(new java.awt.Color(255, 255, 255));
-        lblSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/puerta-de-salida-abierta.png"))); // NOI18N
+        lblSalir.setForeground(new java.awt.Color(51, 51, 51));
+        lblSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Close_Window_100px.png"))); // NOI18N
         lblSalir.setText("SALIR");
         lblSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,29 +162,27 @@ public class Menu extends javax.swing.JFrame {
                 lblSalirMouseClicked(evt);
             }
         });
-        jPanel1.add(lblSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1690, 10, 210, -1));
+        getContentPane().add(lblSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1700, 10, 210, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("USUARIO:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 130, 30));
+        jLabel1.setText("Usuario");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 30));
 
-        lbl_caja.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbl_caja.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(lbl_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 350, 30));
+        lbl_caja.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lbl_caja.setForeground(new java.awt.Color(51, 51, 51));
+        getContentPane().add(lbl_caja, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 330, 30));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel4.setText("CAJA:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 130, 30));
+        jLabel4.setText("Caja:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 130, 30));
 
-        lbl_Usuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbl_Usuario.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 40, 350, 30));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1920, 160));
+        lbl_Usuario.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        lbl_Usuario.setForeground(new java.awt.Color(51, 51, 51));
+        getContentPane().add(lbl_Usuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 330, 30));
 
         lblImg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/girlDJ.png"))); // NOI18N
         lblImg.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,13 +192,18 @@ public class Menu extends javax.swing.JFrame {
         });
         getContentPane().add(lblImg, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 880, 210, 160));
 
+        btnGastos.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        btnGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_Cash_in_Hand_100px.png"))); // NOI18N
         btnGastos.setText("GASTOS");
+        btnGastos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnGastos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnGastos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGastosActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 390, 280, 220));
+        getContentPane().add(btnGastos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 390, 330, 220));
+        getContentPane().add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 470, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -438,9 +448,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblImg;
     private javax.swing.JLabel lblSalir;
     private javax.swing.JLabel lbl_Usuario;

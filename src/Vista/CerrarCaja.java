@@ -9,12 +9,15 @@ import Controlador.AbrirCajaControl;
 import Controlador.CerrarCajaControl;
 import Controlador.ManejadorFechas;
 import Controlador.MyiReportVisor;
+import Modelo.CierreCaja;
 import Modelo.FlujoCaja;
+import Modelo.MySQLDAO.EntradaGeneralDAO;
 import Modelo.MySQLDAO.FlujoCajaDAO;
 import Modelo.MySQLDAO.UsuarioGastosDAO;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,7 +63,7 @@ public class CerrarCaja extends javax.swing.JFrame {
 
             //txtEgresos.setText("" + new UsuarioGastosDAO().getMontoEgresos(idFlujoCaja));
             //txtBalance.setText("" + calcularBalanceTotal());
-            double total = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText());
+            double total = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText());//suma monto apertura y ventas
             double gastos = Double.parseDouble(txtGastos.getText());
             lblEgresos.setText("" + gastos);
             lblIngresos.setText("" + total);
@@ -298,7 +301,7 @@ public class CerrarCaja extends javax.swing.JFrame {
         lblIngresos.setForeground(new java.awt.Color(204, 0, 0));
         lblIngresos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIngresos.setText(".......");
-        getContentPane().add(lblIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, 120, 30));
+        getContentPane().add(lblIngresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 360, 30));
 
         lblTotalEfectivo.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
         lblTotalEfectivo.setForeground(new java.awt.Color(0, 102, 51));
@@ -421,19 +424,19 @@ public class CerrarCaja extends javax.swing.JFrame {
 
         jLabel17.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("INGRESOS");
-        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 120, -1));
+        jLabel17.setText("TOTAL INGRESOS");
+        getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 360, -1));
 
         lblEgresos.setFont(new java.awt.Font("Consolas", 1, 16)); // NOI18N
         lblEgresos.setForeground(new java.awt.Color(204, 0, 0));
         lblEgresos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEgresos.setText(".......");
-        getContentPane().add(lblEgresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 340, 120, 30));
+        getContentPane().add(lblEgresos, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, 370, 30));
 
         jLabel18.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("EGRESOS");
-        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, 120, -1));
+        jLabel18.setText("TOTAL EGRESOS");
+        getContentPane().add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 320, 370, -1));
 
         jLabel19.setFont(new java.awt.Font("Consolas", 0, 36)); // NOI18N
         jLabel19.setText("TOTAL EFECTIVO");
@@ -469,16 +472,17 @@ public class CerrarCaja extends javax.swing.JFrame {
                             int idFlujoCaja = new FlujoCajaDAO().getIdFlujo(new CerrarCajaControl().getIdUsuario(txtUsuario.getText()), new CerrarCajaControl().getIdCaja(lblCaja.getText()));
 
                             parametros.put("idflujo", idFlujoCaja);
+                            parametros.put("gasto", txtGastos.getText());
                             parametros.put("visa", txtVisa.getText());
                             parametros.put("master", txtMasterCard.getText());
                             parametros.put("subTotal", lblIngresos.getText());
                             parametros.put("total", lblTotalEfectivo.getText());
                             if (lblCaja.getText().equals("ENTRADA GENERAL")) {
-                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral.jrxml", parametros, getPageSize());
+                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral.jrxml", parametros, getPageSize(idFlujoCaja));
                                 mrv.setNombreArchivo("CierreEntradasGeneral");
                                 mrv.exportarADocxConCopia("CierreEntradasGeneral.docx");
                             } else {
-                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral2.jrxml", parametros, getPageSize());
+                                mrv = new MyiReportVisor(System.getProperty("user.dir") + "\\reportes\\CierreEntradasGeneral2.jrxml", parametros, getPageSize(idFlujoCaja));
                                 mrv.setNombreArchivo("CierreEntradasGeneral2");
                                 mrv.exportarADocxConCopia("CierreEntradasGeneral2.docx");
                             }
@@ -502,20 +506,29 @@ public class CerrarCaja extends javax.swing.JFrame {
 
     private void jarraCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jarraCalcularActionPerformed
         double ingReal = Double.parseDouble(txtMontoApertura.getText()) + Double.parseDouble(txtTotalVentas.getText());
-        double subtotal = 0.0;
+        double ventas = 0.0;
+        double visa = 0.0;
+        double master = 0.0;
+        double gastos = 0.0;
         if (opc == 1) {
             txtVisa.setText(txtMontos.getText());
             txtMontos.setText("");
-            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
-            lblTotalEfectivo.setText("" + subtotal);
-            lblIngresos.setText(""+ (ingReal+ subtotal));
+            ventas = (ingReal + (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
+            visa = Double.parseDouble(txtVisa.getText());
+            master = Double.parseDouble(txtMasterCard.getText());
+            gastos = Double.parseDouble(txtGastos.getText());;
+            lblIngresos.setText(""+ ventas);
+            lblTotalEfectivo.setText("" + (ventas-(visa+master+gastos)));
             panelMontos.dispose();
         } else {
             txtMasterCard.setText(txtMontos.getText());
             txtMontos.setText("");
-            subtotal = (Double.parseDouble(lblIngresos.getText()) - (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
-            lblTotalEfectivo.setText("" + subtotal);
-            lblIngresos.setText(""+ (ingReal+ subtotal));
+            ventas = (ingReal + (Double.parseDouble(txtVisa.getText()) + Double.parseDouble(txtMasterCard.getText())));
+            visa = Double.parseDouble(txtVisa.getText());
+            master = Double.parseDouble(txtMasterCard.getText());
+            gastos = Double.parseDouble(txtGastos.getText());;
+            lblIngresos.setText(""+ ventas);
+            lblTotalEfectivo.setText("" + (ventas-(visa+master+gastos)));
             panelMontos.dispose();
         }
     }//GEN-LAST:event_jarraCalcularActionPerformed
@@ -678,23 +691,53 @@ public class CerrarCaja extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     //METODO PARA LOS TAMAÑOS DE LA IMPRESION
-    private int getPageSize() {
-        int filas = 2;
-        System.out.println("cantidad de filas: " + filas);
-        int rowCount = 2;//FILAS DE GRACIA
-        int fontSize = 9;//TAMAÑO DE LETRA DEL DETAIL
-        int rowSize = fontSize + 2;//TAMAÑO DE LA FILA
-        int caracteresPorLinea = 14;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA
-        for (int i = 0; i < filas; i++) {
-            //String descripcionDeProducto = tblPedidos.getValueAt(i, 1).toString();
-            //rowCount += (1 + (int) (descripcionDeProducto.length() / caracteresPorLinea));
-            rowCount += 1;
+    private int getPageSize(int idFlujoCaja) {
+        int pageSize = 0;
+        try {
+            //int filas = 2;//para obtener el num de filas se debe contar el numero de filas que retornará la consulta de productos vendidos
+            List<CierreCaja> cc = new EntradaGeneralDAO().numRegistrosCierre(idFlujoCaja);
+            
+            int filas = cc.size();
+            System.out.println("cantidad de filas: " + filas);
+            int rowCount = 2;//FILAS DE GRACIA
+            int fontSize = 9;//TAMAÑO DE LETRA DEL DETAIL
+            int rowSize = fontSize + 2;//TAMAÑO DE LA FILA
+            int caracteresPorLinea = 14;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA
+            for (int i = 0; i < filas; i++) {
+                String descripcionDeProducto = cc.get(i).getProducto();
+                rowCount += (1 + (int) (descripcionDeProducto.length() / caracteresPorLinea));
+                //rowCount += 1;
+            }
+            int cabecera = 80;
+            int piePagina = 140;
+            pageSize = (rowCount * rowSize) + cabecera + piePagina;
+            System.out.println("Cantidad de Filas finales:" + rowCount);
+            System.out.println("pageSize:" + pageSize);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(CerrarCaja.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int cabecera = 90;
-        int piePagina = 200;
-        int pageSize = (rowCount * rowSize) + cabecera + piePagina;
-        System.out.println("Cantidad de Filas finales:" + rowCount);
-        System.out.println("pageSize:" + pageSize);
         return pageSize;
     }
+    
+    
+    //metodo original de HANS
+//    private int getPageSize() {
+//        int filas = tbl_venta.getRowCount();
+//        System.out.println("cantidad de filas: " + filas);
+//        int rowCount = 2;//FILAS DE GRACIA
+//        int fontSize = 7;//TAMAÑO DE LETRA DEL DETAIL
+//        int rowSize = fontSize + 2;//TAMAÑO DE LA FILA
+//        int caracteresPorLinea = 16;// CANTIDAD DE CARACTERES PARA QUE PASE A LA SIGTE LINEA
+//        for (int i = 0; i < filas; i++) {
+//            String descripcionDeProducto = tbl_venta.getValueAt(i, 1).toString();
+//            rowCount += (1 + (int) (descripcionDeProducto.length() / caracteresPorLinea));
+//        }
+//        int cabecera = 156;
+//        int piePagina = 217;
+//        int pageSize = (rowCount * rowSize) + cabecera + piePagina;
+//        System.out.println("Cantidad de Filas finale:" + rowCount);
+//        System.out.println("pageSize:" + pageSize);
+//        return pageSize;
+//    }
 }

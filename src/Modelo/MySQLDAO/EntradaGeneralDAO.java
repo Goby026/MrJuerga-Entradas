@@ -6,6 +6,7 @@
 package Modelo.MySQLDAO;
 
 import Interfaces.DAO;
+import Modelo.CierreCaja;
 import Modelo.Conexion;
 import Modelo.EntradaGeneral;
 import java.sql.PreparedStatement;
@@ -41,7 +42,7 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
             if (pst.executeUpdate() > 0) {
                 return true;
             }
-            
+
             pst.close();
 
         } catch (Exception e) {
@@ -51,7 +52,7 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
         }
         return false;
     }
-    
+
     //METODO PARA REGISTRAR ENTRADAS GENERAL DE SERIE 006
     public boolean RegistrarEntrada2(EntradaGeneral p) throws Exception {
         try {
@@ -73,7 +74,7 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
             if (pst.executeUpdate() > 0) {
                 return true;
             }
-            
+
             pst.close();
 
         } catch (Exception e) {
@@ -96,8 +97,8 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
             pst.setInt(4, p.getIdCliente());
             pst.setInt(5, p.getIdTipoComprobante());
             pst.setInt(6, p.getEstado());
-            pst.setInt(7,p.getTipopago());
-            pst.setString(8,p.getnOperacion());
+            pst.setInt(7, p.getTipopago());
+            pst.setString(8, p.getnOperacion());
             pst.setInt(9, p.getIdCaja());
             pst.setInt(10, p.getIdFlujoCaja());
             pst.setInt(11, p.getIdEntradaGeneral());
@@ -123,16 +124,16 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
     public boolean Anular(int id) throws Exception {
         try {
             //estado 0=anulado - 1=activo
-            String sqlAnularVenta = "UPDATE EntradaGeneral SET estado = 0 WHERE idEntradaGeneral = "+id+"";
-            String sqlAnularDetalleVenta = "UPDATE ventaentrada SET numCovers = 0, total = 0 WHERE venta_idventa = "+id+"";
+            String sqlAnularVenta = "UPDATE EntradaGeneral SET estado = 0 WHERE idEntradaGeneral = " + id + "";
+            String sqlAnularDetalleVenta = "UPDATE ventaentrada SET numCovers = 0, total = 0 WHERE venta_idventa = " + id + "";
             this.conectar();
-            
+
             PreparedStatement pst = this.conexion.prepareStatement(sqlAnularVenta);
             PreparedStatement pst2 = this.conexion.prepareStatement(sqlAnularDetalleVenta);
-            
+
             int res = pst.executeUpdate();
             int res2 = pst2.executeUpdate();
-            
+
             if (res > 0 && res2 > 0) {
                 return true;
             }
@@ -144,20 +145,20 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
         }
         return false;
     }
-    
+
     public boolean AnularEntradaGeneral2(int id) throws Exception {
         try {
             //estado 0=anulado - 1=activo
-            String sqlAnularVenta = "UPDATE EntradaGeneral2 SET estado = 0 WHERE idEntradaGeneral2 = "+id+"";
-            String sqlAnularDetalleVenta = "UPDATE ventaentrada2 SET numCovers = 0, total = 0 WHERE venta_idventa = "+id+"";
+            String sqlAnularVenta = "UPDATE EntradaGeneral2 SET estado = 0 WHERE idEntradaGeneral2 = " + id + "";
+            String sqlAnularDetalleVenta = "UPDATE ventaentrada2 SET numCovers = 0, total = 0 WHERE venta_idventa = " + id + "";
             this.conectar();
-            
+
             PreparedStatement pst = this.conexion.prepareStatement(sqlAnularVenta);
             PreparedStatement pst2 = this.conexion.prepareStatement(sqlAnularDetalleVenta);
-            
+
             int res = pst.executeUpdate();
             int res2 = pst2.executeUpdate();
-            
+
             if (res > 0 && res2 > 0) {
                 return true;
             }
@@ -202,7 +203,7 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
         }
         return lista;
     }
-    
+
     public List<EntradaGeneral> ListarEntradaGeneral2() throws Exception {
         List<EntradaGeneral> lista = null;
         try {
@@ -266,7 +267,7 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
         }
         return v;
     }
-    
+
     public EntradaGeneral ObtenerEntradaGeneral2(int id) throws Exception {
         EntradaGeneral v = null;
         try {
@@ -297,49 +298,85 @@ public class EntradaGeneralDAO extends Conexion implements DAO<EntradaGeneral> {
         }
         return v;
     }
-    
-    public int getIdDeUltimaEntradaGeneralRegistrada() throws Exception{
+
+    public int getIdDeUltimaEntradaGeneralRegistrada() throws Exception {
         try {
             this.conectar();
             String sql = "SELECT idEntradaGeneral FROM EntradaGeneral ORDER BY idEntradaGeneral DESC LIMIT 1";
             PreparedStatement pst = this.conexion.prepareStatement(sql);
             ResultSet res = pst.executeQuery();
-            
+
             if (res.next()) {
                 return res.getInt(1);
             }
-            
+
             pst.close();
             res.close();
-            
+
         } catch (Exception e) {
-            throw  e;
-        }finally{
+            throw e;
+        } finally {
             this.cerrar();
         }
         return -1;
     }
-    
-    public int getIdDeUltimaEntradaGeneral2Registrada() throws Exception{
+
+    public int getIdDeUltimaEntradaGeneral2Registrada() throws Exception {
         try {
             this.conectar();
             String sql = "SELECT idEntradaGeneral2 FROM EntradaGeneral2 ORDER BY idEntradaGeneral2 DESC LIMIT 1";
             PreparedStatement pst = this.conexion.prepareStatement(sql);
             ResultSet res = pst.executeQuery();
-            
+
             if (res.next()) {
                 return res.getInt(1);
             }
-            
+
             pst.close();
             res.close();
-            
+
         } catch (Exception e) {
-            throw  e;
-        }finally{
+            throw e;
+        } finally {
             this.cerrar();
         }
         return -1;
+    }
+
+    //metodo para contar las filas para la impresion del reporte de cierre de entrada general
+    public List<CierreCaja> numRegistrosCierre(int idFlujoCaja) throws Exception {
+        List<CierreCaja> lista = null;
+        CierreCaja v = null;
+        try {
+            this.conectar();
+            PreparedStatement pst = this.conexion.prepareStatement("select usuario.usuario, producto.nombre, sum(ventaentrada.numCovers) as cantcover, sum(ventaentrada.total) as total\n"
+                    + "from entradageneral\n"
+                    + "inner join ventaentrada on entradageneral.identradageneral = ventaentrada.venta_idventa\n"
+                    + "inner join productopresentacion on ventaentrada.idproducto = productopresentacion.idproductopresentacion\n"
+                    + "inner join producto on productopresentacion.idproducto = producto.idproducto\n"
+                    + "inner join usuario on entradageneral.idusuario = usuario.idusuario\n"
+                    + "where entradageneral.idflujocaja = ? \n"
+                    + "group by producto.nombre");
+            
+            pst.setInt(1, idFlujoCaja);
+            lista = new ArrayList();
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                v = new CierreCaja();
+                v.setUsuario(rs.getString(1));
+                v.setProducto(rs.getString(2));
+                v.setCantCover(rs.getInt(3));
+                v.setTotal(rs.getDouble(4));
+                lista.add(v);
+            }
+            rs.close();
+            pst.close();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.cerrar();
+        }
+        return lista;
     }
 
 }
